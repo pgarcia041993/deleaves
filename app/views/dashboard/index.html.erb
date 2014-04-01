@@ -1,0 +1,17 @@
+<form method="get" action="/dashboard">
+  <%= render :partial => 'status' %>
+</form>
+<hr/>
+<%= render :partial => 'total_count' %>
+<hr/>
+<table>
+  <tr>
+    <td valign="top">
+      <%= render :partial => 'table-dtl' %>
+    </td>
+    <td valign="top" halign="center">
+      <%= render :partial => 'chart' %>
+    </td>
+  </tr>
+</table>
+<hr/>

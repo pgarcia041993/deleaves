@@ -1,0 +1,31 @@
+<h1>Listing online_application_forms</h1>
+
+<table>
+  <tr>
+    <th>User</th>
+    <th>Personal detail</th>
+    <th>Employment detail</th>
+    <th>Education detail</th>
+    <th>Supporting document</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @online_application_forms.each do |online_application_form| %>
+  <tr>
+    <td><%= online_application_form.user_id %></td>
+    <td><%= online_application_form.personal_detail_id %></td>
+    <td><%= online_application_form.employment_detail_id %></td>
+    <td><%= online_application_form.education_detail_id %></td>
+    <td><%= online_application_form.supporting_document_id %></td>
+    <td><%= link_to 'Show', online_application_form %></td>
+    <td><%= link_to 'Edit', edit_online_application_form_path(online_application_form) %></td>
+    <td><%= link_to 'Destroy', online_application_form, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Online application form', new_online_application_form_path %>

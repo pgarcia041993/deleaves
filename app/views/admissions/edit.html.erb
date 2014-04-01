@@ -1,0 +1,5 @@
+<%= stylesheet_link_tag 'online_application_forms' %>
+<span id="online-application-id" data-online-application-id="<%= @online_application.id %>"></span>
+<%= javascript_include_tag :global %>
+<%= render :partial => 'data' %>
+<%= render :partial => 'form' %>

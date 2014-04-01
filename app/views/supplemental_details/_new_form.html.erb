@@ -1,0 +1,152 @@
+<script>
+    $(document).ready(function(){
+        $('.dropdown-value').each(function(e){
+            $(this).val($(this).data('chosen-value'));
+        });
+    })
+</script>
+
+<p>
+  In addition to the basic information we have requested, we would also like to request for additional information
+  that may help us process your application. You may return to this section of the application at any time. You
+  will be returned to this page when you login to our Online Admissions system again.
+</p>
+
+<form accept-charset="UTF-8" action="/supplement/<%= @supplemental_detail.id %>" class="edit_supplemental_detail form-horizontal" id="edit_supplemental_detail_1" method="post">
+  <fieldset>
+
+    <!-- Form Name -->
+    <legend>Academic Achievement</legend>
+
+    <!-- Text input-->
+    <div class="control-group">
+      <label class="control-label" for="honor">Honours / Awards Received</label>
+      <div class="controls">
+        <input id="honor" name="supplemental_detail[honors]" type="text" placeholder="" class="input-xlarge" value="<%= @supplemental_detail.honors %>">
+
+      </div>
+    </div>
+
+    <!-- Select Basic -->
+    <div class="control-group">
+      <label class="control-label" for="sfundings">Source of Funding</label>
+      <div class="controls">
+        <select id="sfundings" name="supplemental_detail[source_of_funding]" class="input-xlarge dropdown-value" data-chosen-value="<%= @supplemental_detail.source_of_funding %>">
+          <option>Self Financed</option>
+          <option>Company sponsorship</option>
+          <option>Institute Scholarship</option>
+          <option>ADB Scholarship</option>
+          <option>Loans</option>
+          <option>BPI Loans</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Select Basic -->
+    <div class="control-group">
+      <label class="control-label" for="supplemental_detail[civil_status]">Civil Status</label>
+      <div class="controls">
+        <select id="supplemental_detail[civil_status]" name="supplemental_detail[civil_status]" class="input-xlarge dropdown-value" data-chosen-value="<%= @supplemental_detail.civil_status %>">
+          <option>Unmarried</option>
+          <option>Married</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Text input-->
+    <div class="control-group">
+      <label class="control-label" for="supplemental_detail[dual_citizenship]">Other Citizenship</label>
+      <div class="controls">
+        <input id="supplemental_detail[dual_citizenship]" name="supplemental_detail[dual_citizenship]" type="text" placeholder="Country of Other Citizenship" class="input-xlarge" value="<%= @supplemental_detail.dual_citizenship%>">
+        <p class="help-block">If you are a dual citizen, kindly enter the country of citizenship</p>
+      </div>
+    </div>
+
+    <!-- Text input-->
+
+
+    <!-- Select Basic -->
+    <div class="control-group">
+      <label class="control-label" for="supplemental_detail[housing]">Housing</label>
+      <div class="controls">
+        <select id="supplemental_detail[housing]" name="supplemental_detail[housing]" class="input-xlarge dropdown-value" data-chosen-value="<%= @supplemental_detail.housing %>">
+          <option>AIM Dormitory</option>
+          <option>Off-Campus</option>
+        </select>
+      </div>
+    </div>
+
+
+    <!-- Select Basic -->
+    <div class="control-group">
+      <label class="control-label" for="source">Source of Information about AIM </label>
+      <div class="controls">
+        <select id="source" name="supplemental_detail[source_of_information]" class="input-xlarge dropdown-value" data-chosen-value="<%= @supplemental_detail.source_of_information %>">
+          <option>Alumni</option>
+          <option>Advertisement</option>
+          <option>Friends</option>
+          <option>Company</option>
+          <option>Letter From AIM</option>
+          <option>AIM Webpage</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Select Basic -->
+    <div class="control-group">
+      <label class="control-label" for="objective">What is your objective in attending this program</label>
+      <div class="controls">
+        <select id="objective" name="supplemental_detail[objective]" class="input-xlarge dropdown-value" data-chosen-value="<%= @supplemental_detail.objective %>">
+          <option>For continuing education</option>
+          <option>Networking</option>
+          <option>To know the current industry trends</option>
+          <option>Career enhancement / improvement</option>
+        </select>
+      </div>
+    </div>
+    <div class="control-group">
+      <legend>Person to notify in case of emergency</legend>
+      <label class="control-label" for="eperson">Name</label>
+      <div class="controls">
+        <input id="eperson" name="supplemental_detail[notify_name]" type="text" placeholder="" class="input-xlarge" value="<%= @supplemental_detail.notify_name%>">
+
+      </div>
+    </div>
+
+    <!-- Text input-->
+    <div class="control-group">
+      <label class="control-label" for="erelationship">Relationship</label>
+      <div class="controls">
+        <input id="erelationship" name="supplemental_detail[notify_relationship]" type="text" placeholder="" class="input-xlarge" value="<%= @supplemental_detail.notify_relationship%>">
+
+      </div>
+    </div>
+
+    <!-- Text input-->
+    <div class="control-group">
+      <label class="control-label" for="emobile">Mobile</label>
+      <div class="controls">
+        <input id="emobile" name="supplemental_detail[notify_mobile]" type="text" placeholder="" class="input-xlarge" value="<%= @supplemental_detail.notify_mobile%>">
+
+      </div>
+    </div>
+
+    <!-- Text input-->
+    <div class="control-group">
+      <label class="control-label" for="eemail">Email</label>
+      <div class="controls">
+        <input id="eemail" name="supplemental_detail[notify_email]" type="text" placeholder="" class="input-xlarge" value="<%= @supplemental_detail.notify_email%>">
+
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="singlebutton"></label>
+      <div class="controls">
+        <div class="actions">
+          <input name="commit" type="submit" value="Update Information" class="btn btn-info">
+        </div>
+      </div>
+    </div>
+
+  </fieldset>
+</form>

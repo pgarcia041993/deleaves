@@ -1,0 +1,39 @@
+<table width="750" border="1" cellpadding="0" cellspacing="0" style="font-family: arial,sans-serif;
+        font-size:13px;
+        border-width: 1px;
+        border-color: #000;
+        border-collapse: collapse;">
+  <tr>
+    <td style="width:400px; font-weight:bold; background:#989898;" colspan="6">ACADEMIC INFORMATION</td>
+  </tr>
+  <tr>
+    <td height="25" colspan="4" style="font-weight:bold;">Bachelor Degree</td>
+  </tr>
+  <tr>
+    <td width="201" valign="top" height="43" style="font-weight:bold;">Course:
+      <p class="form-detail"><%= @online_application_form.education_detail.last_school_degree %> <%= @online_application_form.education_detail.last_school_course_title %></p>
+    </td>
+    <td width="168" valign="top" style="font-weight:bold;">School:
+      <p class="form-detail"><%= @online_application_form.education_detail.last_school_name %></p></td>
+    <td width="210" valign="top" style="font-weight:bold;">Award:
+      <p class="form-detail"></p></td>
+    <td width="261" valign="top" style="font-weight:bold;">Date Conferred:
+      <p class="form-detail"><%= @online_application_form.education_detail.last_school_end_date %></p></td>
+  </tr>
+  <tr>
+    <td colspan="6" style="font-weight:bold;">Masters/ Phd Degree</td>
+  </tr>
+  <tr>
+    <td height="34">
+      <p class="form-detail"><%= @online_application_form.education_detail.highest_school_degree %> <%= @online_application_form.education_detail.highest_school_course_title %></p>
+    </td>
+    <td>
+      <p class="form-detail"><%= @online_application_form.education_detail.highest_school_name %></p>
+    </td>
+    <td>
+      <p class="form-detail"></p>
+    <td>
+      <p class="form-detail"><%= @online_application_form.education_detail.highest_school_end_date %></p>
+    </td>
+  </tr>
+</table>

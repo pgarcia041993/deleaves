@@ -1,0 +1,1002 @@
+<%= javascript_include_tag 'realtime' %>
+<form id="application-form" class="form-horizontal" method="post" action="/admissions/submit/<%= @online_application.id %>">
+<fieldset>
+
+<!-- Begin Page 1 -->
+
+<div id="page-1">
+
+<!-- Form Name -->
+<legend>Personal Information</legend>
+
+<!-- Text input-->
+<div class="control-group">
+  <label class="control-label" for="first-name">First Name</label>
+
+  <div class="controls">
+    <input id="first-name" name="personal_detail[first_name]" value="<%= @personal_details.first_name %>" type="text" placeholder="First Name" class="input-xlarge">
+
+  </div>
+</div>
+
+<!-- Text input-->
+<div class="control-group">
+  <label class="control-label" for="middle-name">Middle Name</label>
+
+  <div class="controls">
+    <input id="middle-name" name="personal_detail[middle_name]" value="<%= @personal_details.middle_name %>" type="text" placeholder="Middle Name" class="input-xlarge">
+
+  </div>
+</div>
+
+<!-- Text input-->
+<div class="control-group">
+  <label class="control-label" for="last-name">Last Name</label>
+
+  <div class="controls">
+    <input id="last-name" name="personal_detail[last_name]" value="<%= @personal_details.last_name %>" type="text" placeholder="Last Name" class="input-xlarge">
+
+  </div>
+</div>
+
+<!-- Select Basic -->
+<div class="control-group">
+  <label class="control-label" for="gender">Gender</label>
+
+  <div class="controls">
+    <select id="gender" name="personal_detail[gender]" class="input-xlarge dropdown-value" data-chosen-value="<%= @personal_details.gender %>">
+      <option>Select One</option>
+      <option>Male</option>
+      <option>Female</option>
+    </select>
+  </div>
+</div>
+
+<!-- Select Basic -->
+<div class="control-group">
+  <label class="control-label" for="civil_status">Civil Status</label>
+
+  <div class="controls">
+    <select id="civil_status" name="personal_detail[civil_status]" class="input-xlarge dropdown-value" data-chosen-value="<%= @personal_details.civil_status %>">
+      <option>Select One</option>
+      <option>Single</option>
+      <option>Married</option>
+      <option>Separated</option>
+      <option>Divorced/Annulled</option>
+      <option>Widow(er)</option>
+    </select>
+  </div>
+</div>
+
+<!-- Text input-->
+<div class="control-group">
+  <label class="control-label" for="dob">Date of Birth</label>
+
+  <div class="controls">
+    <p class="data-placeholder"><%= @personal_details.dob.strftime('%d/%m/%Y') %></p>
+  </div>
+</div>
+
+<!-- Select Basic -->
+<div class="control-group">
+<label class="control-label" for="citizenship">Country of Citizenship</label>
+
+<div class="controls">
+<select id="citizenship" name="personal_detail[citizenship]" class="input-xlarge dropdown-value" data-chosen-value="<%= @personal_details.citizenship %>">
+<option>Select One</option>
+<option>Afghanistan</option>
+<option>Åland Islands</option>
+<option>Albania</option>
+<option>Algeria</option>
+<option>American Samoa</option>
+<option>Andorra</option>
+<option>Angola</option>
+<option>Anguilla</option>
+<option>Antarctica</option>
+<option>Antigua And Barbuda</option>
+<option>Argentina</option>
+<option>Armenia</option>
+<option>Aruba</option>
+<option>Australia</option>
+<option>Austria</option>
+<option>Azerbaijan</option>
+<option>Bahamas</option>
+<option>Bahrain</option>
+<option>Bangladesh</option>
+<option>Barbados</option>
+<option>Belarus</option>
+<option>Belgium</option>
+<option>Belize</option>
+<option>Benin</option>
+<option>Bermuda</option>
+<option>Bhutan</option>
+<option>Bolivia</option>
+<option>Bosnia And Herzegovina</option>
+<option>Botswana</option>
+<option>Bouvet Island</option>
+<option>Brazil</option>
+<option>British Indian Ocean Territory</option>
+<option>Brunei Darussalam</option>
+<option>Bulgaria</option>
+<option>Burkina Faso</option>
+<option>Burundi</option>
+<option>Cambodia</option>
+<option>Cameroon</option>
+<option>Canada</option>
+<option>Cape Verde</option>
+<option>Cayman Islands</option>
+<option>Central African Republic</option>
+<option>Chad</option>
+<option>Chile</option>
+<option>China</option>
+<option>Christmas Island</option>
+<option>Cocos (keeling) Islands</option>
+<option>Colombia</option>
+<option>Comoros</option>
+<option>Congo</option>
+<option>Congo, The Democratic Republic Of The</option>
+<option>Cook Islands</option>
+<option>Costa Rica</option>
+<option>CÔte D'ivoire</option>
+<option>Croatia</option>
+<option>Cuba</option>
+<option>Cyprus</option>
+<option>Czech Republic</option>
+<option>Denmark</option>
+<option>Djibouti</option>
+<option>Dominica</option>
+<option>Dominican Republic</option>
+<option>Ecuador</option>
+<option>Egypt</option>
+<option>El Salvador</option>
+<option>Equatorial Guinea</option>
+<option>Eritrea</option>
+<option>Estonia</option>
+<option>Ethiopia</option>
+<option>Falkland Islands (malvinas)</option>
+<option>Faroe Islands</option>
+<option>Fiji</option>
+<option>Finland</option>
+<option>France</option>
+<option>French Guiana</option>
+<option>French Polynesia</option>
+<option>French Southern Territories</option>
+<option>Gabon</option>
+<option>Gambia</option>
+<option>Georgia</option>
+<option>Germany</option>
+<option>Ghana</option>
+<option>Gibraltar</option>
+<option>Greece</option>
+<option>Greenland</option>
+<option>Grenada</option>
+<option>Guadeloupe</option>
+<option>Guam</option>
+<option>Guatemala</option>
+<option>Guernsey</option>
+<option>Guinea</option>
+<option>Guinea-bissau</option>
+<option>Guyana</option>
+<option>Haiti</option>
+<option>Heard Island And Mcdonald Islands</option>
+<option>Honduras</option>
+<option>Hong Kong</option>
+<option>Hungary</option>
+<option>Iceland</option>
+<option>India</option>
+<option>Indonesia</option>
+<option>Iran, Islamic Republic Of</option>
+<option>Iraq</option>
+<option>Ireland</option>
+<option>Isle Of Man</option>
+<option>Israel</option>
+<option>Italy</option>
+<option>Jamaica</option>
+<option>Japan</option>
+<option>Jersey</option>
+<option>Jordan</option>
+<option>Kazakhstan</option>
+<option>Kenya</option>
+<option>Kiribati</option>
+<option>Korea, Democratic People's Republic Of</option>
+<option>Korea, Republic Of</option>
+<option>Kuwait</option>
+<option>Kyrgyzstan</option>
+<option>Lao People's Democratic Republic</option>
+<option>Latvia</option>
+<option>Lebanon</option>
+<option>Lesotho</option>
+<option>Liberia</option>
+<option>Libyan Arab Jamahiriya</option>
+<option>Liechtenstein</option>
+<option>Lithuania</option>
+<option>Luxembourg</option>
+<option>Macao</option>
+<option>Macedonia, The Former Yugoslav Republic Of</option>
+<option>Madagascar</option>
+<option>Malawi</option>
+<option>Malaysia</option>
+<option>Maldives</option>
+<option>Mali</option>
+<option>Malta</option>
+<option>Marshall Islands</option>
+<option>Martinique</option>
+<option>Mauritania</option>
+<option>Mauritius</option>
+<option>Mayotte</option>
+<option>Mexico</option>
+<option>Micronesia, Federated States Of</option>
+<option>Moldova</option>
+<option>Monaco</option>
+<option>Mongolia</option>
+<option>Montenegro</option>
+<option>Montserrat</option>
+<option>Morocco</option>
+<option>Mozambique</option>
+<option>Myanmar</option>
+<option>Namibia</option>
+<option>Nauru</option>
+<option>Nepal</option>
+<option>Netherlands</option>
+<option>Netherlands Antilles</option>
+<option>New Caledonia</option>
+<option>New Zealand</option>
+<option>Nicaragua</option>
+<option>Niger</option>
+<option>Nigeria</option>
+<option>Niue</option>
+<option>Norfolk Island</option>
+<option>Northern Mariana Islands</option>
+<option>Norway</option>
+<option>Oman</option>
+<option>Pakistan</option>
+<option>Palau</option>
+<option>Palestinian Territory, Occupied</option>
+<option>Panama</option>
+<option>Papua New Guinea</option>
+<option>Paraguay</option>
+<option>Peru</option>
+<option>Philippines</option>
+<option>Pitcairn</option>
+<option>Poland</option>
+<option>Portugal</option>
+<option>Puerto Rico</option>
+<option>Qatar</option>
+<option>RÉunion</option>
+<option>Romania</option>
+<option>Russian Federation</option>
+<option>Rwanda</option>
+<option>Saint BarthÉlemy</option>
+<option>Saint Helena</option>
+<option>Saint Kitts And Nevis</option>
+<option>Saint Lucia</option>
+<option>Saint Martin</option>
+<option>Saint Pierre And Miquelon</option>
+<option>Saint Vincent And The Grenadines</option>
+<option>Samoa</option>
+<option>San Marino</option>
+<option>Sao Tome And Principe</option>
+<option>Saudi Arabia</option>
+<option>Senegal</option>
+<option>Serbia</option>
+<option>Seychelles</option>
+<option>Sierra Leone</option>
+<option>Singapore</option>
+<option>Slovakia</option>
+<option>Slovenia</option>
+<option>Solomon Islands</option>
+<option>Somalia</option>
+<option>South Africa</option>
+<option>South Georgia And The South Sandwich Islands</option>
+<option>Spain</option>
+<option>Sri Lanka</option>
+<option>Sudan</option>
+<option>Suriname</option>
+<option>Svalbard And Jan Mayen</option>
+<option>Swaziland</option>
+<option>Sweden</option>
+<option>Switzerland</option>
+<option>Syrian Arab Republic</option>
+<option>Taiwan, Province Of China</option>
+<option>Tajikistan</option>
+<option>Tanzania, United Republic Of</option>
+<option>Thailand</option>
+<option>Timor-leste</option>
+<option>Togo</option>
+<option>Tokelau</option>
+<option>Tonga</option>
+<option>Trinidad And Tobago</option>
+<option>Tunisia</option>
+<option>Turkey</option>
+<option>Turkmenistan</option>
+<option>Turks And Caicos Islands</option>
+<option>Tuvalu</option>
+<option>Uganda</option>
+<option>Ukraine</option>
+<option>United Arab Emirates</option>
+<option>United Kingdom</option>
+<option>United States</option>
+<option>United States Minor Outlying Islands</option>
+<option>Uruguay</option>
+<option>Uzbekistan</option>
+<option>Vanuatu</option>
+<option>Vatican City State</option>
+<option>Venezuela</option>
+<option>Viet Nam</option>
+<option>Virgin Islands, British</option>
+<option>Virgin Islands, U.s.</option>
+<option>Wallis And Futuna</option>
+<option>Western Sahara</option>
+<option>Yemen</option>
+<option>Zambia</option>
+<option>Zimbabwe</option>
+</select>
+</div>
+</div>
+
+<!-- Text input-->
+<div class="control-group">
+  <label class="control-label" for="address-1">Address</label>
+
+  <div class="controls">
+    <input id="address-1" name="personal_detail[address_1]" value="<%= @personal_details.address_1 %>" type="text" placeholder="Address Line 1" class="input-xlarge">
+
+  </div>
+</div>
+
+<!-- Text input-->
+<div class="control-group">
+  <label class="control-label" for="address-2"></label>
+
+  <div class="controls">
+    <input id="address-2" name="personal_detail[address_2]" value="<%= @personal_details.address_2 %>" type="text" placeholder="Address Line 2" class="input-xlarge">
+
+  </div>
+</div>
+
+<!-- Text input-->
+<div class="control-group">
+  <label class="control-label" for="city"></label>
+
+  <div class="controls">
+    <input id="city" name="personal_detail[city]" value="<%= @personal_details.city %>" type="text" placeholder="City" class="input-xlarge">
+  </div>
+</div>
+
+<!-- Text input-->
+<div class="control-group">
+  <label class="control-label" for="address-state">State/Province</label>
+
+  <div class="controls">
+    <input id="address-state" name="personal_detail[address_state]" value="<%= @personal_details.address_state %>" type="text" placeholder="State/Province" class="input-xlarge">
+
+  </div>
+</div>
+
+<!-- Select Basic -->
+<div class="control-group">
+<label class="control-label" for="address-country">Country</label>
+
+<div class="controls">
+<select id="address-country" name="personal_detail[address_country]" class="input-xlarge dropdown-value" data-chosen-value="<%= @personal_details.address_country %>">
+<option>Select One</option>
+<option>Afghanistan</option>
+<option>Åland Islands</option>
+<option>Albania</option>
+<option>Algeria</option>
+<option>American Samoa</option>
+<option>Andorra</option>
+<option>Angola</option>
+<option>Anguilla</option>
+<option>Antarctica</option>
+<option>Antigua And Barbuda</option>
+<option>Argentina</option>
+<option>Armenia</option>
+<option>Aruba</option>
+<option>Australia</option>
+<option>Austria</option>
+<option>Azerbaijan</option>
+<option>Bahamas</option>
+<option>Bahrain</option>
+<option>Bangladesh</option>
+<option>Barbados</option>
+<option>Belarus</option>
+<option>Belgium</option>
+<option>Belize</option>
+<option>Benin</option>
+<option>Bermuda</option>
+<option>Bhutan</option>
+<option>Bolivia</option>
+<option>Bosnia And Herzegovina</option>
+<option>Botswana</option>
+<option>Bouvet Island</option>
+<option>Brazil</option>
+<option>British Indian Ocean Territory</option>
+<option>Brunei Darussalam</option>
+<option>Bulgaria</option>
+<option>Burkina Faso</option>
+<option>Burundi</option>
+<option>Cambodia</option>
+<option>Cameroon</option>
+<option>Canada</option>
+<option>Cape Verde</option>
+<option>Cayman Islands</option>
+<option>Central African Republic</option>
+<option>Chad</option>
+<option>Chile</option>
+<option>China</option>
+<option>Christmas Island</option>
+<option>Cocos (keeling) Islands</option>
+<option>Colombia</option>
+<option>Comoros</option>
+<option>Congo</option>
+<option>Congo, The Democratic Republic Of The</option>
+<option>Cook Islands</option>
+<option>Costa Rica</option>
+<option>CÔte D'ivoire</option>
+<option>Croatia</option>
+<option>Cuba</option>
+<option>Cyprus</option>
+<option>Czech Republic</option>
+<option>Denmark</option>
+<option>Djibouti</option>
+<option>Dominica</option>
+<option>Dominican Republic</option>
+<option>Ecuador</option>
+<option>Egypt</option>
+<option>El Salvador</option>
+<option>Equatorial Guinea</option>
+<option>Eritrea</option>
+<option>Estonia</option>
+<option>Ethiopia</option>
+<option>Falkland Islands (malvinas)</option>
+<option>Faroe Islands</option>
+<option>Fiji</option>
+<option>Finland</option>
+<option>France</option>
+<option>French Guiana</option>
+<option>French Polynesia</option>
+<option>French Southern Territories</option>
+<option>Gabon</option>
+<option>Gambia</option>
+<option>Georgia</option>
+<option>Germany</option>
+<option>Ghana</option>
+<option>Gibraltar</option>
+<option>Greece</option>
+<option>Greenland</option>
+<option>Grenada</option>
+<option>Guadeloupe</option>
+<option>Guam</option>
+<option>Guatemala</option>
+<option>Guernsey</option>
+<option>Guinea</option>
+<option>Guinea-bissau</option>
+<option>Guyana</option>
+<option>Haiti</option>
+<option>Heard Island And Mcdonald Islands</option>
+<option>Honduras</option>
+<option>Hong Kong</option>
+<option>Hungary</option>
+<option>Iceland</option>
+<option>India</option>
+<option>Indonesia</option>
+<option>Iran, Islamic Republic Of</option>
+<option>Iraq</option>
+<option>Ireland</option>
+<option>Isle Of Man</option>
+<option>Israel</option>
+<option>Italy</option>
+<option>Jamaica</option>
+<option>Japan</option>
+<option>Jersey</option>
+<option>Jordan</option>
+<option>Kazakhstan</option>
+<option>Kenya</option>
+<option>Kiribati</option>
+<option>Korea, Democratic People's Republic Of</option>
+<option>Korea, Republic Of</option>
+<option>Kuwait</option>
+<option>Kyrgyzstan</option>
+<option>Lao People's Democratic Republic</option>
+<option>Latvia</option>
+<option>Lebanon</option>
+<option>Lesotho</option>
+<option>Liberia</option>
+<option>Libyan Arab Jamahiriya</option>
+<option>Liechtenstein</option>
+<option>Lithuania</option>
+<option>Luxembourg</option>
+<option>Macao</option>
+<option>Macedonia, The Former Yugoslav Republic Of</option>
+<option>Madagascar</option>
+<option>Malawi</option>
+<option>Malaysia</option>
+<option>Maldives</option>
+<option>Mali</option>
+<option>Malta</option>
+<option>Marshall Islands</option>
+<option>Martinique</option>
+<option>Mauritania</option>
+<option>Mauritius</option>
+<option>Mayotte</option>
+<option>Mexico</option>
+<option>Micronesia, Federated States Of</option>
+<option>Moldova</option>
+<option>Monaco</option>
+<option>Mongolia</option>
+<option>Montenegro</option>
+<option>Montserrat</option>
+<option>Morocco</option>
+<option>Mozambique</option>
+<option>Myanmar</option>
+<option>Namibia</option>
+<option>Nauru</option>
+<option>Nepal</option>
+<option>Netherlands</option>
+<option>Netherlands Antilles</option>
+<option>New Caledonia</option>
+<option>New Zealand</option>
+<option>Nicaragua</option>
+<option>Niger</option>
+<option>Nigeria</option>
+<option>Niue</option>
+<option>Norfolk Island</option>
+<option>Northern Mariana Islands</option>
+<option>Norway</option>
+<option>Oman</option>
+<option>Pakistan</option>
+<option>Palau</option>
+<option>Palestinian Territory, Occupied</option>
+<option>Panama</option>
+<option>Papua New Guinea</option>
+<option>Paraguay</option>
+<option>Peru</option>
+<option>Philippines</option>
+<option>Pitcairn</option>
+<option>Poland</option>
+<option>Portugal</option>
+<option>Puerto Rico</option>
+<option>Qatar</option>
+<option>RÉunion</option>
+<option>Romania</option>
+<option>Russian Federation</option>
+<option>Rwanda</option>
+<option>Saint BarthÉlemy</option>
+<option>Saint Helena</option>
+<option>Saint Kitts And Nevis</option>
+<option>Saint Lucia</option>
+<option>Saint Martin</option>
+<option>Saint Pierre And Miquelon</option>
+<option>Saint Vincent And The Grenadines</option>
+<option>Samoa</option>
+<option>San Marino</option>
+<option>Sao Tome And Principe</option>
+<option>Saudi Arabia</option>
+<option>Senegal</option>
+<option>Serbia</option>
+<option>Seychelles</option>
+<option>Sierra Leone</option>
+<option>Singapore</option>
+<option>Slovakia</option>
+<option>Slovenia</option>
+<option>Solomon Islands</option>
+<option>Somalia</option>
+<option>South Africa</option>
+<option>South Georgia And The South Sandwich Islands</option>
+<option>Spain</option>
+<option>Sri Lanka</option>
+<option>Sudan</option>
+<option>Suriname</option>
+<option>Svalbard And Jan Mayen</option>
+<option>Swaziland</option>
+<option>Sweden</option>
+<option>Switzerland</option>
+<option>Syrian Arab Republic</option>
+<option>Taiwan, Province Of China</option>
+<option>Tajikistan</option>
+<option>Tanzania, United Republic Of</option>
+<option>Thailand</option>
+<option>Timor-leste</option>
+<option>Togo</option>
+<option>Tokelau</option>
+<option>Tonga</option>
+<option>Trinidad And Tobago</option>
+<option>Tunisia</option>
+<option>Turkey</option>
+<option>Turkmenistan</option>
+<option>Turks And Caicos Islands</option>
+<option>Tuvalu</option>
+<option>Uganda</option>
+<option>Ukraine</option>
+<option>United Arab Emirates</option>
+<option>United Kingdom</option>
+<option>United States</option>
+<option>United States Minor Outlying Islands</option>
+<option>Uruguay</option>
+<option>Uzbekistan</option>
+<option>Vanuatu</option>
+<option>Vatican City State</option>
+<option>Venezuela</option>
+<option>Viet Nam</option>
+<option>Virgin Islands, British</option>
+<option>Virgin Islands, U.s.</option>
+<option>Wallis And Futuna</option>
+<option>Western Sahara</option>
+<option>Yemen</option>
+<option>Zambia</option>
+<option>Zimbabwe</option>
+</select>
+</div>
+</div>
+
+<!-- Text input-->
+<div class="control-group">
+  <label class="control-label" for="address-post-code">Post Code</label>
+
+  <div class="controls">
+    <input id="address-post-code" name="personal_detail[address_post_code]" value="<%= @personal_details.address_post_code %>" type="text" placeholder="Post Code" class="input-xlarge">
+
+  </div>
+</div>
+
+<!-- Text input-->
+<div class="control-group">
+  <label class="control-label" for="email">E-Mail</label>
+
+  <div class="controls">
+    <input id="email" name="personal_detail[email]" value="<%= @personal_details.email %>" type="text" placeholder="E-Mail Address" class="input-xlarge">
+  </div>
+</div>
+
+<!-- Text input-->
+<div class="control-group">
+  <label class="control-label" for="home-phone">Telephone</label>
+
+  <div class="controls">
+    <input id="home-phone" name="personal_detail[home_phone]" value="<%= @personal_details.home_phone %>" type="text" placeholder="Home Phone" class="input-xlarge">
+
+  </div>
+</div>
+
+<!-- Text input-->
+<div class="control-group">
+  <label class="control-label" for="cell-phone">Mobile Phone</label>
+
+  <div class="controls">
+    <input id="cell-phone" name="personal_detail[cell_phone]" value="<%= @personal_details.cell_phone %>" type="text" placeholder="Cell Phone" class="input-xlarge">
+
+  </div>
+</div>
+
+<!-- Button -->
+<div class="control-group">
+  <label class="control-label" for="submit-personal-info"></label>
+
+  <div class="controls">
+    <button id="submit-personal-info" name="submit-personal-info" class="btn btn-info">Next - Employment Information
+    </button>
+  </div>
+</div>
+
+</div>
+<!-- End Page 1 -->
+
+<!-- Start Page 2 -->
+<div id="page-2">
+
+<!-- Form Name -->
+<legend>Employment Details</legend>
+
+<!-- Text input-->
+<div class="control-group">
+  <label class="control-label" for="company-name">Employer Name</label>
+
+  <div class="controls">
+    <input id="company-name" name="employment_detail[company_name]" value="<%= @employment_detail.company_name %>" type="text" placeholder="Company Name" class="input-xlarge">
+
+  </div>
+</div>
+
+<!-- Textarea -->
+<div class="control-group">
+  <label class="control-label" for="work-address">Employer Address</label>
+
+  <div class="controls">
+    <textarea id="work-address" name="employment_detail[work_address]" placeholder="Enter your employer's address"><%= @employment_detail.work_address %></textarea>
+  </div>
+</div>
+
+<!-- Text input-->
+<div class="control-group">
+  <label class="control-label" for="work-phone">Employer Phone Number</label>
+
+  <div class="controls">
+    <input id="work-phone" name="employment_detail[work_phone]" value="<%= @employment_detail.work_phone %>" type="text" placeholder="Work Phone Number" class="input-xlarge">
+
+  </div>
+</div>
+
+<!-- Select Basic -->
+<div class="control-group">
+  <label class="control-label" for="work-industry">Industry</label>
+
+  <div class="controls">
+    <select id="work-industry" name="employment_detail[work_industry]" class="input-xlarge dropdown-value" data-chosen-value="<%= @employment_detail.work_industry %>">
+      <option>Agriculture</option>
+      <option>Accounting</option>
+      <option>Advertising</option>
+      <option>Aerospace</option>
+      <option>Aircraft</option>
+      <option>Airline</option>
+      <option>Apparel &amp; Accessories</option>
+      <option>Automotive</option>
+      <option>Banking</option>
+      <option>Broadcasting</option>
+      <option>Brokerage</option>
+      <option>Biotechnology</option>
+      <option>Call Centers</option>
+      <option>Cargo Handling</option>
+      <option>Chemical</option>
+      <option>Computer</option>
+      <option>Consulting</option>
+      <option>Consumer Products</option>
+      <option>Cosmetics</option>
+      <option>Defense</option>
+      <option>Department Stores</option>
+      <option>Education</option>
+      <option>Electronics</option>
+      <option>Energy</option>
+      <option>Entertainment &amp; Leisure</option>
+      <option>Executive Search</option>
+      <option>Financial Services</option>
+      <option>Food, Beverage &amp;</option>
+      <option>Grocery</option>
+      <option>Health Care</option>
+      <option>Internet Publishing</option>
+      <option>Investment Banking</option>
+      <option>Legal</option>
+      <option>Manufacturing</option>
+      <option>Motion Picture &amp; Video</option>
+      <option>Music</option>
+      <option>Newspaper Publishers</option>
+      <option>Online Auctions</option>
+      <option>Pension Funds</option>
+      <option>Pharmaceuticals</option>
+      <option>Private Equity</option>
+      <option>Publishing</option>
+      <option>Real Estate</option>
+      <option>Retail &amp; Wholesale</option>
+      <option>Securities &amp; Commodity Exchanges</option>
+      <option>Service</option>
+      <option>Soap &amp; Detergent</option>
+      <option>Software</option>
+      <option>Sports</option>
+      <option>Technology</option>
+      <option>Telecommunications</option>
+      <option>Television</option>
+      <option>Transportation</option>
+      <option>Venture Capital</option>
+    </select>
+  </div>
+</div>
+
+<!-- Text input-->
+<div class="control-group">
+  <label class="control-label" for="work-fax-number">Fax Number</label>
+
+  <div class="controls">
+    <input id="work-fax-number" name="employment_detail[work_fax_number]" value="<%= @employment_detail.work_fax_number %>" type="text" placeholder="" class="input-xlarge">
+
+  </div>
+</div>
+
+<!-- Multiple Radios -->
+<div class="control-group">
+  <label class="control-label" for="company_type">Company Type</label>
+
+  <div class="controls">
+    <label class="radio" for="company-type-0">
+      <input type="radio" name="employment_detail[company_type]" id="company-type-0" value="Private" checked="checked">
+      Private
+    </label>
+    <label class="radio" for="company-type-1">
+      <input type="radio" name="employment_detail[company_type]" id="company-type-1" value="Government">
+      Government
+    </label>
+    <label class="radio" for="company-type-2">
+      <input type="radio" name="employment_detail[company_type]" id="company-type-2" value="Non-Profit">
+      Non-Profit
+    </label>
+    <label class="radio" for="company-type-3">
+      <input type="radio" name="employment_detail[company_type]" id="company-type-3" value="Retired">
+      Retired
+    </label>
+  </div>
+</div>
+
+<!-- Text input-->
+<div class="control-group">
+  <label class="control-label" for="company-position">Position</label>
+
+  <div class="controls">
+    <input id="company-position" name="employment_detail[company_position]" value="<%= @employment_detail.company_position %>" type="text" placeholder="" class="input-xlarge">
+
+  </div>
+</div>
+
+<!-- Select Basic -->
+<div class="control-group">
+  <label class="control-label" for="position-level">Position Level</label>
+
+  <div class="controls">
+    <select id="position-level" name="employment_detail[position_level]" class="input-xlarge  dropdown-value" data-chosen-value="<%= @employment_detail.position_level %>">
+      <option>Director</option>
+      <option>Manager</option>
+      <option>Supervisor</option>
+      <option>Rank &amp; File</option>
+      <option>Consultant</option>
+      <option>Contractor</option>
+      <option>Informal</option>
+    </select>
+  </div>
+</div>
+
+<!-- Button (Double) -->
+<div class="control-group">
+  <label class="control-label" for="submit-employment-info-back"></label>
+
+  <div class="controls">
+    <button id="submit-employment-info-back" name="submit-employment-info-back" class="btn btn-inverse">Back -
+      Particulars
+    </button>
+    <button id="submit-employment-info-next" name="submit-employment-info-next" class="btn btn-info">Next -
+      Education
+    </button>
+  </div>
+</div>
+
+</div>
+<!-- End Page 2 -->
+
+<!-- Start Page 3 -->
+<div id="page-3">
+  <!-- Form Name -->
+  <legend>AIM Degree</legend>
+
+  <!-- Text input-->
+  <div class="control-group">
+    <label class="control-label" for="education_detail[last-school-name]">Institution Name</label>
+
+    <div class="controls">
+      <input id="last-school-name" name="education_detail[last_school_name]" type="text" value="Asian Institute of Management" class="input-xlarge" readonly>
+
+    </div>
+  </div>
+
+  <!-- Text input-->
+  <div class="control-group">
+    <label class="control-label" for="last-school-course-title">AIM Program/Course Title</label>
+
+    <div class="controls">
+      <input id="last-school-course-title" name="education_detail[last_school_course_title]" value="<%= @education_detail.last_school_course_title %>" type="text" placeholder="" class="input-xlarge">
+
+    </div>
+  </div>
+
+  <!-- Select Basic -->
+  <div class="control-group">
+    <label class="control-label" for="last-school-degree">Program Type</label>
+
+    <div class="controls">
+      <select id="last-school-degree" name="education_detail[last_school_degree]" class="input-xlarge  dropdown-value" data-chosen-value="<%= @education_detail.last_school_degree %>">
+        <option>Graduate Degree</option>
+        <option>Short Course</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Text input-->
+  <div id="graduation-date-field">
+    <div class="control-group">
+      <label class="control-label" for="last-school-end-date">Graduation Date (approximate)</label>
+
+      <div class="controls">
+        <input id="last-school-end-date" name="education_detail[last_school_end_date]" value="<%= @education_detail.last_school_end_date %>" type="text" placeholder="Enter the date completed" class="input-xlarge date-pick non-dob">
+      </div>
+    </div>
+  </div>
+
+  <div id="highest-degree-obtained">
+    <!-- Form Name -->
+    <legend>Highest Degree Obtained</legend>
+    <!-- Text input-->
+    <div class="control-group">
+      <label class="control-label" for="highest-school-name">Institution Name</label>
+
+      <div class="controls">
+        <input id="highest-school-name" name="education_detail[highest_school_name]" type="text" value="<%= @education_detail.highest_school_name %>" placeholder="" class="input-xlarge">
+
+      </div>
+    </div>
+
+    <!-- Text input-->
+    <div class="control-group">
+      <label class="control-label" for="highest-school-course-title">Concentration/Course Title</label>
+
+      <div class="controls">
+        <input id="highest-school-course-title" name="education_detail[highest_school_course_title]" value="<%= @education_detail.highest_school_course_title %>" type="text" placeholder="" class="input-xlarge">
+
+      </div>
+    </div>
+
+    <!-- Select Basic -->
+    <div class="control-group">
+      <label class="control-label" for="highest-school-degree">Degree</label>
+
+      <div class="controls">
+        <select id="highest-school-degree" name="education_detail[highest_school_degree]" class="input-xlarge  dropdown-value" data-chosen-value="<%= @education_detail.highest_school_degree %>">
+          <option>Bachelor's Degree</option>
+          <option>Master's Degree</option>
+          <option>Doctorate Degree</option>
+          <option>Certificate Course</option>
+          <option>Diploma Course</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Textarea -->
+    <div class="control-group">
+      <label class="control-label" for="highest-school-address">Address</label>
+
+      <div class="controls">
+        <textarea id="highest-school-address" name="education_detail[highest_school_address]" placeholder="Address of institution"><%= @education_detail.highest_school_address %></textarea>
+      </div>
+    </div>
+
+    <!-- Text input-->
+    <div class="control-group">
+      <label class="control-label" for="highest-school-commencement-date">Date First Attended</label>
+
+      <div class="controls">
+        <input id="highest-school-commencement-date" name="education_detail[highest_school_commencement_date]" value="<%= @education_detail.highest_school_commencement_date %>" type="text" placeholder="Enter the date commenced" class="input-xlarge date-pick non-dob">
+
+      </div>
+    </div>
+
+    <!-- Text input-->
+    <div class="control-group">
+      <label class="control-label" for="highest-school-end-date">Graduation Date</label>
+
+      <div class="controls">
+        <input id="highest-school-end-date" name="education_detail[highest_school_end_date]" type="text" value="<%= @education_detail.highest_school_end_date %>" placeholder="Enter the date completed" class="input-xlarge date-pick non-dob">
+
+      </div>
+    </div>
+  </div>
+
+  <hr/>
+  <div style="width: 800px; border-radius: 5px; background: lightgray; padding: 10px;">
+    <h3>Submission</h3>
+
+    <p>
+      Thank you for updating your information.
+    </p>
+
+    <p>Please click on the "Update Information" button below once you have reviewed your information.</p>
+
+    <!-- Button (Double) -->
+    <div class="control-group">
+      <label class="control-label" for="education-back"></label>
+
+      <div class="controls">
+        <button id="education-back" name="education-back" class="btn btn-inverse">Back - Employment</button>
+        <button id="education-submit" name="education-submit" class="btn btn-info">Update Information</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Page 3 -->
+
+</fieldset>
+</form>

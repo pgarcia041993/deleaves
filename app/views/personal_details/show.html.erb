@@ -1,0 +1,90 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>First name:</b>
+  <%= @personal_detail.first_name %>
+</p>
+
+<p>
+  <b>Middle name:</b>
+  <%= @personal_detail.middle_name %>
+</p>
+
+<p>
+  <b>Last name:</b>
+  <%= @personal_detail.last_name %>
+</p>
+
+<p>
+  <b>Gender:</b>
+  <%= @personal_detail.gender %>
+</p>
+
+<p>
+  <b>Dob:</b>
+  <%= @personal_detail.dob %>
+</p>
+
+<p>
+  <b>Citizenship:</b>
+  <%= @personal_detail.citizenship %>
+</p>
+
+<p>
+  <b>Civil status:</b>
+  <%= @personal_detail.civil_status %>
+</p>
+
+<p>
+  <b>Medications:</b>
+  <%= @personal_detail.medications %>
+</p>
+
+<p>
+  <b>Address 1:</b>
+  <%= @personal_detail.address_1 %>
+</p>
+
+<p>
+  <b>Address 2:</b>
+  <%= @personal_detail.address_2 %>
+</p>
+
+<p>
+  <b>City:</b>
+  <%= @personal_detail.city %>
+</p>
+
+<p>
+  <b>Address state:</b>
+  <%= @personal_detail.address_state %>
+</p>
+
+<p>
+  <b>Address country:</b>
+  <%= @personal_detail.address_country %>
+</p>
+
+<p>
+  <b>Address post code:</b>
+  <%= @personal_detail.address_post_code %>
+</p>
+
+<p>
+  <b>Email:</b>
+  <%= @personal_detail.email %>
+</p>
+
+<p>
+  <b>Home phone:</b>
+  <%= @personal_detail.home_phone %>
+</p>
+
+<p>
+  <b>Cell phone:</b>
+  <%= @personal_detail.cell_phone %>
+</p>
+
+
+<%= link_to 'Edit', edit_personal_detail_path(@personal_detail) %> |
+<%= link_to 'Back', personal_details_path %>

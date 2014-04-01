@@ -1,0 +1,55 @@
+<h1>Listing personal_details</h1>
+
+<table>
+  <tr>
+    <th>First name</th>
+    <th>Middle name</th>
+    <th>Last name</th>
+    <th>Gender</th>
+    <th>Dob</th>
+    <th>Citizenship</th>
+    <th>Civil status</th>
+    <th>Medications</th>
+    <th>Address 1</th>
+    <th>Address 2</th>
+    <th>City</th>
+    <th>Address state</th>
+    <th>Address country</th>
+    <th>Address post code</th>
+    <th>Email</th>
+    <th>Home phone</th>
+    <th>Cell phone</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @personal_details.each do |personal_detail| %>
+  <tr>
+    <td><%= personal_detail.first_name %></td>
+    <td><%= personal_detail.middle_name %></td>
+    <td><%= personal_detail.last_name %></td>
+    <td><%= personal_detail.gender %></td>
+    <td><%= personal_detail.dob %></td>
+    <td><%= personal_detail.citizenship %></td>
+    <td><%= personal_detail.civil_status %></td>
+    <td><%= personal_detail.medications %></td>
+    <td><%= personal_detail.address_1 %></td>
+    <td><%= personal_detail.address_2 %></td>
+    <td><%= personal_detail.city %></td>
+    <td><%= personal_detail.address_state %></td>
+    <td><%= personal_detail.address_country %></td>
+    <td><%= personal_detail.address_post_code %></td>
+    <td><%= personal_detail.email %></td>
+    <td><%= personal_detail.home_phone %></td>
+    <td><%= personal_detail.cell_phone %></td>
+    <td><%= link_to 'Show', personal_detail %></td>
+    <td><%= link_to 'Edit', edit_personal_detail_path(personal_detail) %></td>
+    <td><%= link_to 'Destroy', personal_detail, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Personal detail', new_personal_detail_path %>

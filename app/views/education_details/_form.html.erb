@@ -1,0 +1,65 @@
+<%= form_for(@education_detail) do |f| %>
+  <% if @education_detail.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@education_detail.errors.count, "error") %> prohibited this education_detail from being saved:</h2>
+
+      <ul>
+      <% @education_detail.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :last_school_name %><br />
+    <%= f.text_field :last_school_name %>
+  </div>
+  <div class="field">
+    <%= f.label :last_school_course_title %><br />
+    <%= f.text_field :last_school_course_title %>
+  </div>
+  <div class="field">
+    <%= f.label :last_school_degree %><br />
+    <%= f.text_field :last_school_degree %>
+  </div>
+  <div class="field">
+    <%= f.label :last_school_address %><br />
+    <%= f.text_field :last_school_address %>
+  </div>
+  <div class="field">
+    <%= f.label :last_school_commencement_date %><br />
+    <%= f.date_select :last_school_commencement_date %>
+  </div>
+  <div class="field">
+    <%= f.label :last_school_end_date %><br />
+    <%= f.date_select :last_school_end_date %>
+  </div>
+  <div class="field">
+    <%= f.label :highest_school_name %><br />
+    <%= f.text_field :highest_school_name %>
+  </div>
+  <div class="field">
+    <%= f.label :highest_school_course_title %><br />
+    <%= f.text_field :highest_school_course_title %>
+  </div>
+  <div class="field">
+    <%= f.label :highest_school_degree %><br />
+    <%= f.text_field :highest_school_degree %>
+  </div>
+  <div class="field">
+    <%= f.label :highest_school_address %><br />
+    <%= f.text_field :highest_school_address %>
+  </div>
+  <div class="field">
+    <%= f.label :highest_school_commencement_date %><br />
+    <%= f.date_select :highest_school_commencement_date %>
+  </div>
+  <div class="field">
+    <%= f.label :highest_school_end_date %><br />
+    <%= f.date_select :highest_school_end_date %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

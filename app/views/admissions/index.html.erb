@@ -1,0 +1,43 @@
+<% pending_applications = @online_applications.where(:supporting_document_id => nil) %>
+<% processing_applications = @online_applications.where('supporting_document_id is not null') %>
+
+<div id="applications-pending-completion">
+  <h1>Applications Pending Completion</h1>
+
+  <div class="application-summary-stats">
+    <table width="90%">
+      <tr>
+        <td width="50%"><h3>Total Applications</h3></td>
+        <td width="10%" align="right"><h4><%= pending_applications.count %></h4></td>
+        <td width="10%">&nbsp;</td>
+        <td width="30%" align="right">
+          <div class="progress progress-striped active">
+            <div class="bar" style="width: 30%;"></div>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <%= render :partial => 'admissions/summary', :locals => {:applications => pending_applications} %>
+</div>
+
+
+<div id="applications-processing-ssar">
+  <h1>Applications for Processing by SSAR</h1>
+
+  <div class="application-summary-stats">
+    <table width="90%">
+      <tr>
+        <td width="50%"><h3>Total Applications</h3></td>
+        <td width="10%" align="right"><h4><%= processing_applications.count %></h4></td>
+        <td width="10%">&nbsp;</td>
+        <td width="30%" align="right">
+          <div class="progress progress-striped active">
+            <div class="bar" style="width: 10%;"></div>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <%= render :partial => 'admissions/summary', :locals => {:applications => processing_applications} %>
+</div>

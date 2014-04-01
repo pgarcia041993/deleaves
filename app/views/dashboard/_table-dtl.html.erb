@@ -1,0 +1,27 @@
+<div id="applicant-detail">
+  <table class="applicant-dtl-main">
+    <tr>
+      <th></th>
+      <th>STATUS</th>
+      <th>Applicant Name</th>
+      <th>Actions</th>
+    </tr>
+    <% @applicants.each do |applicant| %>
+        <% personal_detail = applicant.personal_detail %>
+        <% if personal_detail.present? %>
+            <tr>
+              <% if applicant.read_status == false %>
+                  <td>
+                    <i class="icon-search"></i>
+                  </td>
+              <% else %>
+                  <td></td>
+              <% end %>
+              <td><%= OnlineApplicationForm.get_status(applicant.status).capitalize %></td>
+              <td><%= "#{personal_detail.first_name} #{personal_detail.middle_name} #{personal_detail.last_name}" %></td>
+              <td><%= link_to('View', online_application_form_path(applicant.id), :class => 'btn btn-info no-print') %></td>
+            </tr>
+        <% end %>
+    <% end %>
+  </table>
+</div>

@@ -1,0 +1,65 @@
+<%= form_for(@employment_detail) do |f| %>
+  <% if @employment_detail.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@employment_detail.errors.count, "error") %> prohibited this employment_detail from being saved:</h2>
+
+      <ul>
+      <% @employment_detail.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :company_name %><br />
+    <%= f.text_field :company_name %>
+  </div>
+  <div class="field">
+    <%= f.label :work_address %><br />
+    <%= f.text_field :work_address %>
+  </div>
+  <div class="field">
+    <%= f.label :work_phone %><br />
+    <%= f.text_field :work_phone %>
+  </div>
+  <div class="field">
+    <%= f.label :work_industry %><br />
+    <%= f.text_field :work_industry %>
+  </div>
+  <div class="field">
+    <%= f.label :company_type %><br />
+    <%= f.text_field :company_type %>
+  </div>
+  <div class="field">
+    <%= f.label :company_position %><br />
+    <%= f.text_field :company_position %>
+  </div>
+  <div class="field">
+    <%= f.label :position_level %><br />
+    <%= f.text_field :position_level %>
+  </div>
+  <div class="field">
+    <%= f.label :work_job_responsibilities %><br />
+    <%= f.text_field :work_job_responsibilities %>
+  </div>
+  <div class="field">
+    <%= f.label :date_hired %><br />
+    <%= f.date_select :date_hired %>
+  </div>
+  <div class="field">
+    <%= f.label :date_fired %><br />
+    <%= f.date_select :date_fired %>
+  </div>
+  <div class="field">
+    <%= f.label :manager_exp_years %><br />
+    <%= f.text_field :manager_exp_years %>
+  </div>
+  <div class="field">
+    <%= f.label :years_work_experience %><br />
+    <%= f.text_field :years_work_experience %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

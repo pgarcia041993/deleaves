@@ -1,0 +1,43 @@
+<h1>Listing supplemental_details</h1>
+
+<table>
+  <tr>
+    <th>Honors</th>
+    <th>Source of funding</th>
+    <th>Civil status</th>
+    <th>Dual citizenship</th>
+    <th>Notify name</th>
+    <th>Notify relationship</th>
+    <th>Notify mobile</th>
+    <th>Notify email</th>
+    <th>Housing</th>
+    <th>Source of information</th>
+    <th>Objective</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @supplemental_details.each do |supplemental_detail| %>
+  <tr>
+    <td><%= supplemental_detail.honors %></td>
+    <td><%= supplemental_detail.source_of_funding %></td>
+    <td><%= supplemental_detail.civil_status %></td>
+    <td><%= supplemental_detail.dual_citizenship %></td>
+    <td><%= supplemental_detail.notify_name %></td>
+    <td><%= supplemental_detail.notify_relationship %></td>
+    <td><%= supplemental_detail.notify_mobile %></td>
+    <td><%= supplemental_detail.notify_email %></td>
+    <td><%= supplemental_detail.housing %></td>
+    <td><%= supplemental_detail.source_of_information %></td>
+    <td><%= supplemental_detail.objective %></td>
+    <td><%= link_to 'Show', supplemental_detail %></td>
+    <td><%= link_to 'Edit', edit_supplemental_detail_path(supplemental_detail) %></td>
+    <td><%= link_to 'Destroy', supplemental_detail, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Supplemental detail', new_supplemental_detail_path %>

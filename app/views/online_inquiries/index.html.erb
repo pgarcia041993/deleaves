@@ -1,0 +1,15 @@
+<h1>Inquries</h1>
+<table>
+  <tr>
+    <th>First Name</th>
+    <th>Last Name</th>
+    <th>E-Mail Address</th>
+  </tr>
+  <% @inquiries.each do |inquiry| %>
+      <tr>
+        <td><%= inquiry.personal_detail.first_name %></td>
+        <td><%= inquiry.personal_detail.last_name %></td>
+        <td><%= inquiry.personal_detail.email %></td>
+      </tr>
+  <% end %>
+</table>

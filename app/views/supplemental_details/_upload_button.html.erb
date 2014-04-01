@@ -1,0 +1,27 @@
+<% if Requirement.where(online_application_form_id: @supplemental_detail.online_application_form.id, requirement_type_id: requirement_type_id).blank? %>
+    <form action="<%= S3_PARAMS[:form_action] %>" method="post" enctype="multipart/form-data">
+      <input type="hidden" name="key" value="<%= create_key(@supplemental_detail.online_application_form.id, requirement_type_id) %>">
+      <input type="hidden" name="AWSAccessKeyId" value="<%= S3_PARAMS[:access_key] %>">
+      <input type="hidden" name="acl" value="public-read">
+      <input type="hidden" name="success_action_redirect" value="<%= create_success_action_redirect(@supplemental_detail.online_application_form.id, requirement_type_id) %>">
+      <input type="hidden" name="policy" value="<%= create_policy(@supplemental_detail.online_application_form.id, requirement_type_id) %>">
+      <input type="hidden" name="signature" value="<%= create_signature(@supplemental_detail.online_application_form.id, requirement_type_id) %>">
+      <!-- Include any additional input fields here -->
+
+      <input name="file" type="file" id="<%= "requirement#{requirement_type_id}" %>">
+      <br>
+      <input type="submit" value="Upload" class="btn btn-info" id="<%= "submit_requirement#{requirement_type_id}" %>">
+      <script type="text/javascript">
+          $(document).ready(function (e) {
+              $('#<%= "submit_requirement#{requirement_type_id}"%>').click(function (ee) {
+                  if ($('#<%= "requirement#{requirement_type_id}"%>').val().length === 0) {
+                      ee.preventDefault();
+                      alert('Choose a file to upload before attempting to upload it.');
+                  }
+              })
+          })
+      </script>
+    </form>
+<% else %>
+    Submitted
+<% end %>

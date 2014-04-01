@@ -1,0 +1,45 @@
+<h1>Listing education_details</h1>
+
+<table>
+  <tr>
+    <th>Last school name</th>
+    <th>Last school course title</th>
+    <th>Last school degree</th>
+    <th>Last school address</th>
+    <th>Last school commencement date</th>
+    <th>Last school end date</th>
+    <th>Highest school name</th>
+    <th>Highest school course title</th>
+    <th>Highest school degree</th>
+    <th>Highest school address</th>
+    <th>Highest school commencement date</th>
+    <th>Highest school end date</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @education_details.each do |education_detail| %>
+  <tr>
+    <td><%= education_detail.last_school_name %></td>
+    <td><%= education_detail.last_school_course_title %></td>
+    <td><%= education_detail.last_school_degree %></td>
+    <td><%= education_detail.last_school_address %></td>
+    <td><%= education_detail.last_school_commencement_date %></td>
+    <td><%= education_detail.last_school_end_date %></td>
+    <td><%= education_detail.highest_school_name %></td>
+    <td><%= education_detail.highest_school_course_title %></td>
+    <td><%= education_detail.highest_school_degree %></td>
+    <td><%= education_detail.highest_school_address %></td>
+    <td><%= education_detail.highest_school_commencement_date %></td>
+    <td><%= education_detail.highest_school_end_date %></td>
+    <td><%= link_to 'Show', education_detail %></td>
+    <td><%= link_to 'Edit', edit_education_detail_path(education_detail) %></td>
+    <td><%= link_to 'Destroy', education_detail, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Education detail', new_education_detail_path %>

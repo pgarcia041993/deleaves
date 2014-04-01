@@ -1,0 +1,141 @@
+<%= javascript_include_tag 'table2CSV' %>
+
+<script>
+    $(document).ready(function () {
+        $('#page-title').text('Application Registry');
+        $('#result-table').each(function () {
+            var $table = $(this);
+
+            var $button = $("<a download=\"download.csv\" class='btn btn-success'>");
+            $button.text("Download Excel");
+            $button.insertAfter($('#button-marker'));
+
+            $button.click(function (e) {
+                var csv = $table.table2CSV({
+                    delivery: 'value'
+                });
+
+                var downloadLink = document.createElement("a");
+                downloadLink.href = 'data:text/csv;charset=UTF-8,'
+                        + encodeURIComponent(csv);
+                downloadLink.download = "registry.csv";
+
+                document.body.appendChild(downloadLink);
+                downloadLink.click();
+                document.body.removeChild(downloadLink);
+            });
+        });
+    })
+</script>
+
+<br/>
+<div class="alert alert-info row-fluid">
+  <div class="span8">
+    <p style="position: relative; top: 5px;">Deleted Applications Are Not Included</p>
+  </div>
+  <div class="span4">
+    <span id="button-marker"/>
+  </div>
+
+</div>
+
+<table id="result-table" class="table table-striped">
+  <tr>
+    <td>Application ID</td>
+    <td>Date Created</td>
+    <td>Date Updated</td>
+    <td>Status</td>
+    <td>First Name</td>
+    <td>Middle Name</td>
+    <td>Last Name</td>
+    <td>Gender</td>
+    <td>DOB</td>
+    <td>Citizenship</td>
+    <td>Civil Status</td>
+    <td>Medications Taken</td>
+    <td>Address 1</td>
+    <td>Address 2</td>
+    <td>City</td>
+    <td>State/Province</td>
+    <td>Country</td>
+    <td>Post Code</td>
+    <td>E-Mail</td>
+    <td>Home Phone</td>
+    <td>Mobile Phone</td>
+    <td>Company Name</td>
+    <td>Work Address</td>
+    <td>Work Phone</td>
+    <td>Work Industry</td>
+    <td>Company Type</td>
+    <td>Position</td>
+    <td>Position Level</td>
+    <td>Job Responsibilities</td>
+    <td>Employment Start</td>
+    <td>Employment End</td>
+    <td>Years Management Exp</td>
+    <td>Years Work Experience</td>
+    <td>Last School Attended</td>
+    <td>Program</td>
+    <td>Degree</td>
+    <td>Address</td>
+    <td>Date Started</td>
+    <td>Date Ended</td>
+    <td>Highest School Attended</td>
+    <td>Program</td>
+    <td>Degree</td>
+    <td>Address</td>
+    <td>Date Started</td>
+    <td>Date Ended</td>
+  </tr>
+  <% @online_applications.each do |online_application| %>
+      <% if (online_application.personal_detail.present? && online_application.employment_detail.present? && online_application.education_detail.present?) %>
+          <tr>
+            <td><%= online_application.id %></td>
+            <td><%= online_application.created_at.strftime('%m/%d/%Y %H:%M') %></td>
+            <td><%= online_application.updated_at.strftime('%m/%d/%Y %H:%M') %></td>
+            <td><%= OnlineApplicationForm.get_status(online_application.status).capitalize %></td>
+            <td><%= online_application.personal_detail.first_name %></td>
+            <td><%= online_application.personal_detail.middle_name %></td>
+            <td><%= online_application.personal_detail.last_name %></td>
+            <td><%= online_application.personal_detail.gender %></td>
+            <td><%= online_application.personal_detail.dob %></td>
+            <td><%= online_application.personal_detail.citizenship %></td>
+            <td><%= online_application.personal_detail.civil_status %></td>
+            <td><%= online_application.personal_detail.medications %></td>
+            <td><%= online_application.personal_detail.address_1 %></td>
+            <td><%= online_application.personal_detail.address_2 %></td>
+            <td><%= online_application.personal_detail.city %></td>
+            <td><%= online_application.personal_detail.address_state %></td>
+            <td><%= online_application.personal_detail.address_country %></td>
+            <td><%= online_application.personal_detail.address_post_code %></td>
+            <td><%= online_application.personal_detail.email %></td>
+            <td><%= online_application.personal_detail.home_phone %></td>
+            <td><%= online_application.personal_detail.cell_phone %></td>
+            <td><%= online_application.employment_detail.company_name %></td>
+            <td><%= online_application.employment_detail.work_address %></td>
+            <td><%= online_application.employment_detail.work_phone %></td>
+            <td><%= online_application.employment_detail.work_industry %></td>
+            <td><%= online_application.employment_detail.company_type %></td>
+            <td><%= online_application.employment_detail.company_position %></td>
+            <td><%= online_application.employment_detail.position_level %></td>
+            <td><%= online_application.employment_detail.work_job_responsibilities %></td>
+            <td><%= online_application.employment_detail.date_hired %></td>
+            <td><%= online_application.employment_detail.date_fired %></td>
+            <td><%= online_application.employment_detail.manager_exp_years %></td>
+            <td><%= online_application.employment_detail.years_work_experience %></td>
+            <td><%= online_application.education_detail.last_school_name %></td>
+            <td><%= online_application.education_detail.last_school_course_title %></td>
+            <td><%= online_application.education_detail.last_school_degree %></td>
+            <td><%= online_application.education_detail.last_school_address %></td>
+            <td><%= online_application.education_detail.last_school_commencement_date %></td>
+            <td><%= online_application.education_detail.last_school_end_date %></td>
+            <td><%= online_application.education_detail.highest_school_name %></td>
+            <td><%= online_application.education_detail.highest_school_course_title %></td>
+            <td><%= online_application.education_detail.highest_school_degree %></td>
+            <td><%= online_application.education_detail.highest_school_address %></td>
+            <td><%= online_application.education_detail.highest_school_commencement_date %></td>
+            <td><%= online_application.education_detail.highest_school_end_date %></td>
+          </tr>
+      <% end %>
+  <% end %>
+</table>

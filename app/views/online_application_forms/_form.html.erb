@@ -1,0 +1,37 @@
+<%= form_for(@online_application_form) do |f| %>
+  <% if @online_application_form.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@online_application_form.errors.count, "error") %> prohibited this online_application_form from being saved:</h2>
+
+      <ul>
+      <% @online_application_form.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :user_id %><br />
+    <%= f.number_field :user_id %>
+  </div>
+  <div class="field">
+    <%= f.label :personal_detail_id %><br />
+    <%= f.number_field :personal_detail_id %>
+  </div>
+  <div class="field">
+    <%= f.label :employment_detail_id %><br />
+    <%= f.number_field :employment_detail_id %>
+  </div>
+  <div class="field">
+    <%= f.label :education_detail_id %><br />
+    <%= f.number_field :education_detail_id %>
+  </div>
+  <div class="field">
+    <%= f.label :supporting_document_id %><br />
+    <%= f.number_field :supporting_document_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,65 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Company name:</b>
+  <%= @employment_detail.company_name %>
+</p>
+
+<p>
+  <b>Work address:</b>
+  <%= @employment_detail.work_address %>
+</p>
+
+<p>
+  <b>Work phone:</b>
+  <%= @employment_detail.work_phone %>
+</p>
+
+<p>
+  <b>Work industry:</b>
+  <%= @employment_detail.work_industry %>
+</p>
+
+<p>
+  <b>Company type:</b>
+  <%= @employment_detail.company_type %>
+</p>
+
+<p>
+  <b>Company position:</b>
+  <%= @employment_detail.company_position %>
+</p>
+
+<p>
+  <b>Position level:</b>
+  <%= @employment_detail.position_level %>
+</p>
+
+<p>
+  <b>Work job responsibilities:</b>
+  <%= @employment_detail.work_job_responsibilities %>
+</p>
+
+<p>
+  <b>Date hired:</b>
+  <%= @employment_detail.date_hired %>
+</p>
+
+<p>
+  <b>Date fired:</b>
+  <%= @employment_detail.date_fired %>
+</p>
+
+<p>
+  <b>Manager exp years:</b>
+  <%= @employment_detail.manager_exp_years %>
+</p>
+
+<p>
+  <b>Years work experience:</b>
+  <%= @employment_detail.years_work_experience %>
+</p>
+
+
+<%= link_to 'Edit', edit_employment_detail_path(@employment_detail) %> |
+<%= link_to 'Back', employment_details_path %>

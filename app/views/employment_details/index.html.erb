@@ -1,0 +1,45 @@
+<h1>Listing employment_details</h1>
+
+<table>
+  <tr>
+    <th>Company name</th>
+    <th>Work address</th>
+    <th>Work phone</th>
+    <th>Work industry</th>
+    <th>Company type</th>
+    <th>Company position</th>
+    <th>Position level</th>
+    <th>Work job responsibilities</th>
+    <th>Date hired</th>
+    <th>Date fired</th>
+    <th>Manager exp years</th>
+    <th>Years work experience</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @employment_details.each do |employment_detail| %>
+  <tr>
+    <td><%= employment_detail.company_name %></td>
+    <td><%= employment_detail.work_address %></td>
+    <td><%= employment_detail.work_phone %></td>
+    <td><%= employment_detail.work_industry %></td>
+    <td><%= employment_detail.company_type %></td>
+    <td><%= employment_detail.company_position %></td>
+    <td><%= employment_detail.position_level %></td>
+    <td><%= employment_detail.work_job_responsibilities %></td>
+    <td><%= employment_detail.date_hired %></td>
+    <td><%= employment_detail.date_fired %></td>
+    <td><%= employment_detail.manager_exp_years %></td>
+    <td><%= employment_detail.years_work_experience %></td>
+    <td><%= link_to 'Show', employment_detail %></td>
+    <td><%= link_to 'Edit', edit_employment_detail_path(employment_detail) %></td>
+    <td><%= link_to 'Destroy', employment_detail, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Employment detail', new_employment_detail_path %>

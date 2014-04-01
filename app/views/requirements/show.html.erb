@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Online application form:</b>
+  <%= @requirement.online_application_form_id %>
+</p>
+
+<p>
+  <b>Requirement type:</b>
+  <%= @requirement.requirement_type_id %>
+</p>
+
+<p>
+  <b>File name:</b>
+  <%= link_to "https://s3-ap-northeast-1.amazonaws.com/online-admissions/#{@requirement.file_name}", "https://s3-ap-northeast-1.amazonaws.com/online-admissions/#{@requirement.file_name}"%>
+</p>
+
+
+<%= link_to 'Edit', edit_requirement_path(@requirement) %> |
+<%= link_to 'Back', requirements_path %>

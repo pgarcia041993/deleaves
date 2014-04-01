@@ -1,0 +1,61 @@
+<p id="notice"><%= notice %></p>
+
+<% if @online_application_form.supplemental_detail.present? %>
+
+<p>
+  <b>Honors:</b>
+  <%= @online_application_form.supplemental_detail.try(:honors) %>
+</p>
+
+<p>
+  <b>Source of funding:</b>
+  <%= @online_application_form.supplemental_detail.try(:source_of_funding) %>
+</p>
+
+<p>
+  <b>Civil status:</b>
+  <%= @online_application_form.supplemental_detail.try(:civil_status) %>
+</p>
+
+<p>
+  <b>Dual citizenship:</b>
+  <%= @online_application_form.supplemental_detail.try(:dual_citizenship) %>
+</p>
+
+<p>
+  <b>Notify name:</b>
+  <%= @online_application_form.supplemental_detail.try(:notify_name) %>
+</p>
+
+<p>
+  <b>Notify relationship:</b>
+  <%= @online_application_form.supplemental_detail.try(:notify_relationship) %>
+</p>
+
+<p>
+  <b>Notify mobile:</b>
+  <%= @online_application_form.supplemental_detail.try(:notify_mobile) %>
+</p>
+
+<p>
+  <b>Notify email:</b>
+  <%= @online_application_form.supplemental_detail.try(:notify_email) %>
+</p>
+
+<p>
+  <b>Housing:</b>
+  <%= @online_application_form.supplemental_detail.try(:housing) %>
+</p>
+
+<p>
+  <b>Source of information:</b>
+  <%= @online_application_form.supplemental_detail.try(:source_of_information) %>
+</p>
+
+<p>
+  <b>Objective:</b>
+  <%= @online_application_form.supplemental_detail.try(:objective) %>
+</p>
+    <% else %>
+    <p>No supplemental details provided by applicant.</p>
+<% end %>

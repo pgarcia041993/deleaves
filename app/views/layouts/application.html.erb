@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" type="text/css" href="/assets/application.css"/>
+  <%= stylesheet_link_tag :application %>
+  <%= javascript_include_tag :application %>
+  <title>Online Admissions</title>
+</head>
+<body style="background-color: #0D112E;">
+<div class="admissions-container">
+  <div class="aim-brand">
+    <%= image_tag 'aim_brand.png' %>
+  </div>
+
+  <div class="admissions-title">
+    <div class="row">
+      <div class="span6" style="height: 43px;">
+        <h1 class="admissions-header" id="page-title">Loading...</h1>
+      </div>
+      <div class="span4" style="position: relative; top: 6px;">
+        <% if current_user.present? %>
+            <%= link_to 'Sign Out', destroy_user_session_path, :method => 'delete', :class => 'btn btn-warning no-print' %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="potential-errors">
+    <% if notice.present? %>
+        <p class="alert alert-info"><%= notice %></p>
+    <% end %>
+    <% if alert.present? %> <p class="alert"><%= alert %></p>
+    <% end %>
+  </div>
+  <div class="content-container">
+
+    <%= yield %>
+
+  </div>
+</div>
+<div class="footer-online-admissions">
+  <p>Copyright &copy; 2013 Asian Institute of Management</p>
+
+  <p>Best viewed in IE9 or above, Mozilla Firefox, Safari or Google Chrome</p>
+</div>
+
+</body>
+</html>
+</body>
+</html>

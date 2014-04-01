@@ -1,0 +1,27 @@
+<table class="table table-striped" style="width: 500px;">
+  <tr>
+    <th>Requirement</th>
+    <th>Status/Download</th>
+    <th>Date Submitted</th>
+  </tr>
+  <% RequirementType.all.each do |requirement_type| %>
+      <tr>
+        <td><%= requirement_type.name %></td>
+        <% requirement = Requirement.where(requirement_type_id: requirement_type.id, online_application_form_id: @online_application_form.id).last %>
+        <td>
+          <% if requirement.present? %>
+            <%= link_to 'Download', "#{S3_PARAMS[:form_action]}#{requirement.file_name}" , :class => 'btn btn-info' %>
+          <% else %>
+            Not Submitted
+          <% end %>
+        </td>
+        <td>
+          <% if requirement.present? %>
+              <%= requirement.created_at.strftime('%d/%m/%Y %H:%M %P') %>
+          <% else %>
+              Not Submitted
+          <% end %>
+        </td>
+      </tr>
+  <% end %>
+</table>

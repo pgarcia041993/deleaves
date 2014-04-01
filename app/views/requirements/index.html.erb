@@ -1,0 +1,27 @@
+<h1>Listing requirements</h1>
+
+<table>
+  <tr>
+    <th>Online application form</th>
+    <th>Requirement type</th>
+    <th>File name</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @requirements.each do |requirement| %>
+  <tr>
+    <td><%= requirement.online_application_form_id %></td>
+    <td><%= requirement.requirement_type_id %></td>
+    <td><%= link_to "https://s3-ap-northeast-1.amazonaws.com/online-admissions/#{requirement.file_name}", "https://s3-ap-northeast-1.amazonaws.com/online-admissions/#{requirement.file_name}" %></td>
+    <td><%= link_to 'Show', requirement %></td>
+    <td><%= link_to 'Edit', edit_requirement_path(requirement) %></td>
+    <td><%= link_to 'Destroy', requirement, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Requirement', new_requirement_path %>

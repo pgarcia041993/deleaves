@@ -1,0 +1,61 @@
+<%= form_for(@supplemental_detail) do |f| %>
+  <% if @supplemental_detail.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@supplemental_detail.errors.count, "error") %> prohibited this supplemental_detail from being saved:</h2>
+
+      <ul>
+      <% @supplemental_detail.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :honors %><br />
+    <%= f.text_field :honors %>
+  </div>
+  <div class="field">
+    <%= f.label :source_of_funding %><br />
+    <%= f.text_field :source_of_funding %>
+  </div>
+  <div class="field">
+    <%= f.label :civil_status %><br />
+    <%= f.text_field :civil_status %>
+  </div>
+  <div class="field">
+    <%= f.label :dual_citizenship %><br />
+    <%= f.text_field :dual_citizenship %>
+  </div>
+  <div class="field">
+    <%= f.label :notify_name %><br />
+    <%= f.text_field :notify_name %>
+  </div>
+  <div class="field">
+    <%= f.label :notify_relationship %><br />
+    <%= f.text_field :notify_relationship %>
+  </div>
+  <div class="field">
+    <%= f.label :notify_mobile %><br />
+    <%= f.text_field :notify_mobile %>
+  </div>
+  <div class="field">
+    <%= f.label :notify_email %><br />
+    <%= f.text_field :notify_email %>
+  </div>
+  <div class="field">
+    <%= f.label :housing %><br />
+    <%= f.text_field :housing %>
+  </div>
+  <div class="field">
+    <%= f.label :source_of_information %><br />
+    <%= f.text_field :source_of_information %>
+  </div>
+  <div class="field">
+    <%= f.label :objective %><br />
+    <%= f.text_field :objective %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

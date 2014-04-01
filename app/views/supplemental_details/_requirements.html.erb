@@ -1,0 +1,24 @@
+<div style="width: 380px; border-radius: 5px; background: #001452; color: white; padding: 5px; margin-left: 10px; float: left;">
+  <h3>Submit Your Requirements</h3>
+
+  <p>Kindly submit the necessary requirements below:</p>
+  <table>
+    <tr>
+      <th>
+        <td></td>
+        <td></td>
+      </th>
+    </tr>
+    <% RequirementType.all.each do |requirement_type| %>
+        <tr>
+          <td>
+            <%= requirement_type.name %>
+          </td>
+          <td>
+            <%= render :partial => 'upload_button', :locals => {:requirement_type_id => requirement_type.id} %>
+          </td>
+        </tr>
+    <% end %>
+  </table>
+
+</div>

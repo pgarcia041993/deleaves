@@ -1,0 +1,1 @@
+S3_PARAMS = YAML.load_file("#{Rails.root}/config/aws_credentials.yml")[Rails.env].symbolize_keys!

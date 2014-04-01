@@ -1,0 +1,29 @@
+<TABLE width="750" border="1" cellpadding="0" cellspacing="0" style="font-family: arial,sans-serif;
+        font-size:13px;
+        border-width: 1px;
+        border-color: #000;
+        border-collapse: collapse;">
+  <tr>
+    <td style="width:400px; font-weight:bold; background:#989898;" colspan="6">EMPLOYMENT INFORMATION</td>
+  </tr>
+  <tr>
+    <td colspan="4" style="font-weight:bold;">Curent / Previous (will be triggered by the info in the duration field)
+    </td>
+  </tr>
+  <tr>
+    <td width="160" valign="top" height="34" style="font-weight:bold;">Company: <p class="form-detail"><%= @online_application_form.employment_detail.company_name %></p></td>
+    <td width="204" valign="top" style="font-weight:bold;">Industry: <p class="form-detail"><%= @online_application_form.employment_detail.work_industry %></p></td>
+    <td colspan="2" valign="top" style="font-weight:bold;"><div class="shorten" style="width: 300px; text-wrap: normal">Address: <p class="form-detail"><%= @online_application_form.employment_detail.work_address %></p></div></td>
+  </tr>
+  <tr>
+    <td height="39" valign="top" style="font-weight:bold;">Position: <p class="form-detail"><%= @online_application_form.employment_detail.company_position %></p></td>
+    <td valign="top" style="font-weight:bold;">Duration: <p class="form-detail"><%= @online_application_form.employment_detail.date_hired %> <%= @online_application_form.employment_detail.date_fired %></p></td>
+    <td width="233" valign="top" style="font-weight:bold;">Total Managerial
+      Experience: <p class="form-detail"><%= @online_application_form.employment_detail.manager_exp_years %></p></td>
+    <td width="243" valign="top" style="font-weight:bold;">Total Work
+      Experience: <p class="form-detail"><%= @online_application_form.employment_detail.years_work_experience %></p></td>
+  </tr>
+  <tr>
+    <td colspan="4">&nbsp;</td>
+  </tr>
+</table>

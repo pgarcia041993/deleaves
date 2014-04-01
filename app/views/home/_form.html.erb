@@ -1,0 +1,48 @@
+<div id="online-admissions-login">
+  <form class="form-horizontal" action="/admissions" method="post">
+    <fieldset>
+      <!-- Text input-->
+      <div class="control-group">
+        <label class="control-label" for="email">E-Mail Address</label>
+
+        <div class="controls">
+          <input id="email" name="email" type="text" placeholder="Your e-mail address" class="input-xlarge">
+        </div>
+      </div>
+
+      <!-- Text input-->
+      <div class="control-group">
+        <label class="control-label" for="dob">Date of Birth</label>
+
+        <div class="controls">
+          <div>
+            <input id="dob" name="dob" type="text" placeholder="Your date of birth" class="input-xlarge date-pick dob">
+          </div>
+          <div>
+            Please enter your date of birth in DD/MM/YYYY format. (e.g. '01/11/2014' refers to November 1, 2014)
+          </div>
+        </div>
+      </div>
+
+      <!-- Button -->
+      <div class="control-group">
+        <label class="control-label" for="submit"></label>
+
+        <div class="controls">
+          <button id="begin-app-submit" name="submit" class="btn btn-primary">Begin/Continue Application</button>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <label class="control-label" for="show-instructions"></label>
+
+        <div id="online-application-instructions-toggle" class="controls">
+          <a id="show-instructions" data-toggle="modal" href="#application-instructions" class="btn btn-warning">
+            Online Application Instructions
+          </a>
+        </div>
+      </div>
+
+    </fieldset>
+  </form>
+</div>

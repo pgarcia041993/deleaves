@@ -1,0 +1,18 @@
+<div class="admissions-summary">
+  <table class="table">
+    <tr>
+      <th>Sequence</th>
+      <th>Name</th>
+      <th>Submitted</th>
+      <th>&nbsp;</th>
+    </tr>
+    <% applications.each do |application| %>
+    <tr>
+      <td><%= application.id %></td>
+      <td><%= application.personal_detail.first_name %> <%= application.personal_detail.middle_name %> <%= application.personal_detail.last_name %></td>
+      <td><%= application.created_at %></td>
+      <td><%= link_to 'View', online_application_form_path(application), :class => 'btn btn-info' %></td>
+    </tr>
+    <% end %>
+  </table>
+</div>

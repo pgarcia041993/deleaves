@@ -1,0 +1,23 @@
+<h1>Listing requirement_types</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @requirement_types.each do |requirement_type| %>
+  <tr>
+    <td><%= requirement_type.name %></td>
+    <td><%= link_to 'Show', requirement_type %></td>
+    <td><%= link_to 'Edit', edit_requirement_type_path(requirement_type) %></td>
+    <td><%= link_to 'Destroy', requirement_type, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Requirement type', new_requirement_type_path %>

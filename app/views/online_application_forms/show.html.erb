@@ -1,0 +1,51 @@
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#page-title').text("<%= "#{@online_application_form.personal_detail.last_name}, #{@online_application_form.personal_detail.first_name} #{@online_application_form.personal_detail.middle_name}" %>");
+    })
+</script>
+
+<p id="notice"><%= notice %></p>
+
+<div style="padding-bottom: 10px;" class="row row-fluid no-print">
+  <div class="span9">
+  </div>
+
+  <div class="span3">
+    <%= link_to 'Return To Dashboard', '/dashboard', :class => 'btn' %>
+  </div>
+</div>
+
+<hr/>
+<div>
+  <form method="get" action="/online_application_status/update_status/<%= @online_application_form.id %>">
+    <%= render :partial => 'dashboard/status' %>
+  </form>
+</div>
+
+
+<div class="tabbable"> <!-- Only required for left/right tabs -->
+  <ul class="nav nav-tabs">
+    <li class="active"><a href="#tab1" data-toggle="tab">Basic Information</a></li>
+    <li><a href="#tab2" data-toggle="tab">Supplemental Information</a></li>
+    <li><a href="#tab3" data-toggle="tab">Requirements</a></li>
+
+  </ul>
+  <div class="tab-content">
+    <div class="tab-pane active" id="tab1">
+      <div id="print-details">
+        <%= render :partial => 'print' %>
+      </div>
+    </div>
+    <div class="tab-pane" id="tab2">
+      <div id="supplemental-details">
+        <%= render :partial => 'supplemental_detail' %>
+      </div>
+    </div>
+    <div class="tab-pane" id="tab3">
+      <div id="requirements">
+        <%= render :partial => 'requirements' %>
+      </div>
+    </div>
+  </div>
+</div>
+
