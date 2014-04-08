@@ -20,11 +20,18 @@
   <%= @student.learning_team %>
 </p>
 
-<p>
-  <b>Grade:</b>
-  <%= @student.grade_id %>
-</p>
-
+<table>
+  <tr>
+    <th>Subject</th>
+    <th>Grade</th>
+  </tr>
+  <% @grades.each do |grade|%>
+  <tr>
+    <td><%= grade.temporary_subject_code %></td>
+    <td><%= grade.grade %></td>
+  </tr>
+  <% end %>
+</table>
 
 <%= link_to 'Edit', edit_student_path(@student) %> |
 <%= link_to 'Back', students_path %>

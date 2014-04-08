@@ -34,16 +34,17 @@ CSV.foreach("#{Rails.root}/#{ARGV[0]}") do |row|
 
 end
 
-#puts headers
-#puts students
-#puts names
-
-
 students.each_pair do |student, scores|
-  student_search
+  student_search = Student.where(number: student.keys.first).first
+  if student_search.blank?
+    student_search = Student.create!(number: student.keys.first, name: student[student.keys.first])
+  end
 
-
+  puts student_search
   scores.each_pair do |subject, score|
+    Grade.create!(student_id: student_search.id, temporary_subject_code: subject, grade: score)
     puts "#{student.keys.first} : #{student[student.keys.first]} : #{subject} : #{score}"
   end
 end
+
+puts "Done"
