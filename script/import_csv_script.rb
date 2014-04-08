@@ -39,7 +39,7 @@ end
 #puts names
 
 
-students.each_pair do |student, scores|h
+students.each_pair do |student, scores|
   student_search
 
 
