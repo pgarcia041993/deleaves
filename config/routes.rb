@@ -1,4 +1,10 @@
 OnlineApplication::Application.routes.draw do
+  resources :grades
+
+
+  resources :students
+
+
   resources :requirements
 
 
@@ -86,5 +92,5 @@ OnlineApplication::Application.routes.draw do
   get '/excel/export' => 'dashboard#excel'
   get 'submit_requirement' => 'requirements#submit_requirement'
   post 'supplement/(:id)' => 'supplemental_details#update'
-  root :to => 'home#index'
+  root :to => 'dashboard#index'
 end
