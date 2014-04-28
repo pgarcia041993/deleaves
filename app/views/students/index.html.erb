@@ -1,7 +1,31 @@
+<link rel="stylesheet" href="/assets/blue/style.css" type="text/css" id="" media="print, projection, screen">
+<!--<link rel="stylesheet" href="/assets/navpager.css" type="text/css">-->
+<link rel="stylesheet" href="/assets/jquery.tablesorter.pager.css" type="text/css">
+
+<script type="text/javascript" src="/assets/jquery-latest.js"></script>
+<script type="text/javascript" src="/assets/jquery.tablesorter.js"></script>
+<script type="text/javascript" src="/assets/jquery.tablesorter.pager.js"></script>
+
+<!--<script type='text/javascript' src='/assets/navpaging.js'></script>-->
+<script type="text/javascript" id="js">$(document).ready(function() {
+    // call the tablesorter plugin
+    $("table").tablesorter({
+        // change the multi sort key from the default shift to alt button
+        sortMultiSortKey: 'altKey'
+    });
+});
+</script>
+<script type="text/javascript">
+    $(function() {
+        $("table")
+
+                .tablesorterPager({container: $("#pager")});
+    });
+</script>
 <h1>Listing students</h1>
 
-<table>
-  <tr>
+<table class="tablesorter" id="TheTable">
+  <thead>
     <th>Number</th>
     <th>Name</th>
     <th>Cohort</th>
@@ -10,7 +34,7 @@
     <th></th>
     <th></th>
     <th></th>
-  </tr>
+  </thead>
 
 <% @students.each do |student| %>
   <tr>
@@ -26,6 +50,24 @@
 <% end %>
 </table>
 
-<br />
+<div id="pager" class="pager" style="padding-top: 30px; margin-left: 220px; " >
+  <form>
+    <img src="/assets/addons/first.png" class="first">
+    <img src="/assets/addons/prev.png" class="prev">
+    <input type="text" class="pagedisplay">
+    <img src="/assets/addons/next.png" class="next">
+    <img src="/assets/addons/last.png" class="last">
+    <select class="pagesize" style="width: 80px;">
+      <option selected="selected" value="15">15</option>
+      <option value="10">10</option>
+      <!--<option value="30">30</option>-->
+      <!--<option value="40">40</option>-->
+    </select>
+  </form>
+  <%= link_to 'New Student', new_student_path %>
+</div>
 
-<%= link_to 'New Student', new_student_path %>
+
+<div style="padding-top: 30px;">
+
+</div>
