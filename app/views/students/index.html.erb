@@ -24,28 +24,34 @@
 </script>
 <h1>Listing students</h1>
 
-<table class="tablesorter" id="TheTable">
+<table class="tablesorter" id="TheTable" border="1">
   <thead>
     <th>Number</th>
     <th>Name</th>
     <th>Cohort</th>
     <th>Learning team</th>
     <th>GPA</th>
-    <th></th>
-    <th></th>
-    <th></th>
+    <th>Rank</th>
+    <th>Fail</th>
+    <th>Scholar</th>
+    <!--<th></th>-->
+    <!--<th></th>-->
+    <!--<th></th>-->
   </thead>
 
 <% @students.each do |student| %>
   <tr>
     <td><%= student.number %></td>
-    <td><%= student.name %></td>
+    <td><%=  link_to student.name, student,:target => 'new'     %></td>
     <td><%= student.cohort %></td>
     <td><%= student.learning_team %></td>
-    <td><%= number_with_precision(student.gpa, :precison => 2) %></td>
-    <td><%= link_to 'Show', student %></td>
-    <td><%= link_to 'Edit', edit_student_path(student) %></td>
-    <td><%= link_to 'Destroy', student, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td><%= student.gpa %></td>
+    <td><%= student.rank %></td>
+    <td><%= student.fail %></td>
+    <td><%= student.scholar %></td>
+    <!--<td><%= link_to 'Show', student %></    td>-->
+    <!--<td><%= link_to 'Edit', edit_student_path(student) %></td>-->
+    <!--<td>//<%= link_to 'Destroy', student, method: :delete, data: { confirm: 'Are you sure?' } %></td>-->
   </tr>
 <% end %>
 </table>
@@ -64,7 +70,8 @@
       <!--<option value="40">40</option>-->
     </select>
   </form>
-  <%= link_to 'New Student', new_student_path %>
+  <!--<%= link_to 'New Student', new_student_path %>-->
+  <a href="../" >Back</a>
 </div>
 
 
