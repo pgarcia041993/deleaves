@@ -11,13 +11,74 @@ $(document).ready(function (e) {
     $('#end-date-label').hide();
     $('#highest-degree-obtained').hide();
 
+    //begin patricks script
+    window.onload = compute();
+
+    $('.grade').focusout(function() {
+
+        var overallgrade = 0;
+        //FIXED THIS **************************************************************************** -1
+        var count = $('#count').val() - 1;
+        if($('.grade').val() > 0 || $('.grade').val() < 99 || $('.grade').val().match(/^[0-9]+$/)){
+            for(var i = 1; i <= count/*put count here*/; i++){
+                var grade = $('.grade-new' + i).val() === '' ? $('.grade-orig' + i).val() : $('.grade-new' + i).val();
+                if($('.grade-orig' + i).val() === 'Pass' || $('.grade-orig' + i).val() === 'Fail'){
+                    $('.grade-new' + i).val() === '';
+                }
+                parseFloat($('.grade-new' + i).val(grade));
+                overallgrade += parseFloat(grade);
+            }
+            //get count to get the average grade
+            var overallgrade2 = overallgrade / count;
+
+            parseFloat($('#final-new').val(overallgrade2));
+        }
+        else{
+            alert('invalid input');}
+    });
+
+    $('.grade').change(function() {
+
+        var overallgrade = 0;
+        //FIXED THIS **************************************************************************** -1
+        var count = $('#count').val() - 1;
+        if($('.grade').val() > 0 && $('.grade').val() < 99 || $('.grade').val().match(/^[0-9]+$/)){
+            for(var i = 1; i <= count; i++){
+                var grade = $('.grade-new' + i).val() === '' ? $('.grade-orig' + i).val() : $('.grade-new' + i).val();
+                if($('.grade-orig' + i).val() === 'Pass' || $('.grade-orig' + i).val() === 'Fail'){
+                    $('.grade-new' + i).val() === '';
+                }
+                parseFloat($('.grade-new' + i).val(grade));
+                overallgrade += parseFloat(grade);
+            }
+            //get count to get the average grade
+            var overallgrade2 = overallgrade / count;
+            parseFloat($('#final-new').val(overallgrade2));
+        }
+        else{
+            alert('invalid input');}
+    });
+
+    function compute() {
+        //FIXED THIS **************************************************************************** -1
+        var count = $('#count').val() - 1;
+        var origgrade = 0;
+        for(var i = 1; i <= count; i++){
+            var grade = $('.grade-orig' + i).val();
+            origgrade += parseInt(grade);
+        var total = origgrade / count;
+
+        $('#final-orig').val(total);
+        }
+    }
+    //end patricks script
+
     $('#begin-app-submit').click(function(e){
        if ($('#email').val().search('test') != -1) {
            e.preventDefault();
            alert('Kindly contact ICT\'s Quality Assurance department to request for assistance during testing');
        }
     })
-
 
     $('.date-pick').datepicker();
 
