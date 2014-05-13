@@ -28,7 +28,7 @@ CSV.foreach("#{Rails.root}/#{ARGV[0]}") do |row|
     headers.each_pair do |k, v|
       grades.merge!(v => row[k])
     end
-    students.merge!({row[0] => {name: row[1], cohort: row[2], term: row[3], learning_team: row[4], gpa: row[5], rank: row[6], fail: row[7], scholar: row[8]}} => grades)
+    students.merge!({row[0] => {name: row[1], cohort: row[2], term: row[3], lt: row[4], gpa: row[5], rank: row[6], fail: row[7], scholar: row[8]}} => grades)
     #names.merge!(row[1] => grades)
 
 

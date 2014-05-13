@@ -27,13 +27,13 @@
 <table class="tablesorter" id="TheTable" border="1">
   <thead>
     <th>Student Number</th>
-    <th>Name</th>
-    <th>Cohort</th>
-    <th>Learning team</th>
-    <th>GPA</th>
-    <th>Rank</th>
-    <th>Fail</th>
-    <th>Scholar</th>
+    <th>Name </th>
+    <!--<th>Cohort</th>-->
+    <th>Learning Team</th>
+    <th>GPA </th>
+    <th>Rank </th>
+    <th>Fail </th>
+    <th>Scholar </th>
     <!--<th></th>-->
     <!--<th></th>-->
     <!--<th></th>-->
@@ -43,7 +43,7 @@
   <tr>
     <td><%= student.number %></td>
     <td><%=  link_to student.name, student,:target => 'new'     %></td>
-    <td><%= student.cohort %></td>
+    <!--<td><%= student.cohort %></td>-->
     <td><%= student.learning_team %></td>
     <td><%= student.gpa %></td>
     <td><%= student.rank %></td>
