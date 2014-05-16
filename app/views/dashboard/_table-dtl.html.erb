@@ -1,27 +1,67 @@
+<link rel="stylesheet" href="/assets/blue/style.css" type="text/css" id="" media="print, projection, screen">
+<!--<link rel="stylesheet" href="/assets/navpager.css" type="text/css">-->
+<link rel="stylesheet" href="/assets/jquery.tablesorter.pager.css" type="text/css">
+
+<script type="text/javascript" src="/assets/jquery-latest.js"></script>
+<script type="text/javascript" src="/assets/jquery.tablesorter.js"></script>
+<script type="text/javascript" src="/assets/jquery.tablesorter.pager.js"></script>
+<script type="text/javascript" id="js">$(document).ready(function() {
+    // call the tablesorter plugin
+    $("table").tablesorter({
+        // change the multi sort key from the default shift to alt button
+        sortMultiSortKey: 'altKey'
+    });
+});
+</script>
+<script type="text/javascript">
+    $(function() {
+        $("table")
+
+                .tablesorterPager({container: $("#pager")});
+    });
+</script>
 <div id="applicant-detail">
-  <table class="applicant-dtl-main">
-    <tr>
-      <th></th>
-      <th>STATUS</th>
-      <th>Applicant Name</th>
-      <th>Actions</th>
-    </tr>
+  <table class="tablesorter" id="TheTable">
+    <thead>
+    <th>Student Number</th>
+    <th>Name </th>
+    <!--<th>Cohort</th>-->
+    <th>Learning Team</th>
+    <th>GPA </th>
+    <th>Rank </th>
+    <th>Fail </th>
+    <th>Scholar </th>
+    </thead>
     <% @applicants.each do |applicant| %>
-        <% personal_detail = applicant.personal_detail %>
-        <% if personal_detail.present? %>
+        <% if applicant.present? %>
             <tr>
-              <% if applicant.read_status == false %>
-                  <td>
-                    <i class="icon-search"></i>
-                  </td>
-              <% else %>
-                  <td></td>
-              <% end %>
-              <td><%= OnlineApplicationForm.get_status(applicant.status).capitalize %></td>
-              <td><%= "#{personal_detail.first_name} #{personal_detail.middle_name} #{personal_detail.last_name}" %></td>
-              <td><%= link_to('View', online_application_form_path(applicant.id), :class => 'btn btn-info no-print') %></td>
+              <td><%= applicant.number %></td>
+              <td><%=  link_to applicant.name, applicant,:target => 'new'     %></td>
+              <!--<td><%= applicant.cohort %></td>-->
+              <td><%= applicant.learning_team %></td>
+              <td><%= applicant.gpa %></td>
+              <td><%= applicant.rank %></td>
+              <td><%= applicant.fail %></td>
+              <td><%= applicant.scholar %></td>
+
             </tr>
         <% end %>
     <% end %>
   </table>
+  <div id="pager" class="pager" style="padding-top: 30px; margin-left: 220px; " >
+    <form>
+      <img src="/assets/addons/first.png" class="first">
+      <img src="/assets/addons/prev.png" class="prev">
+      <input type="text" class="pagedisplay">
+      <img src="/assets/addons/next.png" class="next">
+      <img src="/assets/addons/last.png" class="last">
+      <select class="pagesize" style="width: 80px;">
+        <option selected="selected" value="15">15</option>
+        <option value="10">10</option>
+        <!--<option value="30">30</option>-->
+        <!--<option value="40">40</option>-->
+      </select>
+    </form>
+
+  </div>
 </div>

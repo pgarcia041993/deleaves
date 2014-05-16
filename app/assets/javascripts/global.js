@@ -4,7 +4,7 @@ $(document).ready(function (e) {
     $('li#step-1 a').addClass('highlighted');
     $('div#page-2').hide();
     $('div#page-3').hide();
-    $('#page-title').text("Personal Particulars");
+//    $('#page-title').text("Personal Particulars");
     $('.pagination').hide();
     $('#page-title').append($('.pagination'));
     $('#termination-date-form').hide();
