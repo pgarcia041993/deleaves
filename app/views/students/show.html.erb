@@ -38,60 +38,27 @@
           <td><%= grade.temporary_subject_code %></td>
           <% if (grade.temporary_subject_code.present? and grade.grade != 'Pass') or (grade.temporary_subject_code.present? and grade.grade != 'Fail') %>
               <% if grade.temporary_subject_code == 'LOB' %>
-                  <% $subject = 1.5 %>
-                  <% if grade.temporary_subject_code == 'LOB' and grade.grade.present? %>
-                      <% $divide = $divide + 1.5 %>
-                  <% end %>
-              <% elsif grade.temporary_subject_code == 'OM' and grade.grade.present? %>
-                  <% $subject = 2 %>
-                  <% if grade.temporary_subject_code == 'OM' and grade.grade.present? %>
-                      <% $divide = $divide + 2 %>
-                  <% end %>
-              <% elsif grade.temporary_subject_code == 'MC' and grade.grade.present? %>
-                  <% $subject = 1.5 %>
-                  <% if grade.temporary_subject_code == 'MC' and grade.grade.present? %>
-                      <% $divide = $divide + 1.5 %>
-                  <% end %>
-              <% elsif grade.temporary_subject_code == 'FM1' and grade.grade.present? %>
-                  <% $subject = 1 %>
-                  <% if grade.temporary_subject_code == 'FM1' and grade.grade.present? %>
-                      <% $divide = $divide + 1 %>
-                  <% end %>
-              <% elsif grade.temporary_subject_code == 'QA' and grade.grade.present? %>
-                  <% $subject = 2 %>
-                  <% if grade.temporary_subject_code == 'QA' and grade.grade.present? %>
-                      <% $divide = $divide + 2 %>
-                  <% end %>
-              <% elsif grade.temporary_subject_code == 'ECON' and grade.grade.present? %>
-                  <% $subject = 2 %>
-                  <% if grade.temporary_subject_code == 'ECON' and grade.grade.present? %>
-                      <% $divide = $divide + 2 %>
-                  <% end %>
-              <% elsif grade.temporary_subject_code == 'MCP' and grade.grade.present? %>
-                  <% $subject = 2 %>
-                  <% if grade.temporary_subject_code == 'MCP' and grade.grade.present? %>
-                      <% $divide = $divide + 2 %>
-                  <% end %>
-              <% elsif grade.temporary_subject_code == 'MM' and grade.grade.present? %>
-                  <% $subject = 2.5 %>
-                  <% if grade.temporary_subject_code == 'MM' and grade.grade.present? %>
-                      <% $divide = $divide + 2.5 %>
-                  <% end %>
-              <% elsif grade.temporary_subject_code == 'MPO' and grade.grade.present? %>
-                  <% $subject = 2 %>
-                  <% if grade.temporary_subject_code == 'MPO' and grade.grade.present? %>
-                      <% $divide = $divide + 2 %>
-                  <% end %>
-              <% elsif grade.temporary_subject_code == 'BIZNET' and grade.grade.present? %>
-                  <% $subject = 0 %>
-                  <% if grade.temporary_subject_code == 'BIZNET' and grade.grade.present? %>
-                      <% $divide = $divide + 0 %>
-                  <% end %>
-              <% elsif grade.temporary_subject_code == 'MOL' and grade.grade.present? %>
-                  <% $subject = 0 %>
-                  <% if grade.temporary_subject_code == 'MOL' and grade.grade.present? %>
-                      <% $divide = $divide + 0 %>
-                  <% end %>
+                  <% $divide = $divide + 1.5 %>
+              <% elsif grade.temporary_subject_code == 'OM'%>
+                  <% $divide = $divide + 2 %>
+              <% elsif grade.temporary_subject_code == 'MC'%>
+                  <% $divide = $divide + 1.5 %>
+              <% elsif grade.temporary_subject_code == 'FM1' %>
+                  <% $divide = $divide + 1 %>
+              <% elsif grade.temporary_subject_code == 'QA' %>
+                  <% $divide = $divide + 2 %>
+              <% elsif grade.temporary_subject_code == 'ECON'%>
+                  <% $divide = $divide + 2 %>
+              <% elsif grade.temporary_subject_code == 'MCP'%>
+                  <% $divide = $divide + 2 %>
+              <% elsif grade.temporary_subject_code == 'MM' %>
+                  <% $divide = $divide + 2.5 %>
+              <% elsif grade.temporary_subject_code == 'MPO' %>
+                  <% $divide = $divide + 2 %>
+              <% elsif grade.temporary_subject_code == 'BIZNET' %>
+                  <% $divide = $divide + 0 %>
+              <% elsif grade.temporary_subject_code == 'MOL'  %>
+                  <% $divide = $divide + 0 %>
               <% end %>
           <% end %>
 
@@ -107,7 +74,6 @@
             <% end %>
           </td>
     <% end %>
-    <script>alert(<%= $divide%>);</script>
     <input type="hidden" name="divide" value="<%= $divide %>" id="divide">
     <!-- INSERT SCRIPT HERE -->
     </tr>

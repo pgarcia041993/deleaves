@@ -53,7 +53,7 @@ $(document).ready(function (e) {
                 }
                 parseFloat($('.grade-new' + i).val(grade));
             }
-            var final_grade = add_grade / 16.5;
+            var final_grade = add_grade / $('#divide').val();
             parseFloat($('#final-new').val(parseFloat(final_grade).toFixed(2)));
         }
         else {
@@ -100,7 +100,7 @@ $(document).ready(function (e) {
                 }
                 parseFloat($('.grade-new' + i).val(grade));
             }
-            var final_grade = add_grade / 16.5;
+            var final_grade = add_grade / $('#divide').val();
             parseFloat($('#final-new').val(parseFloat(final_grade).toFixed(2)));
         }
         else {
@@ -146,7 +146,7 @@ $(document).ready(function (e) {
                 origgrade += parseFloat(grade) * parseFloat(subject_unit_equivalent);
             }
         }
-        var total = origgrade / 16.5;
+        var total = origgrade / $('#divide').val();
 
         $('#final-orig').val(parseFloat(total).toFixed(2));
     }
