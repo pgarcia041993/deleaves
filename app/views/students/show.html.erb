@@ -1,5 +1,4 @@
 <p id="notice"><%= notice %></p>
-<!-- FIX THE IMAGE -->
 <img src="/images/c<%= @student.cohort %>/<%= @student.number %>.jpg" style="position:relative; top: 40px; margin-left: 480px; height: 500px; width: 300px;"/>
 <div style="padding-left: 20px">
   <p style="font-size: 31px; padding-top:20px; margin-top: -500px; padding-bottom: 5px; font-weight: bold; ">
@@ -28,35 +27,91 @@
       <th style="color: #ffffff;">What if</th>
     </tr>
     <% $count = 0; %>
+    <% $subject = 0; %>
+    <% $divide = 0; %>
     <% @grades.each do |grade| %>
         <% if grade.present? %>
-            <!--<script>alert(<%= $count %>);</script>-->
             <% $count = $count + 1 %>
         <% end %>
         <tr>
           <td><%= grade.temporary_subject_code %></td>
-          <% $var = '' %>
-          <% if grade.grade == 'Pass' %>
-              <% $count -= 1 %>
-          <% elsif grade.grade == 'Fail' %>
-              <% $count -= 1 %>
-          <% else %>
-              <% $var = grade.grade %>
+          <% if (grade.temporary_subject_code.present? and grade.grade != 'Pass') or (grade.temporary_subject_code.present? and grade.grade != 'Fail') %>
+              <% if grade.temporary_subject_code == 'LOB' %>
+                  <% $subject = 1.5 %>
+                  <% if grade.temporary_subject_code == 'LOB' and grade.grade.present? %>
+                      <% $divide = $divide + 1.5 %>
+                  <% end %>
+              <% elsif grade.temporary_subject_code == 'OM' and grade.grade.present? %>
+                  <% $subject = 2 %>
+                  <% if grade.temporary_subject_code == 'OM' and grade.grade.present? %>
+                      <% $divide = $divide + 2 %>
+                  <% end %>
+              <% elsif grade.temporary_subject_code == 'MC' and grade.grade.present? %>
+                  <% $subject = 1.5 %>
+                  <% if grade.temporary_subject_code == 'MC' and grade.grade.present? %>
+                      <% $divide = $divide + 1.5 %>
+                  <% end %>
+              <% elsif grade.temporary_subject_code == 'FM1' and grade.grade.present? %>
+                  <% $subject = 1 %>
+                  <% if grade.temporary_subject_code == 'FM1' and grade.grade.present? %>
+                      <% $divide = $divide + 1 %>
+                  <% end %>
+              <% elsif grade.temporary_subject_code == 'QA' and grade.grade.present? %>
+                  <% $subject = 2 %>
+                  <% if grade.temporary_subject_code == 'QA' and grade.grade.present? %>
+                      <% $divide = $divide + 2 %>
+                  <% end %>
+              <% elsif grade.temporary_subject_code == 'ECON' and grade.grade.present? %>
+                  <% $subject = 2 %>
+                  <% if grade.temporary_subject_code == 'ECON' and grade.grade.present? %>
+                      <% $divide = $divide + 2 %>
+                  <% end %>
+              <% elsif grade.temporary_subject_code == 'MCP' and grade.grade.present? %>
+                  <% $subject = 2 %>
+                  <% if grade.temporary_subject_code == 'MCP' and grade.grade.present? %>
+                      <% $divide = $divide + 2 %>
+                  <% end %>
+              <% elsif grade.temporary_subject_code == 'MM' and grade.grade.present? %>
+                  <% $subject = 2.5 %>
+                  <% if grade.temporary_subject_code == 'MM' and grade.grade.present? %>
+                      <% $divide = $divide + 2.5 %>
+                  <% end %>
+              <% elsif grade.temporary_subject_code == 'MPO' and grade.grade.present? %>
+                  <% $subject = 2 %>
+                  <% if grade.temporary_subject_code == 'MPO' and grade.grade.present? %>
+                      <% $divide = $divide + 2 %>
+                  <% end %>
+              <% elsif grade.temporary_subject_code == 'BIZNET' and grade.grade.present? %>
+                  <% $subject = 0 %>
+                  <% if grade.temporary_subject_code == 'BIZNET' and grade.grade.present? %>
+                      <% $divide = $divide + 0 %>
+                  <% end %>
+              <% elsif grade.temporary_subject_code == 'MOL' and grade.grade.present? %>
+                  <% $subject = 0 %>
+                  <% if grade.temporary_subject_code == 'MOL' and grade.grade.present? %>
+                      <% $divide = $divide + 0 %>
+                  <% end %>
+              <% end %>
           <% end %>
-          <!-- NOT YET FLEXIBLE -->
 
           <td>
+            <input type="hidden" name="subject<%= $count %>" value="<%= grade.temporary_subject_code %>" id="subject<%= $count %>">
             <input type="text" style="width:50px; height:15px; text-align: center;" class="gradeorig grade-orig<%= $count %>" name="" readonly value="<%= grade.grade %>"/>
           </td>
-          <!-- PLACE THE LOOP HERE -->
           <td style="padding-left: 25px">
-            <input style="width:50px; height:15px; text-align: center;" type="text" name="" class="grade grade-new<%= $count %>" id="grade-new"/>
+            <% if grade.grade == 'Pass' or grade.grade == 'Fail' or grade.grade == nil %>
+                <input style="width:50px; height:15px; text-align: center;" type="text" name="" class="grade grade-new<%= $count %>" id="grade-new" readonly/>
+            <% else %>
+                <input style="width:50px; height:15px; text-align: center;" type="text" name="" class="grade grade-new<%= $count %>" id="grade-new"/>
+            <% end %>
           </td>
     <% end %>
+    <script>alert(<%= $divide%>);</script>
+    <input type="hidden" name="divide" value="<%= $divide %>" id="divide">
     <!-- INSERT SCRIPT HERE -->
     </tr>
   </table>
-  <table width="290px">
+  <table width="280px">
     <tr>
       <td style="font-weight: bold">Term GPA</td>
       <td style="color: #ff0000">

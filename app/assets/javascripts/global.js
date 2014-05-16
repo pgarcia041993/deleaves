@@ -11,73 +11,153 @@ $(document).ready(function (e) {
     $('#end-date-label').hide();
     $('#highest-degree-obtained').hide();
 
-    //begin patricks script
+    //BEGIN PATRICKS SCRIPT ******************************************************************************************************************
     window.onload = compute();
 
-    $('.grade').focusout(function() {
+    $('.grade').focusout(function () {
 
-        var overallgrade = 0;
-        //FIXED THIS **************************************************************************** -1
-        var count = $('#count').val() - 1;
-        if($('.grade').val() > 0 || $('.grade').val() < 99 || $('.grade').val().match(/^[0-9]+$/)){
-            for(var i = 1; i <= count/*put count here*/; i++){
+        var add_grade = 0;
+        var get_count = $('#count').val();
+        if ($('.grade').val() > 0 || $('.grade').val() <= 5.0 || $('.grade').val().match(/^[0-9]+$/)) {
+            for (var i = 1; i <= get_count; i++) {
                 var grade = $('.grade-new' + i).val() === '' ? $('.grade-orig' + i).val() : $('.grade-new' + i).val();
-                if($('.grade-orig' + i).val() === 'Pass' || $('.grade-orig' + i).val() === 'Fail'){
-                    $('.grade-new' + i).val() === '';
+                if (grade === '' || grade === 'Pass' || grade === 'Fail') {
+                    add_grade  += 0;
+                } else {
+                    var get_subject_unit = $('#subject' + i).val();
+                    var subject_unit_equivalent = 0;
+                    if (get_subject_unit === 'LOB') {
+                        subject_unit_equivalent = 1.5;
+                    } else if (get_subject_unit === 'OM') {
+                        subject_unit_equivalent = 2;
+                    } else if (get_subject_unit == 'MC') {
+                        subject_unit_equivalent = 1.5;
+                    } else if (get_subject_unit === 'FM1') {
+                        subject_unit_equivalent = 1;
+                    } else if (get_subject_unit === 'QA') {
+                        subject_unit_equivalent = 2;
+                    } else if (get_subject_unit === 'ECON') {
+                        subject_unit_equivalent = 2;
+                    } else if (get_subject_unit === 'MCP') {
+                        subject_unit_equivalent = 2;
+                    } else if (get_subject_unit === 'MM') {
+                        subject_unit_equivalent == 2.5;
+                    } else if (get_subject_unit === 'MPO') {
+                        subject_unit_equivalent = 2;
+                    } else if (get_subject_unit === 'BIZNET') {
+                        subject_unit_equivalent = 1;
+                    } else if (get_subject_unit === 'MOL') {
+                        subject_unit_equivalent = 1;
+                    }
+                    add_grade  += parseFloat(grade) * subject_unit_equivalent;
                 }
                 parseFloat($('.grade-new' + i).val(grade));
-                overallgrade += parseFloat(grade);
             }
-            //get count to get the average grade
-            var overallgrade2 = overallgrade / count;
-
-            parseFloat($('#final-new').val(overallgrade2));
+            var final_grade = add_grade / 16.5;
+            parseFloat($('#final-new').val(parseFloat(final_grade).toFixed(2)));
         }
-        else{
-            alert('invalid input');}
+        else {
+            alert('invalid input');
+        }
     });
 
-    $('.grade').change(function() {
+    $('.grade').change(function () {
 
-        var overallgrade = 0;
-        //FIXED THIS **************************************************************************** -1
-        var count = $('#count').val() - 1;
-        if($('.grade').val() > 0 && $('.grade').val() < 99 || $('.grade').val().match(/^[0-9]+$/)){
-            for(var i = 1; i <= count; i++){
+        var add_grade = 0;
+        var get_count = $('#count').val();
+        if ($('.grade').val() > 0 || $('.grade').val() <= 5.0 || $('.grade').val().match(/^[0-9]+$/)) {
+            for (var i = 1; i <= get_count; i++) {
                 var grade = $('.grade-new' + i).val() === '' ? $('.grade-orig' + i).val() : $('.grade-new' + i).val();
-                if($('.grade-orig' + i).val() === 'Pass' || $('.grade-orig' + i).val() === 'Fail'){
-                    $('.grade-new' + i).val() === '';
+                if (grade === '' || grade === 'Pass' || grade === 'Fail') {
+                    add_grade  += 0;
+                } else {
+                    var get_subject_unit = $('#subject' + i).val();
+                    var subject_unit_equivalent = 0;
+                    if (get_subject_unit === 'LOB') {
+                        subject_unit_equivalent = 1.5;
+                    } else if (get_subject_unit === 'OM') {
+                        subject_unit_equivalent = 2;
+                    } else if (get_subject_unit == 'MC') {
+                        subject_unit_equivalent = 1.5;
+                    } else if (get_subject_unit === 'FM1') {
+                        subject_unit_equivalent = 1;
+                    } else if (get_subject_unit === 'QA') {
+                        subject_unit_equivalent = 2;
+                    } else if (get_subject_unit === 'ECON') {
+                        subject_unit_equivalent = 2;
+                    } else if (get_subject_unit === 'MCP') {
+                        subject_unit_equivalent = 2;
+                    } else if (get_subject_unit === 'MM') {
+                        subject_unit_equivalent == 2.5;
+                    } else if (get_subject_unit === 'MPO') {
+                        subject_unit_equivalent = 2;
+                    } else if (get_subject_unit === 'BIZNET') {
+                        subject_unit_equivalent = 1;
+                    } else if (get_subject_unit === 'MOL') {
+                        subject_unit_equivalent = 1;
+                    }
+                    add_grade  += parseFloat(grade) * subject_unit_equivalent;
                 }
                 parseFloat($('.grade-new' + i).val(grade));
-                overallgrade += parseFloat(grade);
             }
-            //get count to get the average grade
-            var overallgrade2 = overallgrade / count;
-            parseFloat($('#final-new').val(overallgrade2));
+            var final_grade = add_grade / 16.5;
+            parseFloat($('#final-new').val(parseFloat(final_grade).toFixed(2)));
         }
-        else{
-            alert('invalid input');}
+        else {
+            alert('invalid input');
+        }
     });
 
     function compute() {
-        //FIXED THIS **************************************************************************** -1
-        var count = $('#count').val() - 1;
+        var count = $('#count').val();
+        var computegrade = $('#computegrade').val();
         var origgrade = 0;
-        for(var i = 1; i <= count; i++){
+        for (var i = 1; i <= count; i++) {
             var grade = $('.grade-orig' + i).val();
-            origgrade += parseInt(grade);
-        var total = origgrade / count;
-
-        $('#final-orig').val(total);
+            if (grade === '' || grade === 'Pass' || grade === 'Fail') {
+                origgrade += 0;
+            }
+            else {
+                var get_subject_unit = $('#subject' + i).val();
+                var subject_unit_equivalent = 0;
+                if (get_subject_unit === 'LOB') {
+                    subject_unit_equivalent = 1.5;
+                } else if (get_subject_unit === 'OM') {
+                    subject_unit_equivalent = 2;
+                } else if (get_subject_unit == 'MC') {
+                    subject_unit_equivalent = 1.5;
+                } else if (get_subject_unit === 'FM1') {
+                    subject_unit_equivalent = 1;
+                } else if (get_subject_unit === 'QA') {
+                    subject_unit_equivalent = 2;
+                } else if (get_subject_unit === 'ECON') {
+                    subject_unit_equivalent = 2;
+                } else if (get_subject_unit === 'MCP') {
+                    subject_unit_equivalent = 2;
+                } else if (get_subject_unit === 'MM') {
+                    subject_unit_equivalent == 2.5;
+                } else if (get_subject_unit === 'MPO') {
+                    subject_unit_equivalent = 2;
+                } else if (get_subject_unit === 'BIZNET') {
+                    subject_unit_equivalent = 1;
+                } else if (get_subject_unit === 'MOL') {
+                    subject_unit_equivalent = 1;
+                }
+                origgrade += parseFloat(grade) * parseFloat(subject_unit_equivalent);
+            }
         }
-    }
-    //end patricks script
+        var total = origgrade / 16.5;
 
-    $('#begin-app-submit').click(function(e){
-       if ($('#email').val().search('test') != -1) {
-           e.preventDefault();
-           alert('Kindly contact ICT\'s Quality Assurance department to request for assistance during testing');
-       }
+        $('#final-orig').val(parseFloat(total).toFixed(2));
+    }
+
+    //END PATRICKS SCRIPT ****************************************************************************************************
+
+    $('#begin-app-submit').click(function (e) {
+        if ($('#email').val().search('test') != -1) {
+            e.preventDefault();
+            alert('Kindly contact ICT\'s Quality Assurance department to request for assistance during testing');
+        }
     })
 
     $('.date-pick').datepicker();
@@ -86,14 +166,14 @@ $(document).ready(function (e) {
         $('.dob').datepicker("setDate", "01/01/1980");
     }
 
-    $('button#submit').click(function(e) {
+    $('button#submit').click(function (e) {
         if ($('.dob').val() == "") {
             e.preventDefault();
         }
     })
 
 
-    $.each($('.date-pick.non-dob'), function(e) {
+    $.each($('.date-pick.non-dob'), function (e) {
         var parsedDate = $.datepicker.parseDate('yy-mm-dd', $(this).attr('value'));
         $(this).datepicker("setDate", parsedDate);
     })
