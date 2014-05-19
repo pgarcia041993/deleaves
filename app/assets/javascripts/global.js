@@ -110,12 +110,12 @@ $(document).ready(function (e) {
 
     function compute() {
         var count = $('#count').val();
-        var computegrade = $('#computegrade').val();
-        var origgrade = 0;
+        var compute_grade = $('#computegrade').val();
+        var orig_grade = 0;
         for (var i = 1; i <= count; i++) {
             var grade = $('.grade-orig' + i).val();
             if (grade === '' || grade === 'Pass' || grade === 'Fail') {
-                origgrade += 0;
+                orig_grade += 0;
             }
             else {
                 var get_subject_unit = $('#subject' + i).val();
@@ -143,10 +143,10 @@ $(document).ready(function (e) {
                 } else if (get_subject_unit === 'MOL') {
                     subject_unit_equivalent = 1;
                 }
-                origgrade += parseFloat(grade) * parseFloat(subject_unit_equivalent);
+                orig_grade += parseFloat(grade) * parseFloat(subject_unit_equivalent);
             }
         }
-        var total = origgrade / $('#divide').val();
+        var total = orig_grade / $('#divide').val();
 
         $('#final-orig').val(parseFloat(total).toFixed(2));
     }

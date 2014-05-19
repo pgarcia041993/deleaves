@@ -28,7 +28,6 @@
       <th style="color: #ffffff;">What if</th>
     </tr>
     <% $count = 0; %>
-    <% $subject = 0; %>
     <% $divide = 0; %>
     <% @grades.each do |grade| %>
         <% if grade.present? %>
@@ -36,7 +35,7 @@
         <% end %>
         <tr>
           <td><%= grade.temporary_subject_code %></td>
-          <% if (grade.temporary_subject_code.present? and grade.grade != 'Pass') or (grade.temporary_subject_code.present? and grade.grade != 'Fail') %>
+          <% if (grade.temporary_subject_code.present? and !(['Pass', 'Fail'].include?(grade.grade))) %>
               <% if grade.temporary_subject_code == 'LOB' %>
                   <% $divide = $divide + 1.5 %>
               <% elsif grade.temporary_subject_code == 'OM'%>
@@ -55,8 +54,8 @@
                   <% $divide = $divide + 2.5 %>
               <% elsif grade.temporary_subject_code == 'MPO' %>
                   <% $divide = $divide + 2 %>
-              <% elsif grade.temporary_subject_code == 'BIZNET' %>
-                  <% $divide = $divide + 0 %>
+              <% elsif grade.temporary_subject_code == 'BIZNET'%>
+                  <% $divide = $divide + 1 %>
               <% elsif grade.temporary_subject_code == 'MOL'  %>
                   <% $divide = $divide + 0 %>
               <% end %>
