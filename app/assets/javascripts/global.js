@@ -88,7 +88,7 @@ $(document).ready(function (e) {
                     } else if (get_subject_unit === 'MCP') {
                         subject_unit_equivalent = 2;
                     } else if (get_subject_unit === 'MM') {
-                        subject_unit_equivalent == 2.5;
+                        subject_unit_equivalent = 2.5;
                     } else if (get_subject_unit === 'MPO') {
                         subject_unit_equivalent = 2;
                     } else if (get_subject_unit === 'BIZNET') {
@@ -135,7 +135,7 @@ $(document).ready(function (e) {
                 } else if (get_subject_unit === 'MCP') {
                     subject_unit_equivalent = 2;
                 } else if (get_subject_unit === 'MM') {
-                    subject_unit_equivalent == 2.5;
+                    subject_unit_equivalent = 2.5;
                 } else if (get_subject_unit === 'MPO') {
                     subject_unit_equivalent = 2;
                 } else if (get_subject_unit === 'BIZNET') {
@@ -144,6 +144,8 @@ $(document).ready(function (e) {
                     subject_unit_equivalent = 1;
                 }
                 orig_grade += parseFloat(grade) * parseFloat(subject_unit_equivalent);
+                alert(parseFloat(grade));
+                alert(parseFloat(subject_unit_equivalent));
             }
         }
         var total = orig_grade / $('#divide').val();
