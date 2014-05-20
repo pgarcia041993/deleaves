@@ -1,13 +1,13 @@
 
 <p id="notice"><%= notice %></p>
-<img src="/images/c<%= @student.cohort %>/<%= @student.number %>.jpg" style="position:relative; top: 40px; margin-left: 480px; height: 500px; width: 300px;"/>
-<div style="padding-left: 20px">
-  <p style="font-size: 31px; padding-top:20px; margin-top: -500px; padding-bottom: 5px; font-weight: bold; ">
+<div style="width:900px;margin:0 auto 0 auto;">
+  <img src="/images/c<%= @student.cohort %>/<%= @student.number %>.jpg" style="position:relative; margin-left:560px;top: 15px; height: 560px; width: 384px;"/>
+  <p style="font-size: 31px; padding-top:20px; margin-top: -560px; padding-bottom: 5px; font-weight: bold; ">
     <%= @student.name %>
   </p>
 
   <p>
-    <b>Number:</b>
+    <b>Student Number:</b>
     <%= @student.number %>
   </p>
 
@@ -21,9 +21,11 @@
     <%= @student.learning_team %>
   </p>
 
-  <table width="280px">
+  <table width="520px">
     <tr style="background-color: rgb(13, 17, 46);">
+      <th style="color: #ffffff;">Subject Code</th>
       <th style="color: #ffffff;">Subject</th>
+      <th style="color: #ffffff;">Unit</th>
       <th style="color: #ffffff;">Grade</th>
       <th style="color: #ffffff;">What if</th>
     </tr>
@@ -60,12 +62,17 @@
                   <% $divide = $divide + 0 %>
               <% end %>
           <% end %>
-
           <td>
+            Managing People in Organizations
+          </td>
+          <td>
+            <center>1.5</center>
+          </td>
+          <td style="text-align: center">
             <input type="hidden" name="subject<%= $count %>" value="<%= grade.temporary_subject_code %>" id="subject<%= $count %>">
             <input type="text" style="width:50px; height:15px; text-align: center;" class="gradeorig grade-orig<%= $count %>" name="" readonly value="<%= grade.grade %>"/>
           </td>
-          <td style="padding-left: 25px">
+          <td style="text-align: center">
             <% if grade.grade == 'Pass' or grade.grade == 'Fail' or grade.grade == nil %>
                 <input style="width:50px; height:15px; text-align: center;" type="text" name="" class="grade grade-new<%= $count %>" id="grade-new" readonly/>
             <% else %>
@@ -77,8 +84,9 @@
     <!-- INSERT SCRIPT HERE -->
     </tr>
   </table>
-  <table width="280px">
+  <table width="410px">
     <tr>
+      <td>&nbsp;</td>
       <td style="font-weight: bold">Term GPA</td>
       <td style="color: #ff0000">
         <input id="final-orig" style="width:50px; height:15px; color:red; font-weight:bold; background-color:transparent; border: 0px solid;" type="text" readonly/>
@@ -89,7 +97,9 @@
     </tr>
   </table>
   <input type="hidden" name="count" value="<%= $count %>" id="count">
+
 </div>
 <!---->
+<!--= <%= link_to 'Back', students_path %> |-->
 <!--= link_to 'Edit', edit_student_path(@student) %> |-->
-<%= link_to 'Back', students_path %>
+
