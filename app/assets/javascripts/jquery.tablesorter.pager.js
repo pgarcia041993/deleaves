@@ -122,7 +122,7 @@
 			};
 			
 			this.defaults = {
-				size: 15,
+				size: 10, //value of how many item to be displayed onload
 				offset: 0,
 				page: 0,
 				totalRows: 0,
