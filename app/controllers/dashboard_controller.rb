@@ -6,7 +6,7 @@ class DashboardController < ApplicationController
     if params['cohort'] == '0' || params['cohort'].blank?
       @applicants = Student.all
     elsif (params['cohort'].present?)
-      @applicants = Student.where(cohort: params['cohort'])
+      @applicants = Student.where(cohort: params['cohort'] , term: params['term'])
     end
   end
 
