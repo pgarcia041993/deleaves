@@ -38,7 +38,10 @@
         <tr>
           <td><%= grade.temporary_subject_code %></td>
           <td>
-            Managing People in Organizations
+           <% subj = "LOB"  %>
+            <%	 puts subj %>
+            <label><% %></label>
+            <label><!--<%	 Subject.select('description').where(subject_code: subj) %>--></label>
           </td>
           <td style="text-align: center">
             <% if grade.units.present? and !(['Pass', 'Fail'].include?(grade.grade))%>
