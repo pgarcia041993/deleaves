@@ -13,13 +13,13 @@ CSV.foreach("#{Rails.root}/#{ARGV[0]}") do |row|
 
   if counter == 1
     row.each do |col|
-         units << col
+      units << col
     end
 
   elsif counter == 2
     col_counter = 0
     row.each do |col|
-     # puts col
+      # puts col
 
       if col_counter <= 8
       else
@@ -32,7 +32,7 @@ CSV.foreach("#{Rails.root}/#{ARGV[0]}") do |row|
     grades = {}
     ctrl=9
     headers.each_pair do |k, v|
-     #puts counter
+      #puts counter
       #puts units
 
       grades.merge!(v => [units[ctrl], row[k]])
