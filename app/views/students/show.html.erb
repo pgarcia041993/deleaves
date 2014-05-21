@@ -1,7 +1,7 @@
-
 <p id="notice"><%= notice %></p>
 <div style="width:900px;margin:0 auto 0 auto;">
   <img src="/images/c<%= @student.cohort %>/<%= @student.number %>.jpg" style="position:relative; margin-left:560px;top: 15px; height: 560px; width: 384px;"/>
+
   <p style="font-size: 31px; padding-top:20px; margin-top: -560px; padding-bottom: 5px; font-weight: bold; ">
     <%= @student.name %>
   </p>
@@ -37,36 +37,15 @@
         <% end %>
         <tr>
           <td><%= grade.temporary_subject_code %></td>
-          <% if (grade.temporary_subject_code.present? and !(['Pass', 'Fail'].include?(grade.grade))) %>
-              <% if grade.temporary_subject_code == 'LOB' %>
-                  <% $divide = $divide + 1.5 %>
-              <% elsif grade.temporary_subject_code == 'OM'%>
-                  <% $divide = $divide + 2 %>
-              <% elsif grade.temporary_subject_code == 'MC'%>
-                  <% $divide = $divide + 1.5 %>
-              <% elsif grade.temporary_subject_code == 'FM1' %>
-                  <% $divide = $divide + 1 %>
-              <% elsif grade.temporary_subject_code == 'QA' %>
-                  <% $divide = $divide + 2 %>
-              <% elsif grade.temporary_subject_code == 'ECON'%>
-                  <% $divide = $divide + 2 %>
-              <% elsif grade.temporary_subject_code == 'MCP'%>
-                  <% $divide = $divide + 2 %>
-              <% elsif grade.temporary_subject_code == 'MM' %>
-                  <% $divide = $divide + 2.5 %>
-              <% elsif grade.temporary_subject_code == 'MPO' %>
-                  <% $divide = $divide + 2 %>
-              <% elsif grade.temporary_subject_code == 'BIZNET'%>
-                  <% $divide = $divide + 0 %>
-              <% elsif grade.temporary_subject_code == 'MOL'  %>
-                  <% $divide = $divide + 0 %>
-              <% end %>
-          <% end %>
           <td>
             Managing People in Organizations
           </td>
-          <td>
-          <%= grade.units %>
+          <td style="text-align: center">
+            <% if grade.units.present? and !(['Pass', 'Fail'].include?(grade.grade))%>
+            <% $divide = $divide + grade.units.to_f%>
+                <% end %>
+            <%= grade.units %>
+            <input type="hidden" name="units<%= $count%>" value="<%= grade.units %>" id="units<%= $count%>">
           </td>
           <td style="text-align: center">
             <input type="hidden" name="subject<%= $count %>" value="<%= grade.temporary_subject_code %>" id="subject<%= $count %>">
@@ -83,18 +62,20 @@
     <input type="hidden" name="divide" value="<%= $divide %>" id="divide">
     <!-- INSERT SCRIPT HERE -->
     </tr>
-  </table>
-  <table width="410px">
     <tr>
       <td>&nbsp;</td>
       <td style="font-weight: bold">Term GPA</td>
-      <td style="color: #ff0000">
+      <td>&nbsp;</td>
+      <td style="color: #ff0000; text-align: center;">
         <input id="final-orig" style="width:50px; height:15px; color:red; font-weight:bold; background-color:transparent; border: 0px solid;" type="text" readonly/>
       </td>
-      <td style="color: #ff0000">
+      <td style="color: #ff0000;text-align: center;">
         <input id="final-new" style="width:50px; height:15px; color:red; font-weight:bold; background-color:transparent; border: 0px solid;" type="text" readonly/>
       </td>
     </tr>
+  </table>
+  <table width="410px">
+
   </table>
   <input type="hidden" name="count" value="<%= $count %>" id="count">
 

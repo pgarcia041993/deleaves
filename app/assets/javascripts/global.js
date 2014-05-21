@@ -24,32 +24,8 @@ $(document).ready(function (e) {
                 if (grade === '' || grade === 'Pass' || grade === 'Fail') {
                     add_grade  += 0;
                 } else {
-                    var get_subject_unit = $('#subject' + i).val();
-                    var subject_unit_equivalent = 0;
-                    if (get_subject_unit === 'LOB') {
-                        subject_unit_equivalent = 1.5;
-                    } else if (get_subject_unit === 'OM') {
-                        subject_unit_equivalent = 2;
-                    } else if (get_subject_unit == 'MC') {
-                        subject_unit_equivalent = 1.5;
-                    } else if (get_subject_unit === 'FM1') {
-                        subject_unit_equivalent = 1;
-                    } else if (get_subject_unit === 'QA') {
-                        subject_unit_equivalent = 2;
-                    } else if (get_subject_unit === 'ECON') {
-                        subject_unit_equivalent = 2;
-                    } else if (get_subject_unit === 'MCP') {
-                        subject_unit_equivalent = 2;
-                    } else if (get_subject_unit === 'MM') {
-                        subject_unit_equivalent = 2.5;
-                    } else if (get_subject_unit === 'MPO') {
-                        subject_unit_equivalent = 2;
-                    } else if (get_subject_unit === 'BIZNET') {
-                        subject_unit_equivalent = 1;
-                    } else if (get_subject_unit === 'MOL') {
-                        subject_unit_equivalent = 1;
-                    }
-                    add_grade  += parseFloat(grade) * subject_unit_equivalent;
+                    var get_subject_unit = $('#units' + i).val();
+                    add_grade  += parseFloat(grade) * get_subject_unit;
                 }
                 parseFloat($('.grade-new' + i).val(grade));
             }
@@ -71,32 +47,8 @@ $(document).ready(function (e) {
                 if (grade === '' || grade === 'Pass' || grade === 'Fail') {
                     add_grade  += 0;
                 } else {
-                    var get_subject_unit = $('#subject' + i).val();
-                    var subject_unit_equivalent = 0;
-                    if (get_subject_unit === 'LOB') {
-                        subject_unit_equivalent = 1.5;
-                    } else if (get_subject_unit === 'OM') {
-                        subject_unit_equivalent = 2;
-                    } else if (get_subject_unit == 'MC') {
-                        subject_unit_equivalent = 1.5;
-                    } else if (get_subject_unit === 'FM1') {
-                        subject_unit_equivalent = 1;
-                    } else if (get_subject_unit === 'QA') {
-                        subject_unit_equivalent = 2;
-                    } else if (get_subject_unit === 'ECON') {
-                        subject_unit_equivalent = 2;
-                    } else if (get_subject_unit === 'MCP') {
-                        subject_unit_equivalent = 2;
-                    } else if (get_subject_unit === 'MM') {
-                        subject_unit_equivalent = 2.5;
-                    } else if (get_subject_unit === 'MPO') {
-                        subject_unit_equivalent = 2;
-                    } else if (get_subject_unit === 'BIZNET') {
-                        subject_unit_equivalent = 1;
-                    } else if (get_subject_unit === 'MOL') {
-                        subject_unit_equivalent = 1;
-                    }
-                    add_grade  += parseFloat(grade) * subject_unit_equivalent;
+                    var get_subject_unit = $('#units' + i).val();
+                    add_grade  += parseFloat(grade) * get_subject_unit;
                 }
                 parseFloat($('.grade-new' + i).val(grade));
             }
@@ -110,7 +62,6 @@ $(document).ready(function (e) {
 
     function compute() {
         var count = $('#count').val();
-        var compute_grade = $('#computegrade').val();
         var orig_grade = 0;
         for (var i = 1; i <= count; i++) {
             var grade = $('.grade-orig' + i).val();
@@ -118,32 +69,8 @@ $(document).ready(function (e) {
                 orig_grade += 0;
             }
             else {
-                var get_subject_unit = $('#subject' + i).val();
-                var subject_unit_equivalent = 0;
-                if (get_subject_unit === 'LOB') {
-                    subject_unit_equivalent = 1.5;
-                } else if (get_subject_unit === 'OM') {
-                    subject_unit_equivalent = 2;
-                } else if (get_subject_unit == 'MC') {
-                    subject_unit_equivalent = 1.5;
-                } else if (get_subject_unit === 'FM1') {
-                    subject_unit_equivalent = 1;
-                } else if (get_subject_unit === 'QA') {
-                    subject_unit_equivalent = 2;
-                } else if (get_subject_unit === 'ECON') {
-                    subject_unit_equivalent = 2;
-                } else if (get_subject_unit === 'MCP') {
-                    subject_unit_equivalent = 2;
-                } else if (get_subject_unit === 'MM') {
-                    subject_unit_equivalent = 2.5;
-                } else if (get_subject_unit === 'MPO') {
-                    subject_unit_equivalent = 2;
-                } else if (get_subject_unit === 'BIZNET') {
-                    subject_unit_equivalent = 1;
-                } else if (get_subject_unit === 'MOL') {
-                    subject_unit_equivalent = 1;
-                }
-                orig_grade += parseFloat(grade) * parseFloat(subject_unit_equivalent);
+                var get_subject_unit = $('#units' + i).val();
+                orig_grade += parseFloat(grade) * parseFloat(get_subject_unit);
             }
         }
         var total = orig_grade / $('#divide').val();
