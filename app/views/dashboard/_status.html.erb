@@ -5,6 +5,7 @@
 </script>
 
 <div class="row no-print" style="margin-top: 35px;">
+
   <div class="span1">
     <b>Cohort</b>
   </div>
@@ -31,3 +32,8 @@
     <input class="btn btn-info" type="submit"/>
   </div>
 </div>
+<%if params['cohort'] == '0' || params['cohort'].blank?
+  else
+%>
+    <div class="span1"><b>Cohort <%= params['cohort'] %></b> </div> <div class="span1"> <b>Term<%= params['term'] %></b></div>
+<% end %>
