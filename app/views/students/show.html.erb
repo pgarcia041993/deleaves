@@ -39,7 +39,7 @@
           <td><%= grade.temporary_subject_code %></td>
           <td>
 
-            <%= Subject.select('description').where(subject_code: grade.temporary_subject_code)%>
+            <%= puts Subject.select('description').where(subject_code: grade.temporary_subject_code) %>
           </td>
           <td style="text-align: center">
             <% if grade.units.present? and !(['Pass', 'Fail'].include?(grade.grade))%>
