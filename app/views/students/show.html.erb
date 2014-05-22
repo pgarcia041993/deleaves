@@ -38,8 +38,7 @@
         <tr>
           <td><%= grade.temporary_subject_code %></td>
           <td>
-
-            <%= puts Subject.select('description').where(subject_code: grade.temporary_subject_code) %>
+            <%= Subject.where(subject_code: grade.temporary_subject_code).last.try(:description) %>
           </td>
           <td style="text-align: center">
             <% if grade.units.present? and !(['Pass', 'Fail'].include?(grade.grade))%>
@@ -50,7 +49,8 @@
           </td>
           <td style="text-align: center">
             <input type="hidden" name="subject<%= $count %>" value="<%= grade.temporary_subject_code %>" id="subject<%= $count %>">
-            <input type="text" style="width:50px; height:15px; text-align: center;" class="gradeorig grade-orig<%= $count %>" name="" readonly value="<%= grade.grade %>"/>
+            <label><%= grade.grade %></label>
+            <input type="hidden" style="width:50px; height:15px; text-align: center;" class="gradeorig grade-orig<%= $count %>" name="" readonly value="<%= grade.grade %>"/>
           </td>
           <td style="text-align: center">
             <% if grade.grade == 'Pass' or grade.grade == 'Fail' or grade.grade == nil %>

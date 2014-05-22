@@ -1,25 +1,17 @@
-<h1>Listing subjects</h1>
+<div style="height: 100%;width: 800px;margin: 0 auto 0 auto;">
+  <h3 style="text-align: center">Listing subjects</h3>
 
-<table>
-  <tr>
-    <th>Subject code</th>
-    <th>Description</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+  <table class="CSSTableGenerator" border="1">
+    <tr>
+      <td>Subject code</td>
+      <td>Description</td>
+    </tr>
 
-<% @subjects.each do |subject| %>
-  <tr>
-    <td><%= subject.subject_code %></td>
-    <td><%= subject.description %></td>
-    <td><%= link_to 'Show', subject %></td>
-    <td><%= link_to 'Edit', edit_subject_path(subject) %></td>
-    <td><%= link_to 'Destroy', subject, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
-<% end %>
-</table>
-
-<br />
-
-<%= link_to 'New Subject', new_subject_path %>
+    <% @subjects.each do |subject| %>
+        <tr>
+          <td><%= subject.subject_code %></td>
+          <td><%= subject.description %></td>
+        </tr>
+    <% end %>
+  </table>
+</div>
