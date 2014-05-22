@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Subject code:</b>
+  <%= @subject_summary.subject_code %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @subject_summary.description %>
+</p>
+
+<p>
+  <b>Professor:</b>
+  <%= @subject_summary.professor %>
+</p>
+
+<p>
+  <b>Units:</b>
+  <%= @subject_summary.units %>
+</p>
+
+<p>
+  <b>Cohort:</b>
+  <%= @subject_summary.cohort %>
+</p>
+
+<p>
+  <b>Term:</b>
+  <%= @subject_summary.term %>
+</p>
+
+
+<%= link_to 'Edit', edit_subject_summary_path(@subject_summary) %> |
+<%= link_to 'Back', subject_summaries_path %>
