@@ -26,7 +26,11 @@
     <th>Student Number</th>
     <th>Name </th>
     <!--<th>Cohort</th>-->
-    <th>Learning Team</th>
+    <% if params['term'] == '2' %>
+    <th>T1 GPA</th>
+    <th>T1 Fail</th>
+    <% end %>
+    <th>LT</th>
     <th>GPA </th>
     <th>Rank </th>
     <th>Fail </th>
@@ -38,7 +42,14 @@
               <td><%= applicant.number %></td>
               <td><%=  link_to applicant.name, applicant,:target => 'new'     %></td>
               <!--<td><%= applicant.cohort %></td>-->
+              <% if params['term'] == '2' %>
+
+                  <td> <%= Student.where(name: applicant.name , cohort: applicant.cohort ,term: '1' ).last.try(:gpa) %></td>
+                  <td> <%= Student.where(name: applicant.name , cohort: applicant.cohort ,term: '1' ).last.try(:fail) %></td>
+              <% end  %>
               <td><%= applicant.learning_team %></td>
+
+
               <td><%= applicant.gpa %></td>
               <td><%= applicant.rank %></td>
               <td><%= applicant.fail %></td>
