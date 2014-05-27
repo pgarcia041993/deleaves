@@ -23,7 +23,7 @@
     });
 </script>
 
-<h1>Listing students</h1>
+<h2 style="text-align: center">List of Students</h2>
 
 <table class="tablesorter" id="TheTable" border="1">
   <thead>
@@ -43,7 +43,7 @@
 <% @students.each do |student| %>
   <tr>
     <td><%= student.number %></td>
-    <td><%=  link_to student.name, student,:target => 'new'     %></td>
+    <td><%=  link_to student.name, student,:target => 'new' %></td>
     <!--<td><%= student.cohort %></td>-->
     <td><%= student.learning_team %></td>
     <td><%= student.gpa %></td>
@@ -57,7 +57,7 @@
 <% end %>
 </table>
 
-<div id="pager" class="pager" style="padding-top: 30px; margin-left: 220px; " >
+<div id="pager" class="pager" style="" >
   <form>
     <img src="/assets/addons/first.png" class="first">
     <img src="/assets/addons/prev.png" class="prev">
@@ -73,9 +73,4 @@
   </form>
   <!--<%= link_to 'New Student', new_student_path %>-->
   <a href="../" >Back</a>
-</div>
-
-
-<div style="padding-top: 30px;">
-
 </div>

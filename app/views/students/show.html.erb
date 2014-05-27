@@ -21,13 +21,13 @@
     <%= @student.learning_team %>
   </p>
 
-  <table width="520px">
-    <tr style="background-color: rgb(13, 17, 46);">
-      <th style="color: #ffffff;">Subject Code</th>
-      <th style="color: #ffffff;">Subject</th>
-      <th style="color: #ffffff;">Unit</th>
-      <th style="color: #ffffff;">Grade</th>
-      <th style="color: #ffffff;">What if</th>
+  <table class="csstable" style="width: 520px">
+    <tr>
+      <td>Subject Code</td>
+      <td>Subject</td>
+      <td>Unit</td>
+      <td>Grade</td>
+      <td>What if</td>
     </tr>
     <% $count = 0; %>
     <% $divide = 0; %>
@@ -49,7 +49,7 @@
           </td>
           <td style="text-align: center">
             <input type="hidden" name="subject<%= $count %>" value="<%= grade.temporary_subject_code %>" id="subject<%= $count %>">
-            <label><%= grade.grade %></label>
+            <%= grade.grade %>
             <input type="hidden" style="width:50px; height:15px; text-align: center;" class="gradeorig grade-orig<%= $count %>" name="" readonly value="<%= grade.grade %>"/>
           </td>
           <td style="text-align: center">
@@ -64,14 +64,14 @@
     <!-- INSERT SCRIPT HERE -->
     </tr>
     <tr>
-      <td>&nbsp;</td>
-      <td style="font-weight: bold">Term GPA</td>
-      <td>&nbsp;</td>
+      <td style="border: none">&nbsp;</td>
+      <td style="font-weight: bold;border: none">Term GPA</td>
+      <td border: none>&nbsp;</td>
       <td style="color: #ff0000; text-align: center;">
-        <input id="final-orig" style="width:50px; height:15px; color:red; font-weight:bold; background-color:transparent; border: 0px solid;" type="text" readonly/>
+        <input id="final-orig" style="text-align:center;width:50px; height:15px; color:red; font-weight:bold; background-color:transparent; border: 0px solid;" type="text" readonly/>
       </td>
       <td style="color: #ff0000;text-align: center;">
-        <input id="final-new" style="width:50px; height:15px; color:red; font-weight:bold; background-color:transparent; border: 0px solid;" type="text" readonly/>
+        <input id="final-new" style="text-align: center;width:50px; height:15px; color:red; font-weight:bold; background-color:transparent; border: 0px solid;" type="text" readonly/>
       </td>
     </tr>
   </table>
