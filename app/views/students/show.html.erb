@@ -3,9 +3,13 @@
   <img src="/images/c<%= @student.cohort %>/<%= @student.number %>.jpg" style="position:relative; margin-left:560px;top: 15px; height: 560px; width: 384px;"/>
 
   <p style="font-size: 31px; padding-top:20px; margin-top: -560px; padding-bottom: 5px; font-weight: bold; ">
+
     <%= @student.name %>
   </p>
 
+  <p><b>Term:</b>
+    <%= @student.term %>
+  </p>
   <p>
     <b>Student Number:</b>
     <%= @student.number %>
