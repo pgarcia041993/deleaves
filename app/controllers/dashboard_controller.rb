@@ -11,7 +11,7 @@ class DashboardController < ApplicationController
   end
 
   def excel
-    @online_applications = OnlineApplicationForm.where('status != 90').order('id DESC')
+    @online_applications = Student.where(cohort: params['cohort'] , term: params['term'])
   end
 
 end
