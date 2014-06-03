@@ -25,13 +25,12 @@
     <thead>
     <th>SN</th>
     <th>Name</th>
-
     <% if params['term'] == '2' %>
     <th>T1 GPA</th>
     <th>T1 Rank</th>
     <th>T1 Fail</th>
     <th>Y1 GPA</th>
-    <th>Y1 FAIL<th>
+    <th>Y1 FAIL</th>
      <% end %>
     <th>LT</th>
     <th>GPA </th>
@@ -63,7 +62,9 @@
                   <% $tgpa = ($gpa.to_f * $total) + (applicant.gpa.to_f * $total ) %>
                   <%$gg = $tgpa / ($total * 2 ) %>
                   <td><%=number_with_precision($gg, precision: 2)%></td>
+
                   <td><%= $fail.to_i + applicant.fail.to_i %></td>
+
               <% end  %>
               <!--end of term 2-->
 
