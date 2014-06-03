@@ -23,13 +23,16 @@
 <div id="applicant-detail">
   <table class="tablesorter" id="TheTable">
     <thead>
-    <th>Student Number</th>
+    <th>SN</th>
     <th>Name</th>
-    <!--<th>Cohort</th>-->
+
     <% if params['term'] == '2' %>
     <th>T1 GPA</th>
+    <th>T1 Rank</th>
     <th>T1 Fail</th>
-    <% end %>
+    <th>Y1 GPA</th>
+    <th>Y1 FAIL<th>
+     <% end %>
     <th>LT</th>
     <th>GPA </th>
     <th>Rank </th>
@@ -40,15 +43,32 @@
         <% if applicant.present? %>
             <tr>
               <td><%= applicant.number %></td>
-              <td><%=  link_to applicant.name, applicant,:target => 'new'     %></td>
-              <!--<td><%= applicant.cohort %></td>-->
+              <td><%=  link_to applicant.name, applicant,:target => 'new' %></td>
+              <!--start if selected params is term 2-->
               <% if params['term'] == '2' %>
 
-                  <td> <%= Student.where(name: applicant.name , cohort: applicant.cohort ,term: '1' ).last.try(:gpa) %></td>
-                  <td> <%= Student.where(name: applicant.name , cohort: applicant.cohort ,term: '1' ).last.try(:fail) %></td>
+                  <td> <%=$gpa = Student.where(name: applicant.name , cohort: applicant.cohort ,term: '1' ).last.try(:gpa) %></td>
+                  <td> <%= Student.where(name: applicant.name , cohort: applicant.cohort ,term: '1' ).last.try(:rank) %></td>
+                  <td> <%=$fail = Student.where(name: applicant.name , cohort: applicant.cohort ,term: '1' ).last.try(:fail) %></td>
+                  <!--get term 1 ID-->
+                  <% $past_id=Student.where(name: applicant.name , cohort: applicant.cohort ,term: '1' ).last.try(:id); %>
+                  <!--now get the Units-->
+                  <% @get_unit=Grade.where(student_id: $past_id) %>
+                  <% $total=0; %>
+                  <% @get_unit.each do |grades| %>
+                      <% if grades.grade.present? and !(['Pass', 'Fail'].include?(grades.grade)) %>
+                          <% $total = $total + grades.units.to_f %>
+                      <% end %>
+                  <% end %>
+                  <% $tgpa = ($gpa.to_f * $total) + (applicant.gpa.to_f * $total ) %>
+                  <%$gg = $tgpa / ($total * 2 ) %>
+                  <td><%=number_with_precision($gg, precision: 2)%></td>
+                  <td><%= $fail.to_i + applicant.fail.to_i %></td>
               <% end  %>
-              <td><%= applicant.learning_team %></td>
+              <!--end of term 2-->
 
+
+              <td><%= applicant.learning_team %></td>
 
               <td><%= applicant.gpa %></td>
               <td><%= applicant.rank %></td>
@@ -68,9 +88,16 @@
       <img src="/assets/addons/last.png" class="last">
       <select class="pagesize" style="width: 80px;">
         <option selected="selected" value="10">10</option>
+        <option value="100">100</option>
+        <option value="50">50</option>
+        <option value="30">30</option>
+        <option value="20">20</option>
         <option value="15">15</option>
-        <!--<option value="30">30</option>-->
-        <!--<option value="40">40</option>-->
+        <option value="13">13</option>
+        <option value="10">10</option>
+        <option value="7">7</option>
+        <option value="5">5</option>
+        <option value="3">3</option>
       </select>
     </form>
 
