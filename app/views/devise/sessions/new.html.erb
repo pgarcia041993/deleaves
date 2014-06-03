@@ -1,17 +1,34 @@
-<h2>Sign in</h2>
+<script type="text/javascript">
+    $(document).ready(function () {
 
-<%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
-  <div><%= f.label :email %><br />
-  <%= f.email_field :email, :autofocus => true %></div>
+        $('#page-title').text("");
+    });
+</script>
 
-  <div><%= f.label :password %><br />
-  <%= f.password_field :password %></div>
-
-  <% if devise_mapping.rememberable? -%>
+<div style="border-radius: 9px; background-color: currentcolor;margin: 0 auto 0 auto;height: 240px;  width: 350px; border: 1px solid; margin-top: 70px;padding-left: 30px;box-shadow: 0 0 5px #000;">
+  <h2 style="color:#006dcc;text-align: center;margin-left: -40px;">Faculty Delibs System</h2>
+  <%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
+      <table>
+        <tr>
+          <div>
+            <td style="padding-left: 50px;padding-top: 20px"><%= f.email_field :email, :autofocus => true, :placeholder => "Email" %></td>
+          </div>
+        </tr>
+        <tr>
+          <div>
+            <td style="padding-left: 50px;"><%= f.password_field :password, :placeholder => "Password"%></td>
+          </div>
+        </tr>
+        <tr>
+          <td>
+            <%= f.submit "SIGN IN", class: 'btn btn-primary', style: 'height: 40px;width: 220px;position: absolute;margin-left: 50px;' %>
+          </td>
+        </tr>
+        <!--
+      <% if devise_mapping.rememberable? -%>
     <div><%= f.check_box :remember_me %> <%= f.label :remember_me %></div>
-  <% end -%>
-
-  <div><%= f.submit "Sign in" %></div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+  <% end -%>-->
+  <% end %>
+</table>
+</div>
+<!--<%= render "devise/shared/links" %>-->
