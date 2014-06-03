@@ -21,7 +21,7 @@
     });
 </script>
 <div id="applicant-detail">
-  <table class="tablesorter" id="TheTable">
+  <table class="tablesorter" id="TheTable" border="1" style="width: 800px;margin: 0 auto 0 auto">
     <thead>
     <th>Student Number</th>
     <th>Name</th>
@@ -39,21 +39,21 @@
     <% @applicants.each do |applicant| %>
         <% if applicant.present? %>
             <tr>
-              <td><%= applicant.number %></td>
-              <td><%=  link_to applicant.name, applicant,:target => 'new'     %></td>
+              <td style="width: 140px;text-align: center;"><%= applicant.number %></td>
+              <td style="width: 280px;"><%=  link_to applicant.name, applicant,:target => 'new'     %></td>
               <!--<td><%= applicant.cohort %></td>-->
               <% if params['term'] == '2' %>
 
                   <td> <%= Student.where(name: applicant.name , cohort: applicant.cohort ,term: '1' ).last.try(:gpa) %></td>
                   <td> <%= Student.where(name: applicant.name , cohort: applicant.cohort ,term: '1' ).last.try(:fail) %></td>
               <% end  %>
-              <td><%= applicant.learning_team %></td>
+              <td style="width: 50px;text-align: center;"><%= applicant.learning_team %></td>
 
 
-              <td><%= applicant.gpa %></td>
-              <td><%= applicant.rank %></td>
-              <td><%= applicant.fail %></td>
-              <td><%= applicant.scholar %></td>
+              <td style="width: 60px;text-align: center;"><%= applicant.gpa %></td>
+              <td style="width: 50px;text-align: center;"><%= applicant.rank %></td>
+              <td style="width: 50px;text-align: center;"><%= applicant.fail %></td>
+              <td style="width: 65px;text-align: center;"><%= applicant.scholar %></td>
 
             </tr>
         <% end %>
