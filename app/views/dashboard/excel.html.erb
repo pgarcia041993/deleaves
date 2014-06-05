@@ -2,8 +2,8 @@
 
 <script>
     $(document).ready(function () {
-        $('#page-title').text('Application Registry');
-        $('#result-table').each(function () {
+//        $('#page-title').text('Application Registry');
+        $('#table').each(function () {
             var $table = $(this);
 
             var $button = $("<a download=\"download.csv\" class='btn btn-success'>");
@@ -27,11 +27,29 @@
         });
     })
 </script>
+<link rel="stylesheet" href="/assets/blue/style.css" type="text/css" id="" media="print, projection, screen">
+<!--<link rel="stylesheet" href="/assets/navpager.css" type="text/css">-->
+<link rel="stylesheet" href="/assets/jquery.tablesorter.pager.css" type="text/css">
+
+<script type="text/javascript" src="/assets/jquery-latest.js"></script>
+<script type="text/javascript" src="/assets/jquery.tablesorter.js"></script>
+<script type="text/javascript" src="/assets/jquery.tablesorter.pager.js"></script>
+<script type="text/javascript" id="js">
+    $(document).ready(function() {
+    // call the tablesorter plugin
+    $("table").tablesorter({
+        // change the multi sort key from the default shift to alt button
+        sortMultiSortKey: 'altKey'
+    });
+});
+</script>
 
 <br/>
 <div class="alert alert-info row-fluid">
   <div class="span8">
-    <p style="position: relative; top: 5px;">Deleted Applications Are Not Included</p>
+    <p style="position: relative; top: 5px;">Master in Business Administration</p>
+    <p style="position: relative; top: 5px;">Cohort <%= params['cohort'] %>  Term  <%= params['term'] %></p>
+
   </div>
   <div class="span4">
     <span id="button-marker"/>
@@ -42,67 +60,73 @@
 
 
 <div id="applicant-detail">
-  <table class="tablesorter" id="TheTable">
+  <table class="tablesorter" id="TheTable" border="1" style="width: 1100px;margin: 0 auto 0 auto">
     <thead>
-    <th>Student Number</th>
+    <th>SN</th>
     <th>Name</th>
-    <!--<th>Cohort</th>-->
     <% if params['term'] == '2' %>
         <th>T1 GPA</th>
+        <th>T1 Rank</th>
         <th>T1 Fail</th>
+        <th>T2 GPA</th>
+        <th>T2 Rank</th>
+        <th>T2 Fail</th>
+        <th>Y1 GPA</th>
+        <th>Y1 RANK</th>
+        <th>Y1 FAIL</th>
+    <% else %>
+        <th>GPA </th>
+        <th>Rank </th>
+        <th>Fail </th>
     <% end %>
+
+
     <th>LT</th>
-    <th>GPA </th>
-    <th>Rank </th>
-    <th>Fail </th>
     <th>Scholar </th>
     <% $stud = Student.where(cohort: params['cohort']).first.try(:id) %>
     <% @grade = Grade.where(student_id: $stud) %>
     <% @grade.each do |sub|	  %>
-    <th><%= sub.temporary_subject_code  %></th>
+        <th><%= sub.temporary_subject_code  %></th>
     <% end %>
     </thead>
     <% @online_applications.each do |applicant| %>
         <% if applicant.present? %>
             <tr>
-              <td><%= applicant.number %></td>
-              <td><%=  link_to applicant.name, applicant,:target => 'new'     %></td>
+              <td style="width: 140px;text-align: center;"><%= applicant.number %></td>
+              <td style="width: 280px;"><%=  link_to applicant.name, applicant,:target => 'new'     %></td>
               <!--<td><%= applicant.cohort %></td>-->
               <% if params['term'] == '2' %>
 
                   <td> <%= Student.where(name: applicant.name , cohort: applicant.cohort ,term: '1' ).last.try(:gpa) %></td>
-                  <td> <%= Student.where(name: applicant.name , cohort: applicant.cohort ,term: '1' ).last.try(:fail) %></td>
+                  <td> <%= Student.where(name: applicant.name , cohort: applicant.cohort ,term: '1' ).last.try(:rank) %></td>
+                  <td> <%=$fail = Student.where(name: applicant.name , cohort: applicant.cohort ,term: '1' ).last.try(:fail) %></td>
+                  <!--T2-->
+                  <td style="width: 60px;text-align: center;"><%= applicant.gpa %></td>
+                  <td style="width: 50px;text-align: center;"><%= applicant.rank %></td>
+                  <td style="width: 50px;text-align: center;"><%= applicant.fail %></td>
+                  <!--end of T2-->
+                  <!--Start of Y1-->
+                  <td><%= applicant.tgpa %></td>
+                  <td><%= applicant.trank %></td>
+                  <td><%= $fail.to_i + applicant.fail.to_i %></td>
+                  <!--End of Y1-->
+              <% else  %>
+                  <td style="width: 60px;text-align: center;"><%= applicant.gpa %></td>
+                  <td style="width: 50px;text-align: center;"><%= applicant.rank %></td>
+                  <td style="width: 50px;text-align: center;"><%= applicant.fail %></td>
+
               <% end  %>
-              <td><%= applicant.learning_team %></td>
+              <td style="width: 50px;text-align: center;"><%= applicant.learning_team %></td>
+              <!--end of term 2-->
+              <td style="width: 65px;text-align: center;"><%= applicant.scholar %></td>
 
-
-              <td><%= applicant.gpa %></td>
-              <td><%= applicant.rank %></td>
-              <td><%= applicant.fail %></td>
-              <td><%= applicant.scholar %></td>
-            <%	 @getgrade = Grade.where(student_id: applicant.id) %>
+              <%	 @getgrade = Grade.where(student_id: applicant.id) %>
               <% @getgrade.each do |output| %>
-             <td> <%= output.grade %></td>
+                  <td> <%= output.grade %></td>
               <% end %>
             </tr>
-
         <% end %>
     <% end %>
   </table>
-  <div id="pager" class="pager" style="margin-top: 80px;margin-left: 385px;" >
-    <form>
-      <img src="/assets/addons/first.png" class="first">
-      <img src="/assets/addons/prev.png" class="prev">
-      <input type="text" class="pagedisplay">
-      <img src="/assets/addons/next.png" class="next">
-      <img src="/assets/addons/last.png" class="last">
-      <select class="pagesize" style="width: 80px;">
-        <option selected="selected" value="10">10</option>
-        <option value="15">15</option>
-        <!--<option value="30">30</option>-->
-        <!--<option value="40">40</option>-->
-      </select>
-    </form>
 
-  </div>
 </div>
