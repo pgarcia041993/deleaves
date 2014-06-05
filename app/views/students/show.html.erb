@@ -1,42 +1,58 @@
 <p id="notice"><%= notice %></p>
 <div style="width:900px;margin:0 auto 0 auto;">
-  <img src="/images/c<%= @student.cohort %>/<%= @student.number %>.jpg" style="position:relative; margin-left:560px;top: 110px; height: 560px; width: 384px;"/>
+  <img src="/images/c<%= @student.cohort %>/<%= @student.number %>.jpg" style="position:relative; margin-left:560px;top: 105px; height: 560px; width: 384px;"/>
 
-  <p style="font-weight: bold; margin-top: -560px; padding-top: 15px; ">
-    Master in Business Administration
-  </p>
-
-  <p style="font-weight: bold;">
-    Washington Sycip Graduate School of Business
-  </p>
-
-  <p style="font-weight: bold;">
-    First Term Grades SY 2013-2014
-  </p>
-
-  <p style="padding-top:20px;">
-    <%= @student.number %>
-  </p>
-
-  <p style="font-size: 31px; padding-bottom: 5px; font-weight: bold; ">
-    <%= @student.name %>
-  </p>
-
-  <p>
-    Cohort:
-    <b><%= @student.cohort %></b>
-  </p>
-
-  <p>
-    LT:
-    <b><%= @student.learning_team %></b>
-  </p>
+  <div style="">
+    <table style="margin-top: -560px;">
+      <tr>
+        <td>
+          <p style="font-weight: bold; padding-top: 15px;margin: 0"> Master in Business Administration</p>
+        </td>
+        </tr>
+      <tr>
+        <td>
+          <p style="font-weight: bold;margin: 0"> Washington Sycip Graduate School of Business</p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+        <p style="font-weight: bold;margin: 0"> <% if(@student.term == '1') %>First Term<% else %>Second Term<% end %> Grades SY 2013-2014 </p>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <table cellpadding="5" style="margin-bottom: 20px">
+    <tr>
+      <p style="padding-top:15px;">
+      <td> <%= @student.number %></td>
+      </p>
+      <p>
+      <td>
+        Section
+      </td>
+      </p>
+      <td>LT</td>
+    </tr>
+    <tr>
+      <p>
+      <td style="font-size: 22px; padding-bottom: 5px; font-weight: bold; width: 430px"><%= @student.name %></td>
+      </p>
+      <td style="text-align: center">
+        <b style="font-size: 18px;"><%= @student.cohort %></b>
+      </td>
+      <p>
+      <td style="text-align: center">
+        <b style="font-size: 18px;"><%= @student.learning_team %></b>
+      </td>
+      </p>
+    </tr>
+  </table>
 
   <table class="csstable" style="width: 520px">
     <tr>
       <td>Subject Code</td>
       <td>Subject</td>
-      <td>Unit</td>
+      <td>Units</td>
       <td>Grade</td>
       <td>What if</td>
     </tr>
@@ -52,18 +68,18 @@
             <%= Subject.where(subject_code: grade.temporary_subject_code).last.try(:description) %>
           </td>
           <td style="text-align: center">
-            <% if grade.units.present? and !(['Pass', 'Fail'].include?(grade.grade))%>
-            <% $divide = $divide + grade.units.to_f%>
-                <% end %>
+            <% if grade.units.present? and !(['Pass', 'Fail'].include?(grade.grade)) %>
+                <% $divide = $divide + grade.units.to_f %>
+            <% end %>
             <%= grade.units %>
-            <input type="hidden" name="units<%= $count%>" value="<%= grade.units %>" id="units<%= $count%>">
+            <input type="hidden" name="units<%= $count %>" value="<%= grade.units %>" id="units<%= $count %>">
           </td>
           <td style="text-align: center">
             <input type="hidden" name="subject<%= $count %>" value="<%= grade.temporary_subject_code %>" id="subject<%= $count %>">
             <%= grade.grade %>
             <input type="hidden" style="width:50px; height:15px; text-align: center;" class="gradeorig grade-orig<%= $count %>" name="" readonly value="<%= grade.grade %>"/>
           </td>
-          <td style="text-align: center">
+          <td style="text-align: center;padding-top: 5px">
             <% if grade.grade == 'Pass' or grade.grade == 'Fail' or grade.grade == nil %>
                 <input style="width:50px; height:15px; text-align: center;" type="text" name="" class="grade grade-new<%= $count %>" id="grade-new" readonly/>
             <% else %>
@@ -76,7 +92,7 @@
     </tr>
     <tr>
       <td style="border: none">&nbsp;</td>
-      <td style="font-weight: bold;border: none">Term GPA</td>
+      <td style="font-weight: bold;border: none">Term <%= @student.term %> GPA</td>
       <td border: none>&nbsp;</td>
       <td style="color: #ff0000; text-align: center;">
         <input id="final-orig" style="font-size: 19px;
@@ -102,9 +118,8 @@
       </td>
     </tr>
   </table>
-  <table width="410px">
-
-  </table>
+  <p style="padding-top: 35px"><b>Mr. Rey R. Reyes</b><br/>Executive Managing Director<br/>Student Services Admissions and Registration
+  </p>
   <input type="hidden" name="count" value="<%= $count %>" id="count">
 
 </div>

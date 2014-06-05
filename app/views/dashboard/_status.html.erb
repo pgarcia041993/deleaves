@@ -1,46 +1,78 @@
 <script type="text/javascript">
     $(document).ready(function () {
-            $('#select-status').val(<%= params['cohort'] %>)
+        $('#select-status').val(<%= params['cohort'] %>)
     })
 </script>
-
-<div class="row no-print" style="margin-top: 35px;">
-
-  <div class="span1">
-    <b>Cohort</b>
-  </div>
-  <div class="span4">
-    <select name="cohort" id="select-status">
-      <option value="8" <% if params['cohort'] == '8' %> selected <% end %>>Cohort 8</option>
-      <option value="9" <% if params['cohort'] == '9' %> selected <% end %>>Cohort 9</option>
-      <option value="10" <% if params['cohort'] == '10' %> selected <% end %>>Cohort 10</option>
-
-    </select>
-  </div>
-  <div class="span1">
-    <b>Term</b>
-  </div>
-  <div class="span4">
-    <select name="term" id="select-status">
-      <option value="1">Term 1</option>
-      <option value="2">Term 2 </option>
-      <option value="3">Term 3</option>
-
-    </select>
-  </div>
-  <div class="span2">
-    <input class="btn btn-info" type="submit"/>
-  </div>
-
+<div style="position: absolute; margin-left: 20px; margin-top: 25px;  font-size: 17px;">
+<table>
+  <tr>
+      <td>Cohort:</td>
+      <td><b style="color: blue">
+        <% if params['cohort'] == ''%>
+            9
+        <% else %>
+        <%= params['cohort'] %>
+         <% end %>
+      </b>
+      </td>
+  </tr>
+  <tr>
+      <td>Term:</td>
+      <td><b style="color: blue"><%= params['term'] %></b></td>
+  </tr>
+  <tr>
+    <td><a href="/excel/export" class="btn btn-warning">Export to Excel</a></td>
+  </tr>
+</table>
 </div>
-<%if params['cohort'] == '0' || params['cohort'].blank?
-  else
+<div class="row no-print" style="margin-top: 15px; padding-top: 20px;margin: 0 auto 0 auto;width: 350px;">
+  <table>
+    <tr>
+      <div class="span1">
+        <td><b>Cohort:</b></td>
+      </div>
+      <div class="span4">
+        <td style="padding-left: 10px;">
+          <select name="cohort" id="select-status">
+            <option value="8"
+                    <% if params['cohort'] == '8' %>
+                    <% end %> >Cohort 8
+            </option>
+            <option value="9"
+                    <% if params['cohort'] == '9' %>
+                    <% end %> selected="selected">Cohort 9
+            </option>
+            <option value="10"
+                    <% if params['cohort'] == '10' %>
+                    <% end %> >Cohort 10
+            </option>
+          </select>
+        </td>
+      </div>
+    </tr>
+    <tr>
+      <div class="span1">
+        <td><b>Term:</b></td>
+      </div>
+      <div class="span4">
+        <td style="padding-left: 10px;">
+          <select name="term" id="select-status">
+            <option value="1">Term 1</option>
+            <option value="2">Term 2</option>
+            <option value="3">Term 3</option>
+          </select>
+        </td>
+      </div>
+    </tr>
+    <tr>
+      <div class="span2">
+        <td>&nbsp;</td>
+        <td style="padding-left: 10px;"><input style="width: 150px;" class="btn btn-info" type="submit"/></td>
+      </div>
+    </tr>
+  </table>
+</div>
+<% if params['cohort'] == '0' || params['cohort'].blank?
+   else
 %>
-
-    <div class="span1"><b>Cohort <%= params['cohort'] %></b> </div> <div class="span1"> <b>Term<%= params['term'] %></b></div>
-
-    <div class="span1">
-      <a href="/excel/export" class="btn btn-warning">Export Tool</a>
-    </div>
-
 <% end %>
