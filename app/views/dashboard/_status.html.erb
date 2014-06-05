@@ -75,4 +75,11 @@
 <% if params['cohort'] == '0' || params['cohort'].blank?
    else
 %>
+
+    <div class="span1"><b>Cohort <%= params['cohort'] %></b> </div> <div class="span1"> <b>Term<%= params['term'] %></b></div>
+
+    <div class="span1">
+      <a href="/excel/export?cohort=<%= params['cohort'] %>&term=<%= params['term'] %>" class="btn btn-warning">Export Tool</a>
+    </div>
+
 <% end %>

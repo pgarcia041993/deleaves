@@ -16,26 +16,33 @@
 <script type="text/javascript">
     $(function() {
         $("table")
+
                 .tablesorterPager({container: $("#pager")});
     });
 </script>
 <div id="applicant-detail">
-  <table class="tablesorter" id="TheTable" border="1" style="width: 800px;margin: 0 auto 0 auto">
+  <table class="tablesorter" id="TheTable" border="1" style="width: 1100px;margin: 0 auto 0 auto">
     <thead>
     <th>SN</th>
     <th>Name</th>
-
     <% if params['term'] == '2' %>
     <th>T1 GPA</th>
     <th>T1 Rank</th>
     <th>T1 Fail</th>
+        <th>T2 GPA</th>
+        <th>T2 Rank</th>
+        <th>T2 Fail</th>
     <th>Y1 GPA</th>
-    <th>Y1 FAIL<th>
+    <th>Y1 RANK</th>
+    <th>Y1 FAIL</th>
+    <% else %>
+        <th>GPA </th>
+        <th>Rank </th>
+        <th>Fail </th>
      <% end %>
-    <th>LT</th>
-    <th>GPA </th>
-    <th>Rank </th>
-    <th>Fail </th>
+
+
+     <th>LT</th>
     <th>Scholar </th>
     </thead>
     <% @applicants.each do |applicant| %>
@@ -46,23 +53,24 @@
               <!--<td><%= applicant.cohort %></td>-->
               <% if params['term'] == '2' %>
 
-                  <td> <%=$gpa = Student.where(name: applicant.name , cohort: applicant.cohort ,term: '1' ).last.try(:gpa) %></td>
+                  <td> <%= Student.where(name: applicant.name , cohort: applicant.cohort ,term: '1' ).last.try(:gpa) %></td>
                   <td> <%= Student.where(name: applicant.name , cohort: applicant.cohort ,term: '1' ).last.try(:rank) %></td>
                   <td> <%=$fail = Student.where(name: applicant.name , cohort: applicant.cohort ,term: '1' ).last.try(:fail) %></td>
-                  <!--get term 1 ID-->
-                  <% $past_id=Student.where(name: applicant.name , cohort: applicant.cohort ,term: '1' ).last.try(:id); %>
-                  <!--now get the Units-->
-                  <% @get_unit=Grade.where(student_id: $past_id) %>
-                  <% $total=0; %>
-                  <% @get_unit.each do |grades| %>
-                      <% if grades.grade.present? and !(['Pass', 'Fail'].include?(grades.grade)) %>
-                          <% $total = $total + grades.units.to_f %>
-                      <% end %>
-                  <% end %>
-                  <% $tgpa = ($gpa.to_f * $total) + (applicant.gpa.to_f * $total ) %>
-                  <%$gg = $tgpa / ($total * 2 ) %>
-                  <td><%=number_with_precision($gg, precision: 2)%></td>
+                <!--T2-->
+                  <td style="width: 60px;text-align: center;"><%= applicant.gpa %></td>
+                  <td style="width: 50px;text-align: center;"><%= applicant.rank %></td>
+                  <td style="width: 50px;text-align: center;"><%= applicant.fail %></td>
+                <!--end of T2-->
+                  <!--Start of Y1-->
+                  <td><%= applicant.tgpa %></td>
+                  <td><%= applicant.trank %></td>
                   <td><%= $fail.to_i + applicant.fail.to_i %></td>
+                <!--End of Y1-->
+                  <% else  %>
+                  <td style="width: 60px;text-align: center;"><%= applicant.gpa %></td>
+                  <td style="width: 50px;text-align: center;"><%= applicant.rank %></td>
+                  <td style="width: 50px;text-align: center;"><%= applicant.fail %></td>
+
               <% end  %>
               <td style="width: 50px;text-align: center;"><%= applicant.learning_team %></td>
               <!--end of term 2-->
@@ -70,12 +78,14 @@
               <td style="width: 60px;text-align: center;"><%= applicant.gpa %></td>
               <td style="width: 50px;text-align: center;"><%= applicant.rank %></td>
               <td style="width: 50px;text-align: center;"><%= applicant.fail %></td>
+
+
               <td style="width: 65px;text-align: center;"><%= applicant.scholar %></td>
             </tr>
         <% end %>
     <% end %>
   </table>
-  <div id="pager" class="pager" style="margin-top: 80px;margin-left: 385px;" >
+  <div id="pager" class="pager" style="margin-top: -1250px;margin-left: 385px;" >
     <form>
       <img src="/assets/addons/first.png" class="first">
       <img src="/assets/addons/prev.png" class="prev">
@@ -83,7 +93,7 @@
       <img src="/assets/addons/next.png" class="next">
       <img src="/assets/addons/last.png" class="last">
       <select class="pagesize" style="width: 80px;">
-        <option selected="selected" value="10">10</option>
+
         <option value="100">100</option>
         <option value="50">50</option>
         <option value="30">30</option>
@@ -96,5 +106,6 @@
         <option value="3">3</option>
       </select>
     </form>
+
   </div>
 </div>
