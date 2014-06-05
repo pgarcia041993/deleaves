@@ -45,27 +45,32 @@
 </script>
 
 <br/>
-<div class="alert alert-info row-fluid">
-  <div class="span8">
-    <p style="position: relative; top: 5px;">Master in Business Administration</p>
-    <p style="position: relative; top: 5px;">Cohort <%= params['cohort'] %>  Term  <%= params['term'] %></p>
-
+  <div class="span8" style="font-size: 17px">
+    <p style="position: relative;top: 5px; font-weight: bold;font-size: 21px;  width: 600px;">
+      Master in Business Administration
+    </p>
+    <table>
+      <tr>
+        <td>Cohort:</td>
+        <td><b style="color: blue">
+          <%= params['cohort'] %>
+        </b>
+        </td>
+      </tr>
+      <tr>
+        <td>Term:</td>
+        <td><b style="color: blue"><%= params['term'] %></b></td>
+      </tr>
+    </table>
   </div>
-  <div class="span4">
-    <span id="button-marker"/>
-  </div>
-
-</div>
-
-
 
 <div id="applicant-detail">
-  <table class="tablesorter" id="TheTable" border="1" style="width: 1100px;margin: 0 auto 0 auto">
+  <table class="tablesorter styletable" id="TheTable" border="1" style="width: 1800px;margin: 0 auto 0 auto;padding-top: 20px">
     <thead>
-    <th>SN</th>
+    <th style="width: 200px">SN</th>
     <th>Name</th>
     <% if params['term'] == '2' %>
-        <th>T1 GPA</th>
+        <th >T1 GPA</th>
         <th>T1 Rank</th>
         <th>T1 Fail</th>
         <th>T2 GPA</th>
@@ -97,18 +102,18 @@
               <!--<td><%= applicant.cohort %></td>-->
               <% if params['term'] == '2' %>
 
-                  <td> <%= Student.where(name: applicant.name , cohort: applicant.cohort ,term: '1' ).last.try(:gpa) %></td>
-                  <td> <%= Student.where(name: applicant.name , cohort: applicant.cohort ,term: '1' ).last.try(:rank) %></td>
-                  <td> <%=$fail = Student.where(name: applicant.name , cohort: applicant.cohort ,term: '1' ).last.try(:fail) %></td>
+                  <td style="text-align: center"> <%= Student.where(name: applicant.name , cohort: applicant.cohort ,term: '1' ).last.try(:gpa) %></td>
+                  <td style="text-align: center"> <%= Student.where(name: applicant.name , cohort: applicant.cohort ,term: '1' ).last.try(:rank) %></td>
+                  <td style="text-align: center"> <%=$fail = Student.where(name: applicant.name , cohort: applicant.cohort ,term: '1' ).last.try(:fail) %></td>
                   <!--T2-->
                   <td style="width: 60px;text-align: center;"><%= applicant.gpa %></td>
                   <td style="width: 50px;text-align: center;"><%= applicant.rank %></td>
                   <td style="width: 50px;text-align: center;"><%= applicant.fail %></td>
                   <!--end of T2-->
                   <!--Start of Y1-->
-                  <td><%= applicant.tgpa %></td>
-                  <td><%= applicant.trank %></td>
-                  <td><%= $fail.to_i + applicant.fail.to_i %></td>
+                  <td style="text-align: center"><%= applicant.tgpa %></td>
+                  <td style="text-align: center"><%= applicant.trank %></td>
+                  <td style="text-align: center"><%= $fail.to_i + applicant.fail.to_i %></td>
                   <!--End of Y1-->
               <% else  %>
                   <td style="width: 60px;text-align: center;"><%= applicant.gpa %></td>
@@ -120,9 +125,9 @@
               <!--end of term 2-->
               <td style="width: 65px;text-align: center;"><%= applicant.scholar %></td>
 
-              <%	 @getgrade = Grade.where(student_id: applicant.id) %>
+              <% @getgrade = Grade.where(student_id: applicant.id) %>
               <% @getgrade.each do |output| %>
-                  <td> <%= output.grade %></td>
+                  <td style="text-align: center"> <%= output.grade %></td>
               <% end %>
             </tr>
         <% end %>

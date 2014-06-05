@@ -3,29 +3,30 @@
         $('#select-status').val(<%= params['cohort'] %>)
     })
 </script>
-<div style="position: absolute; margin-left: 20px; margin-top: 25px;  font-size: 17px;">
-<table>
-  <tr>
-      <td>Cohort:</td>
-      <td><b style="color: blue">
-        <% if params['cohort'] == ''%>
-            9
-        <% else %>
-        <%= params['cohort'] %>
-         <% end %>
-      </b>
-      </td>
-  </tr>
-  <tr>
-      <td>Term:</td>
-      <td><b style="color: blue"><%= params['term'] %></b></td>
-  </tr>
-  <tr>
-    <td><a href="/excel/export" class="btn btn-warning">Export to Excel</a></td>
-  </tr>
-</table>
-</div>
-<div class="row no-print" style="margin-top: 15px; padding-top: 20px;margin: 0 auto 0 auto;width: 350px;">
+<div class="row no-print" style="margin-top: 15px; padding-top: 20px;margin: 0 auto 0 auto;width: 350px;position: relative">
+  <div style="position: absolute; margin-left: -370px;  margin-top: 7px; font-size: 17px;">
+    <table>
+      <tr>
+        <td>Cohort:</td>
+        <td><b style="color: blue">
+          <% if params['cohort'] == ''%>
+              9
+          <% else %>
+              <%= params['cohort'] %>
+          <% end %>
+        </b>
+        </td>
+      </tr>
+      <tr>
+        <td>Term:</td>
+        <td><b style="color: blue"><%= params['term'] %></b></td>
+      </tr>
+      <tr>
+        <td><a href="/excel/export?cohort=<%= params['cohort'] %>&term=<%= params['term'] %>"  class="btn btn-warning">Export to Excel</a></td>
+      </tr>
+    </table>
+  </div>
+
   <table>
     <tr>
       <div class="span1">
@@ -75,11 +76,4 @@
 <% if params['cohort'] == '0' || params['cohort'].blank?
    else
 %>
-
-    <div class="span1"><b>Cohort <%= params['cohort'] %></b> </div> <div class="span1"> <b>Term<%= params['term'] %></b></div>
-
-    <div class="span1">
-      <a href="/excel/export?cohort=<%= params['cohort'] %>&term=<%= params['term'] %>" class="btn btn-warning">Export Tool</a>
-    </div>
-
 <% end %>
