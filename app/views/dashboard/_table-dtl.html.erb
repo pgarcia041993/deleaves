@@ -5,16 +5,17 @@
 <script type="text/javascript" src="/assets/jquery-latest.js"></script>
 <script type="text/javascript" src="/assets/jquery.tablesorter.js"></script>
 <script type="text/javascript" src="/assets/jquery.tablesorter.pager.js"></script>
-<script type="text/javascript" id="js">$(document).ready(function() {
-    // call the tablesorter plugin
-    $("table").tablesorter({
-        // change the multi sort key from the default shift to alt button
-        sortMultiSortKey: 'altKey'
+<script type="text/javascript" id="js">
+    $(document).ready(function () {
+        // call the tablesorter plugin
+        $("table").tablesorter({
+            // change the multi sort key from the default shift to alt button
+            sortMultiSortKey: 'altKey'
+        });
     });
-});
 </script>
 <script type="text/javascript">
-    $(function() {
+    $(function () {
         $("table")
 
                 .tablesorterPager({container: $("#pager")});
@@ -26,52 +27,52 @@
     <th>SN</th>
     <th>Name</th>
     <% if params['term'] == '2' %>
-    <th>T1 GPA</th>
-    <th>T1 Rank</th>
-    <th>T1 Fail</th>
+        <th>T1 GPA</th>
+        <th>T1 Rank</th>
+        <th>T1 Fail</th>
         <th>T2 GPA</th>
         <th>T2 Rank</th>
         <th>T2 Fail</th>
-    <th>Y1 GPA</th>
-    <th>Y1 RANK</th>
-    <th>Y1 FAIL</th>
+        <th>Y1 GPA</th>
+        <th>Y1 RANK</th>
+        <th>Y1 FAIL</th>
     <% else %>
-        <th>GPA </th>
-        <th>Rank </th>
-        <th>Fail </th>
-     <% end %>
+        <th>GPA</th>
+        <th>Rank</th>
+        <th>Fail</th>
+    <% end %>
 
 
-     <th>LT</th>
-    <th>Scholar </th>
+    <th>LT</th>
+    <th>Scholar</th>
     </thead>
     <% @applicants.each do |applicant| %>
         <% if applicant.present? %>
             <tr>
               <td style="width: 140px;text-align: center;"><%= applicant.number %></td>
-              <td style="width: 280px;"><%=  link_to applicant.name, applicant,:target => 'new'     %></td>
+              <td style="width: 280px;"><%= link_to applicant.name, applicant, :target => 'new' %></td>
               <!--<td><%= applicant.cohort %></td>-->
               <% if params['term'] == '2' %>
 
-                  <td style="text-align: center"> <%= Student.where(name: applicant.name , cohort: applicant.cohort ,term: '1' ).last.try(:gpa) %></td>
-                  <td style="text-align: center"> <%= Student.where(name: applicant.name , cohort: applicant.cohort ,term: '1' ).last.try(:rank) %></td>
-                  <td style="text-align: center"> <%=$fail = Student.where(name: applicant.name , cohort: applicant.cohort ,term: '1' ).last.try(:fail) %></td>
-                <!--T2-->
+                  <td style="text-align: center"> <%= Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:gpa) %></td>
+                  <td style="text-align: center"> <%= Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:rank) %></td>
+                  <td style="text-align: center"> <%= $fail = Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:fail) %></td>
+                  <!--T2-->
                   <td style="width: 60px;text-align: center;"><%= applicant.gpa %></td>
                   <td style="width: 50px;text-align: center;"><%= applicant.rank %></td>
                   <td style="width: 50px;text-align: center;"><%= applicant.fail %></td>
-                <!--end of T2-->
+                  <!--end of T2-->
                   <!--Start of Y1-->
                   <td style="text-align: center"><%= applicant.tgpa %></td>
                   <td style="text-align: center"><%= applicant.trank %></td>
                   <td style="text-align: center"><%= $fail.to_i + applicant.fail.to_i %></td>
-                <!--End of Y1-->
-                  <% else  %>
+                  <!--End of Y1-->
+              <% else %>
                   <td style="width: 60px;text-align: center;"><%= applicant.gpa %></td>
                   <td style="width: 50px;text-align: center;"><%= applicant.rank %></td>
                   <td style="width: 50px;text-align: center;"><%= applicant.fail %></td>
 
-              <% end  %>
+              <% end %>
               <td style="width: 50px;text-align: center;"><%= applicant.learning_team %></td>
               <!--end of term 2-->
 
@@ -80,7 +81,7 @@
         <% end %>
     <% end %>
   </table>
-  <div id="pager" class="pager" style="position: inherit !important" >
+  <div id="pager" class="pager" style="position: inherit !important">
     <form>
       <img src="/assets/addons/first.png" class="first">
       <img src="/assets/addons/prev.png" class="prev">
@@ -101,6 +102,5 @@
         <option value="3">3</option>
       </select>
     </form>
-
   </div>
 </div>

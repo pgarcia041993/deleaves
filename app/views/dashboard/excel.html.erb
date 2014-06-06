@@ -27,6 +27,10 @@
         });
     })
 </script>
+<link rel="stylesheet" type="text/css" href="/assets/normalize.css"/>
+<link rel="stylesheet" type="text/css" href="/assets/demo.css"/>
+<link rel="stylesheet" type="text/css" href="/assets/component.css"/>
+
 <link rel="stylesheet" href="/assets/blue/style.css" type="text/css" id="" media="print, projection, screen">
 <!--<link rel="stylesheet" href="/assets/navpager.css" type="text/css">-->
 <link rel="stylesheet" href="/assets/jquery.tablesorter.pager.css" type="text/css">
@@ -34,77 +38,81 @@
 <script type="text/javascript" src="/assets/jquery-latest.js"></script>
 <script type="text/javascript" src="/assets/jquery.tablesorter.js"></script>
 <script type="text/javascript" src="/assets/jquery.tablesorter.pager.js"></script>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-throttle-debounce/1.1/jquery.ba-throttle-debounce.min.js"></script>
+<script src="js/jquery.stickyheader.js"></script>
+<script src="/assets/jquery.stickyheader.js"></script>
+
+<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 <script type="text/javascript" id="js">
-    $(document).ready(function() {
-    // call the tablesorter plugin
-    $("table").tablesorter({
-        // change the multi sort key from the default shift to alt button
-        sortMultiSortKey: 'altKey'
+    $(document).ready(function () {
+        // call the tablesorter plugin
+        $("table").tablesorter({
+            // change the multi sort key from the default shift to alt button
+            sortMultiSortKey: 'altKey'
+        });
     });
-});
 </script>
 
 <br/>
-  <div class="span8" style="font-size: 17px">
-    <p style="position: relative;top: 5px; font-weight: bold;font-size: 21px;  width: 600px;">
-      Master in Business Administration
-    </p>
-    <table>
-      <tr>
-        <td>Cohort:</td>
-        <td><b style="color: blue">
-          <%= params['cohort'] %>
-        </b>
-        </td>
-      </tr>
-      <tr>
-        <td>Term:</td>
-        <td><b style="color: blue"><%= params['term'] %></b></td>
-      </tr>
-    </table>
-  </div>
+<div class="span8" style="font-size: 17px">
+  <p style="position: relative;top: 5px; font-weight: bold;font-size: 21px;  width: 600px;">
+    Master in Business Administration
+  </p>
+  Cohort:
+  <b style="color: blue">
+    <%= params['cohort'] %>
+  </b>
+  <br/>
+  Term:
+  <b style="color: blue"><%= params['term'] %></b>
+</div>
 
 <div id="applicant-detail">
-  <table class="tablesorter styletable" id="TheTable" border="1" style="width: 1800px;margin: 0 auto 0 auto;padding-top: 20px">
+  <table class="overflow-y">
     <thead>
-    <th style="width: 200px">SN</th>
-    <th>Name</th>
-    <% if params['term'] == '2' %>
-        <th >T1 GPA</th>
-        <th>T1 Rank</th>
-        <th>T1 Fail</th>
-        <th>T2 GPA</th>
-        <th>T2 Rank</th>
-        <th>T2 Fail</th>
-        <th>Y1 GPA</th>
-        <th>Y1 RANK</th>
-        <th>Y1 FAIL</th>
-    <% else %>
-        <th>GPA </th>
-        <th>Rank </th>
-        <th>Fail </th>
-    <% end %>
+    <tr>
+      <th class="a">SN</th>
+      <th class="b">Name</th>
+      <% if params['term'] == '2' %>
+          <th>T1 GPA</th>
+          <th>T1 Rank</th>
+          <th>T1 Fail</th>
+          <th>T2 GPA</th>
+          <th>T2 Rank</th>
+          <th>T2 Fail</th>
+          <th>Y1 GPA</th>
+          <th>Y1 RANK</th>
+          <th>Y1 FAIL</th>
+      <% else %>
+          <th>GPA</th>
+          <th>Rank</th>
+          <th>Fail</th>
+      <% end %>
 
 
-    <th>LT</th>
-    <th>Scholar </th>
-    <% $stud = Student.where(cohort: params['cohort']).first.try(:id) %>
-    <% @grade = Grade.where(student_id: $stud) %>
-    <% @grade.each do |sub|	  %>
-        <th><%= sub.temporary_subject_code  %></th>
-    <% end %>
+      <th>LT</th>
+      <th>Scholar</th>
+      <% $stud = Student.where(cohort: params['cohort']).first.try(:id) %>
+      <% @grade = Grade.where(student_id: $stud) %>
+      <% @grade.each do |sub| %>
+          <th><%= sub.temporary_subject_code %></th>
+      <% end %>
+    </tr>
     </thead>
+    <tbody>
     <% @online_applications.each do |applicant| %>
         <% if applicant.present? %>
             <tr>
-              <td style="width: 140px;text-align: center;"><%= applicant.number %></td>
-              <td style="width: 280px;"><%=  link_to applicant.name, applicant,:target => 'new'     %></td>
+              <th style="width: 140px;text-align: center;"><%= applicant.number %></th>
+              <th style="width: 280px; color: #ffffff"><%= link_to applicant.name, applicant, :target => 'new', style: 'color:white;' %></th>
               <!--<td><%= applicant.cohort %></td>-->
               <% if params['term'] == '2' %>
 
-                  <td style="text-align: center"> <%= Student.where(name: applicant.name , cohort: applicant.cohort ,term: '1' ).last.try(:gpa) %></td>
-                  <td style="text-align: center"> <%= Student.where(name: applicant.name , cohort: applicant.cohort ,term: '1' ).last.try(:rank) %></td>
-                  <td style="text-align: center"> <%=$fail = Student.where(name: applicant.name , cohort: applicant.cohort ,term: '1' ).last.try(:fail) %></td>
+                  <td style="text-align: center"> <%= Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:gpa) %></td>
+                  <td style="text-align: center"> <%= Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:rank) %></td>
+                  <td style="text-align: center"> <%= $fail = Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:fail) %></td>
                   <!--T2-->
                   <td style="width: 60px;text-align: center;"><%= applicant.gpa %></td>
                   <td style="width: 50px;text-align: center;"><%= applicant.rank %></td>
@@ -115,12 +123,12 @@
                   <td style="text-align: center"><%= applicant.trank %></td>
                   <td style="text-align: center"><%= $fail.to_i + applicant.fail.to_i %></td>
                   <!--End of Y1-->
-              <% else  %>
+              <% else %>
                   <td style="width: 60px;text-align: center;"><%= applicant.gpa %></td>
                   <td style="width: 50px;text-align: center;"><%= applicant.rank %></td>
                   <td style="width: 50px;text-align: center;"><%= applicant.fail %></td>
 
-              <% end  %>
+              <% end %>
               <td style="width: 50px;text-align: center;"><%= applicant.learning_team %></td>
               <!--end of term 2-->
               <td style="width: 65px;text-align: center;"><%= applicant.scholar %></td>
@@ -130,8 +138,9 @@
                   <td style="text-align: center"> <%= output.grade %></td>
               <% end %>
             </tr>
+            </tbody>
         <% end %>
     <% end %>
-  </table>
+    </table>
 
 </div>
