@@ -99,6 +99,12 @@ tbody tr:hover {
     color: #eee;
 }
 
+.sticky-wrap .sticky-intersect th:nth-child(2) {
+    background-color: #666;
+    color: #eee;
+    width: 268px;
+}
+
 .sticky-wrap td,
 .sticky-wrap th {
     box-sizing: border-box;

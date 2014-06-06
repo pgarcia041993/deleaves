@@ -22,7 +22,7 @@
         <td><b style="color: blue"><%= params['term'] %></b></td>
       </tr>
       <tr>
-        <td><a href="/excel/export?cohort=<%= params['cohort'] %>&term=<%= params['term'] %>"  class="btn btn-warning">Export to Excel</a></td>
+        <td><a href="/excel/export?cohort=<%= params['cohort'] %>&term=<%= params['term'] %>"  class="btn btn-warning">Detailed View</a></td>
       </tr>
     </table>
   </div>
@@ -34,6 +34,7 @@
       </div>
       <div class="span4">
         <td style="padding-left: 10px;">
+          <form name="cohort">
           <select name="cohort" id="select-status">
             <option value="8"
                     <% if params['cohort'] == '8' %>
@@ -41,13 +42,14 @@
             </option>
             <option value="9"
                     <% if params['cohort'] == '9' %>
-                    <% end %> selected="selected">Cohort 9
+                    <% end %> >Cohort 9
             </option>
             <option value="10"
                     <% if params['cohort'] == '10' %>
                     <% end %> >Cohort 10
             </option>
           </select>
+          </form>
         </td>
       </div>
     </tr>

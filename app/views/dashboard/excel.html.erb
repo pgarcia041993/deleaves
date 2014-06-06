@@ -39,12 +39,12 @@
 <script type="text/javascript" src="/assets/jquery.tablesorter.js"></script>
 <script type="text/javascript" src="/assets/jquery.tablesorter.pager.js"></script>
 
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-throttle-debounce/1.1/jquery.ba-throttle-debounce.min.js"></script>
-<script src="js/jquery.stickyheader.js"></script>
-<script src="/assets/jquery.stickyheader.js"></script>
-
 <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+
+<!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<script src="/assets/jquery.stickyheader.js"></script>
+-->
 <script type="text/javascript" id="js">
     $(document).ready(function () {
         // call the tablesorter plugin
@@ -70,6 +70,7 @@
 </div>
 
 <div id="applicant-detail">
+  <div style="overflow-y: auto;height: 500px;    position: absolute;  margin-top: 100px; width: 1160px;">
   <table class="overflow-y">
     <thead>
     <tr>
@@ -101,7 +102,7 @@
       <% end %>
     </tr>
     </thead>
-    <tbody>
+    <!-- <tbody> -->
     <% @online_applications.each do |applicant| %>
         <% if applicant.present? %>
             <tr>
@@ -138,9 +139,9 @@
                   <td style="text-align: center"> <%= output.grade %></td>
               <% end %>
             </tr>
-            </tbody>
+            <!-- </tbody> -->
         <% end %>
     <% end %>
     </table>
-
+  </div>
 </div>
