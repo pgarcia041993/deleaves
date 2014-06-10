@@ -37,15 +37,15 @@
           <form name="cohort">
           <select name="cohort" id="select-status">
             <option value="8"
-                    <% if params['cohort'] == '8' %>
+                    <% if params['cohort'] == '8' %> selected
                     <% end %> >Cohort 8
             </option>
             <option value="9"
-                    <% if params['cohort'] == '9' %>
+                    <% if params['cohort'] == '9' %> selected
                     <% end %> >Cohort 9
             </option>
             <option value="10"
-                    <% if params['cohort'] == '10' %>
+                    <% if params['cohort'] == '10' %> selected
                     <% end %> >Cohort 10
             </option>
           </select>
@@ -60,9 +60,15 @@
       <div class="span4">
         <td style="padding-left: 10px;">
           <select name="term" id="select-status">
-            <option value="1">Term 1</option>
-            <option value="2">Term 2</option>
-            <option value="3">Term 3</option>
+            <option value="1"   <% if params['term'] == '1' %> selected
+                    <% end %> >Cohort 8>Term 1
+            </option>
+            <option value="2" <% if params['term'] == '2' %> selected
+                    <% end %> >Term 2
+            </option>
+            <option value="3"<% if params['term'] == '3' %> selected
+                    <% end %> >Term 3
+            </option>
           </select>
         </td>
       </div>
