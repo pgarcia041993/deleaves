@@ -1,5 +1,5 @@
 ,,,,,,,,,1.5,2,1,2,1,2,2,2,2.5,2,1
-StudentID,Name,Cohort,Term,LT,GPA,Rank,Fail,Scholar,LOB,QA,MicroEcon,MicroEcon,FM1,MCP,OM,MPO,MM,MOL,BN
+StudentID,Name,Cohort,Term,LT,GPA,Rank,Fail,Scholar,LOB,QA,MicroEcon1,MicroEcon2,FM1,MCP,OM,MPO,MM,MOL,BN
 12148137-8,Aadishpa,8,1,7,3.88,8,,,4,3.75,3.5,4.25,4,3.75,3.75,3.5,4.25,Pass,Pass
 12147699-8,"Abbas, Syed Samar",8,1,1,3.41,109,,,3,3,3.5,3.25,3.5,3,4.25,3,4,Pass,Pass
 12147755-8,Abhishek,8,1,11,3.45,102,,,3,3.25,3.5,3.25,3.25,3.5,3.75,3.25,4,Pass,Pass
