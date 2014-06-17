@@ -6,15 +6,14 @@
 <div class="row no-print" style="margin-top: 15px; padding-top: 20px;margin: 0 auto 0 auto;width: 350px;position: relative">
   <div style="position: absolute; margin-left: -370px;  margin-top: 7px; font-size: 17px;">
     <table>
+      <% if params['cohort'].present?%>
+
       <tr>
         <td>Cohort:</td>
         <td><b style="color: blue">
-          <% if params['cohort'] == ''%>
-              9
-          <% else %>
+
               <%= params['cohort'] %>
-          <% end %>
-        </b>
+         </b>
         </td>
       </tr>
       <tr>
@@ -24,6 +23,7 @@
       <tr>
         <td><a href="/excel/export?cohort=<%= params['cohort'] %>&term=<%= params['term'] %>"  class="btn btn-warning">Detailed View</a></td>
       </tr>
+          <%   end %>
     </table>
   </div>
 
