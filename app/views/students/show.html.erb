@@ -80,7 +80,7 @@
             <input type="hidden" style="width:50px; height:15px; text-align: center;" class="gradeorig grade-orig<%= $count %>" name="" readonly value="<%= grade.grade %>"/>
           </td>
           <td style="text-align: center;padding-top: 5px">
-            <% if grade.grade == 'Pass' or grade.grade == 'Fail' or grade.grade == nil %>
+            <% if grade.grade == 'PASS' or grade.grade == 'Pass' or grade.grade == 'FAIL' or grade.grade == nil %>
                 <input style="width:50px; height:15px; text-align: center;" type="text" name="" class="grade grade-new<%= $count %>" id="grade-new" readonly/>
             <% else %>
                 <input style="width:50px; height:15px; text-align: center;" type="text" name="" class="grade grade-new<%= $count %>" id="grade-new"/>
