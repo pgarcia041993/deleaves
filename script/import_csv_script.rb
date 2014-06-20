@@ -3,8 +3,8 @@ headers = {}
 students = {}
 names= {}
 units = []
-Student.delete_all
-Grade.delete_all
+#Student.delete_all
+#Grade.delete_all
 
 counter = 0
 CSV.foreach("#{Rails.root}/#{ARGV[0]}") do |row|

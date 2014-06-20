@@ -10,12 +10,9 @@
       <tr>
         <td>Cohort:</td>
         <td><b style="color: blue">
-          <% if params['cohort'] == ''%>
-              9
-          <% else %>
+
               <%= params['cohort'] %>
-          <% end %>
-        </b>
+         </b>
         </td>
       </tr>
       <tr>
@@ -62,17 +59,14 @@
       <div class="span4">
         <td style="padding-left: 10px;">
           <select name="term" id="select-status">
-            <option value="1"
-                    <% if params['term'] == '1' %> selected
-                    <% end %> > Term 1
+            <option value="1"   <% if params['term'] == '1' %> selected
+                    <% end %> >Term 1
             </option>
-            <option value="2"
-                    <% if params['term'] == '2' %> selected
-                    <% end %> > Term 2
+            <option value="2" <% if params['term'] == '2' %> selected
+                    <% end %> >Term 2
             </option>
-            <option value="3"
-                    <% if params['term'] == '3' %> selected
-                    <% end %> > Term 3
+            <option value="3"<% if params['term'] == '3' %> selected
+                    <% end %> >Term 3
             </option>
           </select>
         </td>
@@ -86,4 +80,7 @@
     </tr>
   </table>
 </div>
-
+<% if params['cohort'] == '0' || params['cohort'].blank?
+   else
+%>
+<% end %>
