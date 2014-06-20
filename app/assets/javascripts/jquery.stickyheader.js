@@ -40,7 +40,7 @@ $(function(){
 				.find('tbody td').remove();
 
 			$stickyInsct.html('<thead><tr><th>'+$t.find('thead th:first-child').html() + '</th><th>' + $t.find('thead th:nth-child(2)').html() +'</th></tr></thead>');
-
+//            $stickyInsct.html('<thead><tr><th>'+$t.find('thead th:first-child').html() + '</th></tr></thead>');
 			// Set widths
 			var setWidths = function () {
 					$t
