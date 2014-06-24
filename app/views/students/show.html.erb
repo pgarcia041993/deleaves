@@ -64,8 +64,8 @@
             <% $count = $count + 1 %>
         <% end %>
         <tr>
-          <td><%= grade.temporary_subject_code %></td>
-          <td>
+          <td style="padding-left: 10px"><%= grade.temporary_subject_code %></td>
+          <td style="padding-left: 10px">
             <%= Subject.where(subject_code: grade.temporary_subject_code).last.try(:description) %>
           </td>
           <td style="text-align: center">
