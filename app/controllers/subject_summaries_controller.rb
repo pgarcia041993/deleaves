@@ -1,6 +1,7 @@
 class SubjectSummariesController < ApplicationController
   # GET /subject_summaries
-  # GET /subject_summaries.json
+  # GET /su
+  # bject_summaries.json
   def index
     @subject_summaries = SubjectSummary.all
 
