@@ -27,10 +27,10 @@ div.container {
 
 h1 {
 	font-family: 'HelveticaNeue-UltraLight', 'Helvetica Neue UltraLight', 'ralewaythin', 'Helvetica Neue', Arial, Helvetica, sans-serif;
-    font-weight: 100;
-    letter-spacing: 1px;
-	font-size: 3em;
-	line-height: 1em;
+    /*font-weight: 100;*/
+    /*letter-spacing: 1px;*/
+	/*font-size: 3em;*/
+	/*line-height: 1em;*/
 }
 
 h1 span {

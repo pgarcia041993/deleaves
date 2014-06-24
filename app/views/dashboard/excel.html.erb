@@ -66,7 +66,6 @@
     /* Ensure that the demo table scrolls */
     th, td { white-space: nowrap; }
     div.dataTables_wrapper {
-        padding-top:20px;
         width: 1140px;
         margin: 0 auto;
     }
@@ -123,7 +122,7 @@
   <b style="color: blue"><%= params['term'] %></b>
 </div>
 
-<a href="../dashboard" class="btn btn-warning" style="position: absolute; margin-top: 80px;margin-left: -620px; width: 70px;">Back</a>
+<a href="../dashboard" class="btn btn-warning" style="margin-top: 80px;margin-left: -620px; width: 70px;">Back</a>
 
 <div id="applicant-detail">
   <div>
@@ -190,7 +189,7 @@
     <% @online_applications.each do |applicant| %>
         <% if applicant.present? %>
             <tr>
-              <td><%= link_to applicant.name, applicant, :target => 'new', style: 'color:black;' %></td>
+              <td><%= link_to applicant.name, applicant, :target => 'new', style: 'color:rgb(0, 34, 141);' %></td>
               <td><%= applicant.number %></td>
               <!--<td><%= applicant.cohort %></td>-->
               <% if params['term'] == '2' %>
@@ -220,7 +219,11 @@
 
               <% @getgrade = Grade.where(student_id: applicant.id) %>
               <% @getgrade.each do |output| %>
+                  <% if output.grade.to_f < 3.0 and !(['Pass', 'Fail'].include?(output.grade))%>
+                  <td style="text-align: center; color: #ff0000;font-weight: bold"> <%= output.grade %></td>
+                  <% else %>
                   <td style="text-align: center"> <%= output.grade %></td>
+                  <% end %>
               <% end %>
             </tr>
 
