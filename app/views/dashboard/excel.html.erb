@@ -200,10 +200,10 @@
                   <!--T2-->
                   <td style="width: 60px;text-align: center;"><%= applicant.gpa %></td>
                   <td style="width: 50px;text-align: center;"><%= applicant.rank %></td>
-                  <td style="width: 50px;text-align: center;"><% if  applicant.fail.blank? %>
-                    &nbsp;
+                  <td style="width: 50px;text-align: center;"><% if  applicant.fail.present? %>
+                        <%=	 applicant.fail %>
                         <%	 else  %>
-                    <%=	 applicant.fail %>
+                    &nbsp; &nbsp; &nbsp;
                         <% end %>
                   </td>
                   <!--end of T2-->
@@ -215,17 +215,17 @@
               <% else %>
                   <td style="width: 60px;text-align: center;"><%= applicant.gpa %></td>
                   <td style="width: 50px;text-align: center;"><%= applicant.rank %></td>
-                  <td style="width: 50px;text-align: center;"><% if  applicant.fail.blank? %>
-                        &nbsp;
-                    <%	 else  %>
+                  <td style="width: 50px;text-align: center;"><% if  applicant.fail.present? %>
                         <%=	 applicant.fail %>
+                    <%	 else  %>
+                        &nbsp; &nbsp; &nbsp;
                     <% end %></td>
 
               <% end %>
               <td style="width: 50px;text-align: center;"><%= applicant.learning_team %></td>
               <!--end of term 2-->
               <td style="width: 65px;text-align: center;"> <% if  applicant.scholar.blank? %>
-                    &nbsp;
+                    &nbsp;   &nbsp;   &nbsp;
                 <%	 else  %>
                     <%=	 applicant.scholar %>
                     <% end %></td>
