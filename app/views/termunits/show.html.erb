@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Cohort:</b>
+  <%= @termunit.cohort %>
+</p>
+
+<p>
+  <b>Term:</b>
+  <%= @termunit.term %>
+</p>
+
+<p>
+  <b>Units:</b>
+  <%= @termunit.units %>
+</p>
+
+
+<%= link_to 'Edit', edit_termunit_path(@termunit) %> |
+<%= link_to 'Back', termunits_path %>
