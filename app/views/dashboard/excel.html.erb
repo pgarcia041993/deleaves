@@ -200,7 +200,12 @@
                   <!--T2-->
                   <td style="width: 60px;text-align: center;"><%= applicant.gpa %></td>
                   <td style="width: 50px;text-align: center;"><%= applicant.rank %></td>
-                  <td style="width: 50px;text-align: center;"><%= applicant.fail %></td>
+                  <td style="width: 50px;text-align: center;"><% if  applicant.fail.blank? %>
+                    &nbsp;
+                        <%	 else  %>
+                    <%=	 applicant.fail %>
+                        <% end %>
+                  </td>
                   <!--end of T2-->
                   <!--Start of Y1-->
                   <td style="text-align: center"><%= applicant.tgpa %></td>
@@ -210,12 +215,20 @@
               <% else %>
                   <td style="width: 60px;text-align: center;"><%= applicant.gpa %></td>
                   <td style="width: 50px;text-align: center;"><%= applicant.rank %></td>
-                  <td style="width: 50px;text-align: center;"><%= applicant.fail %></td>
+                  <td style="width: 50px;text-align: center;"><% if  applicant.fail.blank? %>
+                        &nbsp;
+                    <%	 else  %>
+                        <%=	 applicant.fail %>
+                    <% end %></td>
 
               <% end %>
               <td style="width: 50px;text-align: center;"><%= applicant.learning_team %></td>
               <!--end of term 2-->
-              <td style="width: 65px;text-align: center;"><%= applicant.scholar %></td>
+              <td style="width: 65px;text-align: center;"> <% if  applicant.scholar.blank? %>
+                    &nbsp;
+                <%	 else  %>
+                    <%=	 applicant.scholar %>
+                    <% end %></td>
 
               <% @getgrade = Grade.where(student_id: applicant.id) %>
               <% @getgrade.each do |output| %>
