@@ -27,27 +27,27 @@
         });
     })
 </script>
-<link rel="stylesheet" type="text/css" href="/assets/normalize.css"/>
-<link rel="stylesheet" type="text/css" href="/assets/demo.css"/>
-<link rel="stylesheet" type="text/css" href="/assets/component.css"/>
 
-<link rel="stylesheet" href="/assets/blue/style.css" type="text/css" id="" media="print, projection, screen">
+<!--<link rel="stylesheet" type="text/css" href="/assets/normalize.css"/>-->
+<!--<link rel="stylesheet" type="text/css" href="/assets/demo.css"/>-->
+<!--<link rel="stylesheet" type="text/css" href="/assets/component.css"/>-->
+
+<!--<link rel="stylesheet" href="/assets/blue/style.css" type="text/css" id="" media="print, projection, screen">-->
 <!--<link rel="stylesheet" href="/assets/navpager.css" type="text/css">-->
-<link rel="stylesheet" href="/assets/jquery.tablesorter.pager.css" type="text/css">
+<!--<link rel="stylesheet" href="/assets/jquery.tablesorter.pager.css" type="text/css">-->
 
-<script type="text/javascript" src="/assets/jquery-latest.js"></script>
-<script type="text/javascript" src="/assets/jquery.tablesorter.js"></script>
-<script type="text/javascript" src="/assets/jquery.tablesorter.pager.js"></script>
+<!--<script type="text/javascript" src="/assets/jquery-latest.js"></script>-->
 
-<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-throttle-debounce/1.1/jquery.ba-throttle-debounce.min.js"></script>
-<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<!--<script src="/assets/jquery.stickyheader.js"></script>-->
+<!--<script type="text/javascript" src="/assets/jquery.tablesorter.js"></script>-->
+<!--<script type="text/javascript" src="/assets/jquery.tablesorter.pager.js"></script>-->
 
-<!--
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-<script src="/assets/jquery.stickyheader.js"></script>
--->
+<!--<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-throttle-debounce/1.1/jquery.ba-throttle-debounce.min.js"></script>-->
+<!--<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>-->
 
-<script type="text/javascript" id="js">
+<!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>-->
+
+<!--<script type="text/javascript" id="js">
     $(document).ready(function () {
         // call the tablesorter plugin
         $("table").tablesorter({
@@ -55,6 +55,58 @@
             sortMultiSortKey: 'altKey'
         });
     });
+</script>-->
+
+<link rel="stylesheet" type="text/css" href="/assets/jquery.dataTables.css">
+<link rel="stylesheet" type="text/css" href="/assets/dataTables.fixedColumns.css">
+<link rel="stylesheet" type="text/css" href="/assets/shCore.css">
+<link rel="stylesheet" type="text/css" href="/assets/demo1.css">
+<style type="text/css" class="init">
+
+    /* Ensure that the demo table scrolls */
+    th, td { white-space: nowrap; }
+    div.dataTables_wrapper {
+        padding-top:20px;
+        width: 1140px;
+        margin: 0 auto;
+    }
+
+</style>
+<script type="text/javascript" language="javascript" src="/assets/jquery.js"></script>
+<script type="text/javascript" language="javascript" src="/assets/jquery.dataTables.js"></script>
+<script type="text/javascript" language="javascript" src="/assets/dataTables.fixedColumns.js"></script>
+<script type="text/javascript" language="javascript" src="/assets/shCore.js"></script>
+<script type="text/javascript" language="javascript" src="/assets/demo.js"></script>
+<script type="text/javascript" language="javascript" class="init">
+
+
+    $(document).ready(function() {
+        // Setup - add a text input to each footer cell
+        $('#example tfoot th').each( function () {
+            var title = $('#example thead th').eq( $(this).index() ).text();
+            $(this).html( '<input type="hidden" placeholder="Search '+title+'" />' );
+        } );
+
+        // DataTable
+        var table = $('#example').DataTable( {
+            scrollY:        "300px",
+            scrollX:        true,
+            scrollCollapse: true,
+            paging:         false
+        } );
+
+        // Apply the filter
+        table.columns().indexes().each( function (idx) {
+            $( 'input', table.column( idx ).footer() ).on( 'keyup change', function () {
+                table
+                        .column( idx )
+                        .search( this.value )
+                        .draw();
+            } );
+        } );
+
+        new $.fn.dataTable.FixedColumns( table );
+    } );
 </script>
 
 <br/>
@@ -71,13 +123,15 @@
   <b style="color: blue"><%= params['term'] %></b>
 </div>
 
+<a href="../dashboard" class="btn btn-warning" style="position: absolute; margin-top: 80px;margin-left: -620px; width: 70px;">Back</a>
+
 <div id="applicant-detail">
-  <div style="overflow-y: auto;height: 500px;    position: absolute;  margin-top: 100px; width: 1160px;">
-  <table class="overflow-y">
+  <div>
+  <table id="example" class="stripe row-border order-column" cellspacing="0" width="100%">
     <thead>
-    <tr>
-      <th class="a">SN</th>
-      <th class="b">Name</th>
+    <tr style="background-color: #00228d;color:#ffffff;">
+      <th>Name</th>
+      <th>SN</th>
       <% if params['term'] == '2' %>
           <th>T1 GPA</th>
           <th>T1 Rank</th>
@@ -93,8 +147,6 @@
           <th>Rank</th>
           <th>Fail</th>
       <% end %>
-
-
       <th>LT</th>
       <th>Scholar</th>
       <% $stud = Student.where(cohort: params['cohort']).first.try(:id) %>
@@ -104,12 +156,42 @@
       <% end %>
     </tr>
     </thead>
-    <!-- <tbody> -->
+
+    <tfoot>
+    <tr>
+      <th>Name</th>
+      <th>SN</th>
+      <% if params['term'] == '2' %>
+          <th>T1 GPA</th>
+          <th>T1 Rank</th>
+          <th>T1 Fail</th>
+          <th>T2 GPA</th>
+          <th>T2 Rank</th>
+          <th>T2 Fail</th>
+          <th>Y1 GPA</th>
+          <th>Y1 RANK</th>
+          <th>Y1 FAIL</th>
+      <% else %>
+          <th>GPA</th>
+          <th>Rank</th>
+          <th>Fail</th>
+      <% end %>
+      <th>LT</th>
+      <th>Scholar</th>
+      <% $stud = Student.where(cohort: params['cohort']).first.try(:id) %>
+      <% @grade = Grade.where(student_id: $stud) %>
+      <% @grade.each do |sub| %>
+          <th><%= sub.temporary_subject_code %></th>
+      <% end %>
+    </tr>
+    </tfoot>
+
+     <tbody>
     <% @online_applications.each do |applicant| %>
         <% if applicant.present? %>
             <tr>
-              <th style="width: 140px;text-align: center;"><%= applicant.number %></th>
-              <th style="width: 280px; color: #ffffff"><%= link_to applicant.name, applicant, :target => 'new', style: 'color:white;' %></th>
+              <td><%= link_to applicant.name, applicant, :target => 'new', style: 'color:black;' %></td>
+              <td><%= applicant.number %></td>
               <!--<td><%= applicant.cohort %></td>-->
               <% if params['term'] == '2' %>
 
@@ -141,9 +223,10 @@
                   <td style="text-align: center"> <%= output.grade %></td>
               <% end %>
             </tr>
-            <!-- </tbody> -->
+
         <% end %>
     <% end %>
+     </tbody>
     </table>
   </div>
 </div>
