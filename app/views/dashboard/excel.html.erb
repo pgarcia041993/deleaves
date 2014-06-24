@@ -148,7 +148,7 @@
       <% end %>
       <th>LT</th>
       <th>Scholar</th>
-      <% $stud = Student.where(cohort: params['cohort']).first.try(:id) %>
+      <% $stud = Student.where(cohort: params['cohort'] , term: params['term']).first.try(:id) %>
       <% @grade = Grade.where(student_id: $stud) %>
       <% @grade.each do |sub| %>
           <th><%= sub.temporary_subject_code %></th>
