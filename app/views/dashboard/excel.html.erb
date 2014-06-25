@@ -28,75 +28,75 @@
     })
 </script>
 <!--start script ni mar-->
-<link rel="stylesheet" href="/assets/blue/style.css" type="text/css" id="" media="print, projection, screen">
-<!--<link rel="stylesheet" href="/assets/navpager.css" type="text/css">-->
-<link rel="stylesheet" href="/assets/jquery.tablesorter.pager.css" type="text/css">
+<!--<link rel="stylesheet" href="/assets/blue/style.css" type="text/css" id="" media="print, projection, screen">-->
+<!--&lt;!&ndash;<link rel="stylesheet" href="/assets/navpager.css" type="text/css">&ndash;&gt;-->
+<!--<link rel="stylesheet" href="/assets/jquery.tablesorter.pager.css" type="text/css">-->
 
-<script type="text/javascript" src="/assets/jquery-latest.js"></script>
-<script type="text/javascript" src="/assets/jquery.tablesorter.js"></script>
-<script type="text/javascript" src="/assets/jquery.tablesorter.pager.js"></script>
-<script type="text/javascript" id="js">
-    $(document).ready(function () {
-        // call the tablesorter plugin
-        $("table").tablesorter({
-            // change the multi sort key from the default shift to alt button
-            sortMultiSortKey: 'altKey'
-        });
-    });
-</script>
+<!--<script type="text/javascript" src="/assets/jquery-latest.js"></script>-->
+<!--<script type="text/javascript" src="/assets/jquery.tablesorter.js"></script>-->
+<!--<script type="text/javascript" src="/assets/jquery.tablesorter.pager.js"></script>-->
+<!--<script type="text/javascript" id="js">-->
+<!--//    $(document).ready(function () {-->
+<!--//        // call the tablesorter plugin-->
+<!--//        $("table").tablesorter({-->
+<!--//            // change the multi sort key from the default shift to alt button-->
+<!--//            sortMultiSortKey: 'altKey'-->
+<!--//        });-->
+<!--//    });-->
+<!--</script>-->
 <!--end of script ni mar-->
 
 <!--script ni patrick-->
-<!--<link rel="stylesheet" type="text/css" href="/assets/jquery.dataTables.css">-->
-<!--<link rel="stylesheet" type="text/css" href="/assets/dataTables.fixedColumns.css">-->
-<!--<link rel="stylesheet" type="text/css" href="/assets/shCore.css">-->
-<!--<link rel="stylesheet" type="text/css" href="/assets/demo1.css">-->
-<!--<style type="text/css" class="init">-->
+<link rel="stylesheet" type="text/css" href="/assets/jquery.dataTables.css">
+<link rel="stylesheet" type="text/css" href="/assets/dataTables.fixedColumns.css">
+<link rel="stylesheet" type="text/css" href="/assets/shCore.css">
+<link rel="stylesheet" type="text/css" href="/assets/demo1.css">
+<style type="text/css" class="init">
 
-    <!--/* Ensure that the demo table scrolls */-->
-    <!--/*th, td { white-space: nowrap; }*/-->
-    <!--/*div.dataTables_wrapper {*/-->
-        <!--/*width: 1140px;*/-->
-        <!--/*margin: 0 auto;*/-->
-    <!--/*}*/-->
+    /* Ensure that the demo table scrolls */
+    /*th, td { white-space: nowrap; }*/
+    /*div.dataTables_wrapper {*/
+        /*width: 1140px;*/
+        /*margin: 0 auto;*/
+    /*}*/
 
-<!--</style>-->
-<!--<script type="text/javascript" language="javascript" src="/assets/jquery.js"></script>-->
-<!--<script type="text/javascript" language="javascript" src="/assets/jquery.dataTables.js"></script>-->
-<!--<script type="text/javascript" language="javascript" src="/assets/dataTables.fixedColumns.js"></script>-->
-<!--<script type="text/javascript" language="javascript" src="/assets/shCore.js"></script>-->
-<!--<script type="text/javascript" language="javascript" src="/assets/demo.js"></script>-->
-<!--<script type="text/javascript" language="javascript" class="init">-->
+</style>
+<script type="text/javascript" language="javascript" src="/assets/jquery.js"></script>
+<script type="text/javascript" language="javascript" src="/assets/jquery.dataTables.js"></script>
+<script type="text/javascript" language="javascript" src="/assets/dataTables.fixedColumns.js"></script>
+<script type="text/javascript" language="javascript" src="/assets/shCore.js"></script>
+<script type="text/javascript" language="javascript" src="/assets/demo.js"></script>
+<script type="text/javascript" language="javascript" class="init">
 
 
-<!--//    $(document).ready(function() {-->
-<!--//        // Setup - add a text input to each footer cell-->
-<!--//        $('#example tfoot th').each( function () {-->
-<!--//            var title = $('#example thead th').eq( $(this).index() ).text();-->
-<!--//            $(this).html( '<input type="hidden" placeholder="Search '+title+'" />' );-->
-<!--//        } );-->
-<!--//-->
-<!--//        // DataTable-->
-<!--//        var table = $('#example').DataTable( {-->
-<!--//            scrollY:        "300px",-->
-<!--//            scrollX:        true,-->
-<!--//            scrollCollapse: true,-->
-<!--//            paging:         false-->
-<!--//        } );-->
-<!--//-->
-<!--//        // Apply the filter-->
-<!--//        table.columns().indexes().each( function (idx) {-->
-<!--//            $( 'input', table.column( idx ).footer() ).on( 'keyup change', function () {-->
-<!--//                table-->
-<!--//                        .column( idx )-->
-<!--//                        .search( this.value )-->
-<!--//                        .draw();-->
-<!--//            } );-->
-<!--//        } );-->
-<!--//-->
-<!--//        new $.fn.dataTable.FixedColumns( table );-->
-<!--//    } );-->
-<!--</script>-->
+    $(document).ready(function() {
+        // Setup - add a text input to each footer cell
+        $('#example tfoot th').each( function () {
+            var title = $('#example thead th').eq( $(this).index() ).text();
+            $(this).html( '<input type="hidden" placeholder="Search '+title+'" />' );
+        } );
+
+        // DataTable
+        var table = $('#example').DataTable( {
+            scrollY:        "300px",
+            scrollX:        true,
+            scrollCollapse: true,
+            paging:         false
+        } );
+
+        // Apply the filter
+        table.columns().indexes().each( function (idx) {
+            $( 'input', table.column( idx ).footer() ).on( 'keyup change', function () {
+                table
+                        .column( idx )
+                        .search( this.value )
+                        .draw();
+            } );
+        } );
+
+        new $.fn.dataTable.FixedColumns( table );
+    } );
+</script>
 <!--script ni patrick ends-->
 <br/>
 <div class="span8" style="font-size: 17px">
@@ -116,7 +116,7 @@
 
 <div id="applicant-detail">
   <div>
-    <table class="tablesorter styletable" id="TheTable" border="1" style="width: 100%;margin: 0 auto 0 auto">
+    <table class="stripe row-border order-column" id="example" cellspacing="0" width="100%">
     <thead>
     <tr style="background-color: #00228d;color:#ffffff;">
       <th>Name</th>
@@ -167,7 +167,7 @@
       <% end %>
       <th>LT</th>
       <th>Scholar</th>
-      <% $stud = Student.where(cohort: params['cohort']).first.try(:id) %>
+      <% $stud = Student.where(cohort: params['cohort'] , term: params['term']).first.try(:id) %>
       <% @grade = Grade.where(student_id: $stud) %>
       <% @grade.each do |sub| %>
           <th><%= sub.temporary_subject_code %></th>
