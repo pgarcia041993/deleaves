@@ -11,6 +11,14 @@ $(document).ready(function (e) {
     $('#end-date-label').hide();
     $('#highest-degree-obtained').hide();
 
+    $('input.grade').change(function (e) {
+        var selector_name = this.id;
+        var new_grade = $('#' + selector_name).val();
+        $.ajax({
+            url: '/updates/grade/' + selector_name + "?grade=" + new_grade
+        }).responseText;
+    })
+
     //BEGIN PATRICKS SCRIPT ******************************************************************************************************************
     window.onload = compute();
     window.onload = compute2();

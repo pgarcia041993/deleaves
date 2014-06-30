@@ -27,36 +27,26 @@
         });
     })
 </script>
-
-<!--<link rel="stylesheet" type="text/css" href="/assets/normalize.css"/>-->
-<!--<link rel="stylesheet" type="text/css" href="/assets/demo.css"/>-->
-<!--<link rel="stylesheet" type="text/css" href="/assets/component.css"/>-->
-
+<!--start script ni mar-->
 <!--<link rel="stylesheet" href="/assets/blue/style.css" type="text/css" id="" media="print, projection, screen">-->
-<!--<link rel="stylesheet" href="/assets/navpager.css" type="text/css">-->
+<!--\<link rel="stylesheet" href="/assets/navpager.css" type="text/css">-->
 <!--<link rel="stylesheet" href="/assets/jquery.tablesorter.pager.css" type="text/css">-->
 
 <!--<script type="text/javascript" src="/assets/jquery-latest.js"></script>-->
-
-<!--<script src="/assets/jquery.stickyheader.js"></script>-->
 <!--<script type="text/javascript" src="/assets/jquery.tablesorter.js"></script>-->
 <!--<script type="text/javascript" src="/assets/jquery.tablesorter.pager.js"></script>-->
+<!--<script type="text/javascript" id="js">-->
+<!--//    $(document).ready(function () {-->
+<!--//        // call the tablesorter plugin-->
+<!--//        $("table").tablesorter({-->
+<!--//            // change the multi sort key from the default shift to alt button-->
+<!--//            sortMultiSortKey: 'altKey'-->
+<!--//        });-->
+<!--//    });-->
+<!--</script>-->
+<!--end of script ni mar-->
 
-<!--<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-throttle-debounce/1.1/jquery.ba-throttle-debounce.min.js"></script>-->
-<!--<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>-->
-
-<!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>-->
-
-<!--<script type="text/javascript" id="js">
-    $(document).ready(function () {
-        // call the tablesorter plugin
-        $("table").tablesorter({
-            // change the multi sort key from the default shift to alt button
-            sortMultiSortKey: 'altKey'
-        });
-    });
-</script>-->
-
+<!--script ni patrick-->
 <link rel="stylesheet" type="text/css" href="/assets/jquery.dataTables.css">
 <link rel="stylesheet" type="text/css" href="/assets/dataTables.fixedColumns.css">
 <link rel="stylesheet" type="text/css" href="/assets/shCore.css">
@@ -64,11 +54,11 @@
 <style type="text/css" class="init">
 
     /* Ensure that the demo table scrolls */
-    th, td { white-space: nowrap; }
-    div.dataTables_wrapper {
-        width: 1140px;
-        margin: 0 auto;
-    }
+    /*th, td { white-space: nowrap; }*/
+    /*div.dataTables_wrapper {*/
+        /*width: 1140px;*/
+        /*margin: 0 auto;*/
+    /*}*/
 
 </style>
 <script type="text/javascript" language="javascript" src="/assets/jquery.js"></script>
@@ -107,7 +97,7 @@
         new $.fn.dataTable.FixedColumns( table );
     } );
 </script>
-
+<!--script ni patrick ends-->
 <br/>
 <div class="span8" style="font-size: 17px">
   <p style="position: relative;top: 5px; font-weight: bold;font-size: 21px;  width: 600px;">
@@ -126,7 +116,7 @@
 
 <div id="applicant-detail">
   <div>
-  <table id="example" class="stripe row-border order-column" cellspacing="0" width="100%">
+    <table class="stripe row-border order-column" id="example" cellspacing="0" width="100%">
     <thead>
     <tr style="background-color: #00228d;color:#ffffff;">
       <th>Name</th>
@@ -189,8 +179,8 @@
     <% @online_applications.each do |applicant| %>
         <% if applicant.present? %>
             <tr>
-              <td><%= link_to applicant.name, applicant, :target => 'new', style: 'color:rgb(0, 34, 141);' %></td>
-              <td><%= applicant.number %></td>
+              <td style="white-space: nowrap;"><%= link_to applicant.name, applicant, :target => 'new', style: 'color:rgb(0, 34, 141);' %></td>
+              <td style="white-space: nowrap;"><%= applicant.number %></td>
               <!--<td><%= applicant.cohort %></td>-->
               <% if params['term'] == '2' %>
 
@@ -200,7 +190,12 @@
                   <!--T2-->
                   <td style="width: 60px;text-align: center;"><%= applicant.gpa %></td>
                   <td style="width: 50px;text-align: center;"><%= applicant.rank %></td>
-                  <td style="width: 50px;text-align: center;"><%= applicant.fail %> </td>
+                  <td style="width: 50px;text-align: center;"><% if  applicant.fail.present? %>
+                        <%=	 applicant.fail %>
+                        <%	 else  %>
+                    &nbsp; &nbsp; &nbsp;
+                        <% end %>
+                  </td>
                   <!--end of T2-->
                   <!--Start of Y1-->
                   <td style="text-align: center"><%= applicant.tgpa %></td>
@@ -210,11 +205,21 @@
               <% else %>
                   <td style="width: 60px;text-align: center;"><%= applicant.gpa %></td>
                   <td style="width: 50px;text-align: center;"><%= applicant.rank %></td>
-                  <td style="width: 50px;text-align: center;"><%= applicant.fail %></td>
+                  <td style="width: 50px;text-align: center;"><% if  applicant.fail.present? %>
+                        <%=	 applicant.fail %>
+                    <%	 else  %>
+                        &nbsp; &nbsp; &nbsp;
+                    <% end %></td>
+
               <% end %>
               <td style="width: 50px;text-align: center;"><%= applicant.learning_team %></td>
               <!--end of term 2-->
-              <td style="width: 65px;text-align: center;"><%= applicant.scholar %></td>
+              <td style="width: 65px;text-align: center;"> <% if  applicant.scholar.blank? %>
+                    &nbsp;   &nbsp;   &nbsp;
+                <%	 else  %>
+                    <%=	 applicant.scholar %>
+                    <% end %></td>
+
               <% @getgrade = Grade.where(student_id: applicant.id) %>
               <% @getgrade.each do |output| %>
                   <% if output.grade.to_f < 3.0 and !(['Pass', 'Fail'].include?(output.grade))%>
