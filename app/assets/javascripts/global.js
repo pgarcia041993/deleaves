@@ -116,6 +116,7 @@ $(document).ready(function (e) {
             var final_grade = add_grade / $('#divide').val();
 //            parseFloat($('#final-new').val(parseFloat(final_grade).toFixed(2)));
             document.getElementById('final-new').innerHTML = final_grade.toFixed(2);
+            document.getElementById('final-new2').innerHTML = final_grade.toFixed(2);
         }
         else {
             alert('invalid input');
