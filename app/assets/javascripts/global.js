@@ -4,7 +4,7 @@ $(document).ready(function (e) {
     $('li#step-1 a').addClass('highlighted');
     $('div#page-2').hide();
     $('div#page-3').hide();
-   $('#page-title').text("Class Card");
+    $('#page-title').text("Class Card");
     $('.pagination').hide();
     $('#page-title').append($('.pagination'));
     $('#termination-date-form').hide();
@@ -60,13 +60,14 @@ $(document).ready(function (e) {
             for (var i = 1; i <= get_count; i++) {
                 var grade = $('.grade-new' + i).val() === '' ? $('.grade-orig' + i).val() : $('.grade-new' + i).val();
                 if (grade === '' || grade === 'Pass' || grade === 'Fail') {
-                    add_grade  += 0;
+                    add_grade += 0;
                 } else {
                     var get_subject_unit = $('#units' + i).val();
                     if($('.grade-new' + i).val() < 3.0){
                         count_fail = parseFloat(count_fail) + parseFloat(get_subject_unit);
                     }
                     add_grade  += parseFloat(grade) * get_subject_unit;
+                   
                 }
                 parseFloat($('.grade-new' + i).val(grade));
             }
