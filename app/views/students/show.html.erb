@@ -85,7 +85,7 @@
             <% if grade.grade == 'PASS' or grade.grade == 'Pass' or grade.grade == 'FAIL' or grade.grade == nil %>
                 <input style="width:50px; height:15px; text-align: center;" type="text" name="" class="grade grade-new<%= $count %>" id="<%= grade.id %>" readonly/>
             <% else %>
-                <input style="width:50px; height:15px; text-align: center;" type="text" name="" class="grade grade-new<%= $count %>" id="<%= grade.id %> value="<%= grade %>"/>
+                <input style="width:50px; height:15px; text-align: center;" type="text" name="" class="grade grade-new<%= $count %>" id="<%= grade.id %>" value="<%= grade.whatif %>"/>
             <% end %>
           </td>
     <% end %>
