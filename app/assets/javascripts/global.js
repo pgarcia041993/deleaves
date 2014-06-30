@@ -4,12 +4,20 @@ $(document).ready(function (e) {
     $('li#step-1 a').addClass('highlighted');
     $('div#page-2').hide();
     $('div#page-3').hide();
-   $('#page-title').text("Class Card");
+    $('#page-title').text("Class Card");
     $('.pagination').hide();
     $('#page-title').append($('.pagination'));
     $('#termination-date-form').hide();
     $('#end-date-label').hide();
     $('#highest-degree-obtained').hide();
+
+    $('input.grade').change(function (e) {
+        var selector_name = this.id;
+        var new_grade = $('#' + selector_name).val();
+        $.ajax({
+            url: '/updates/grade/' + selector_name + "?grade=" + new_grade
+        }).responseText;
+    })
 
     //BEGIN PATRICKS SCRIPT ******************************************************************************************************************
     window.onload = compute();
@@ -22,10 +30,10 @@ $(document).ready(function (e) {
             for (var i = 1; i <= get_count; i++) {
                 var grade = $('.grade-new' + i).val() === '' ? $('.grade-orig' + i).val() : $('.grade-new' + i).val();
                 if (grade === '' || grade === 'Pass' || grade === 'Fail') {
-                    add_grade  += 0;
+                    add_grade += 0;
                 } else {
                     var get_subject_unit = $('#units' + i).val();
-                    add_grade  += parseFloat(grade) * get_subject_unit;
+                    add_grade += parseFloat(grade) * get_subject_unit;
                 }
                 parseFloat($('.grade-new' + i).val(grade));
             }
@@ -45,10 +53,10 @@ $(document).ready(function (e) {
             for (var i = 1; i <= get_count; i++) {
                 var grade = $('.grade-new' + i).val() === '' ? $('.grade-orig' + i).val() : $('.grade-new' + i).val();
                 if (grade === '' || grade === 'Pass' || grade === 'Fail') {
-                    add_grade  += 0;
+                    add_grade += 0;
                 } else {
                     var get_subject_unit = $('#units' + i).val();
-                    add_grade  += parseFloat(grade) * get_subject_unit;
+                    add_grade += parseFloat(grade) * get_subject_unit;
                 }
                 parseFloat($('.grade-new' + i).val(grade));
             }
