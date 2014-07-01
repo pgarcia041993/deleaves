@@ -52,14 +52,14 @@ end
 
 
 students.each_pair do |student, scores|
-  puts(student)
+  #puts(student)
 
 
     student_search = Student.create!(number: student.keys.first, name: student[student.keys.first][:name], cohort: student[student.keys.first][:cohort], term: student[student.keys.first][:term], learning_team: student[student.keys.first][:lt], gpa: student[student.keys.first][:gpa], rank: student[student.keys.first][:rank], fail: student[student.keys.first][:fail], scholar: student[student.keys.first][:scholar])
 
   scores.each_pair do |subject, score|
     Grade.create!(student_id: student_search.id, temporary_subject_code: subject, grade: score[1], units: score[0])
-    puts "#{student.keys.first} : #{student[student.keys.first]} : #{subject} : #{score}"
+    #puts "#{student.keys.first} : #{student[student.keys.first]} : #{subject} : #{score}"
   end
 end
 
