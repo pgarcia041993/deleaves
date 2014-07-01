@@ -135,7 +135,7 @@
 
                     <!--T1-->
                     <% if applicant.tgpa.to_f < 3.0 %>
-                        <td style="text-align: center;color: #ff0000"> <%= Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:gpa) %></td>
+                        <td style="text-align: center;color: #ff0000"><%= Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:gpa) %></td>
                     <% else %>
                         <td style="text-align: center"> <%= Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:gpa) %></td>
                     <% end %>
@@ -159,7 +159,7 @@
                             <!---->
                     <%else %>
 
-                        <% if applicant.tgpa.to_f < 3.0 %>
+                        <% if applicant.gpa.to_f < 3.0 %>
                             <td style="text-align: center;color: #ff0000">
                                 <%= applicant.gpa %></td>
                            <% else %>
