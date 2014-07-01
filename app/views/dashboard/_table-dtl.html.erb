@@ -55,7 +55,6 @@
         <% if applicant.present? %>
               <td style="width: 140px;text-align: center;"><%= applicant.number %></td>
               <td style="width: 280px;"><%= link_to applicant.name, applicant, :target => 'new', :style => "color:rgb(0, 34, 141);" %></td>
-              <!--<td><%= applicant.cohort %></td>-->
               <% if params['term'] == '2' %>
                   <!--Start of Y1-->
                   <% if applicant.tgpa.to_f < 3.0 %>

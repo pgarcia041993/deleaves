@@ -23,7 +23,7 @@ $(document).ready(function (e) {
     window.onload = compute();
     window.onload = compute2();
 
-    $('.grade').focusout(function () {
+    $('.grade').change(function () {
         var count_fail = 0
         var add_grade = 0;
         var get_count = $('#count').val();
