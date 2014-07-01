@@ -46,10 +46,13 @@ $(document).ready(function (e) {
             document.getElementById('final-new').innerHTML = final_grade.toFixed(2);
             $('.gpa_new').text(final_grade.toFixed(2));
             var selector_name = $('#student-id').val();
-            $.ajax({
-                url: '/updates/gpa/' + selector_name + "?gpa=" + final_grade.toFixed(2)
+            var jsonData = $.ajax({
+                url: '/updates/gpa/' + selector_name + "?gpa=" + final_grade.toFixed(2),
+                async: false
             }).responseText;
 
+            var jsonResponse = JSON.parse(jsonData);
+            $('#new-rank-place').text(jsonResponse['new_rank']);
             $('#count_fail').val(count_fail);
             document.getElementById('count_fail').innerHTML = count_fail;
         }
