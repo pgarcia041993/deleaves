@@ -62,7 +62,7 @@ $(document).ready(function (e) {
             $('#spinner-rank').hide();
 
             $.ajax({
-                url: '/updates/fail/' + selector_name + "?gpa=" + count_fail,
+                url: '/updates/fail/' + selector_name + "?fail=" + count_fail,
                 async: false
             }).responseText;
 

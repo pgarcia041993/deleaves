@@ -76,17 +76,17 @@
                         <td style="text-align: center;color: #000000"><%= $total %></td>
                     <% end %>
                     <td style="text-align: center"><%= applicant.trank %></td>
-                    <td style="text-align: center"><%= $term1_fail.to_i + applicant.fail.to_i %></td>
+                    <td style="text-align: center"><%= $term1_fail.to_f + applicant.whatif_fail.to_f %></td>
                     <!--End of Y1-->
                     <!--T2-->
                     <% if applicant.whatif_gpa.to_f < 3.0 %>
                         <td style="text-align: center;color: #ff0000">
                           <%= applicant.whatif_gpa %></td>
                     <% else %>
-                        <td style="text-align: center;color: #000000"><%= applicant.whatif_gpa %></td>
+                        <td style="text-align: center;color: #000000"><%= applicant.whatif_gpa.to_s %></td>
                     <% end %>
                     <td style="width: 50px;text-align: center;"><%= applicant.whatif_rank %></td>
-                    <td style="width: 50px;text-align: center;"><%= applicant.fail %></td>
+                    <td style="width: 50px;text-align: center;"><%= applicant.whatif_fail %></td>
                     <!--end of T2-->
 
                     <!--T1-->
