@@ -100,6 +100,7 @@ $(document).ready(function (e) {
         document.getElementById('final-orig').innerHTML = total.toFixed(2);
     }
 
+
     function compute2() {
         var count_fail = 0
         var add_grade = 0;
@@ -121,7 +122,7 @@ $(document).ready(function (e) {
             for (var i = 1; i <= get_count; i++){
             if ($('.grade-new' + i).val() < 3.0) {
                 count_fail = parseFloat(count_fail) + parseFloat($('#units' + i).val());
-                alert($('#units' + i).val());
+                //alert($('#units' + i).val());
             }
             document.getElementById('count_fail').innerHTML = count_fail;
         }
