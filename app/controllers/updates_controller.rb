@@ -72,14 +72,14 @@ class UpdatesController < ApplicationController
           total_units = total_units + Termunit.where(cohort: student.cohort, term: student.term).sum(:units)
           unless student.gpa.blank?
             temporary_gpa = (student.whatif_gpa.present? ? student.whatif_gpa : student.gpa)
-            total_gpa = temporary_gpa * Termunit.where(cohort: student.cohort, term: student.term).sum(:units)
+            total_gpa = total_gpa + (temporary_gpa * Termunit.where(cohort: student.cohort, term: student.term).sum(:units))
           end
         end
 
         unless total_units.zero? || total_gpa.zero?
           ComputedGpa.create!(student_number: student_number, computed_gpa: (total_gpa / total_units))
         end
-
+z
       end
 
     end
