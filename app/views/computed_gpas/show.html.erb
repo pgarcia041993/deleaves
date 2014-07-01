@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Student number:</b>
+  <%= @computed_gpa.student_number %>
+</p>
+
+<p>
+  <b>Computed gpa:</b>
+  <%= @computed_gpa.computed_gpa %>
+</p>
+
+<p>
+  <b>Rank:</b>
+  <%= @computed_gpa.rank %>
+</p>
+
+
+<%= link_to 'Edit', edit_computed_gpa_path(@computed_gpa) %> |
+<%= link_to 'Back', computed_gpas_path %>
