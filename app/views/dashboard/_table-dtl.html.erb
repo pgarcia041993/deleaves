@@ -62,13 +62,13 @@
     </thead>
     <% @applicants.each do |applicant| %>
         <% if applicant.present? %>
-            <tr>
+            <tr style="background-color:<%= "blue !important" if applicant.tgpa.to_f < 4.0 %>;">
               <td style="width: 140px;text-align: center;"><%= applicant.number %></td>
               <td style="width: 280px;"><%= link_to applicant.name, applicant, :target => 'new', :style => "color:rgb(0, 34, 141);" %></td>
               <!--<td><%= applicant.cohort %></td>-->
               <% if params['term'] == '2' %>
                   <!--Start of Y1-->
-                  <td style="text-align: center;" ><%= applicant.tgpa %></td>
+                  <td style="text-align: center;color:<%= "red" if applicant.tgpa.to_f < 3.0 %>;background-color:<%= "yellow" if applicant.tgpa.to_f == 4.0 %>;"><%= applicant.tgpa %></td>
                   <td style="text-align: center"><%= applicant.trank %></td>
                   <td style="text-align: center"><%= $fail.to_i + applicant.fail.to_i %></td>
                   <!--End of Y1-->
