@@ -44,6 +44,12 @@ $(document).ready(function (e) {
             var final_grade = add_grade / $('#divide').val();
 //            parseFloat($('#final-new').val(parseFloat(final_grade).toFixed(2)));
             document.getElementById('final-new').innerHTML = final_grade.toFixed(2);
+            $('.gpa_new').text(final_grade.toFixed(2));
+            var selector_name = $('#student-id').val();
+            $.ajax({
+                url: '/updates/gpa/' + selector_name + "?gpa=" + final_grade.toFixed(2)
+            }).responseText;
+
             $('#count_fail').val(count_fail);
             document.getElementById('count_fail').innerHTML = count_fail;
         }
@@ -100,7 +106,6 @@ $(document).ready(function (e) {
         document.getElementById('final-orig').innerHTML = total.toFixed(2);
     }
 
-
     function compute2() {
         var count_fail = 0
         var add_grade = 0;
@@ -119,81 +124,81 @@ $(document).ready(function (e) {
             var final_grade = add_grade / $('#divide').val();
 //            parseFloat($('#final-new').val(parseFloat(final_grade).toFixed(2)));
             document.getElementById('final-new').innerHTML = final_grade.toFixed(2);
-            for (var i = 1; i <= get_count; i++){
-            if ($('.grade-new' + i).val() < 3.0) {
-                count_fail = parseFloat(count_fail) + parseFloat($('#units' + i).val());
-                //alert($('#units' + i).val());
+            for (var i = 1; i <= get_count; i++) {
+                if ($('.grade-new' + i).val() < 3.0) {
+                    count_fail = parseFloat(count_fail) + parseFloat($('#units' + i).val());
+                }
+                document.getElementById('count_fail').innerHTML = count_fail;
+                $('.gpa_new').text(final_grade.toFixed(2));
+//            document.getElementsByClassName('gpa_new').innerHTML = final_grade.toFixed(2);
             }
-            document.getElementById('count_fail').innerHTML = count_fail;
+        }
+
+        else {
+            alert('invalid input');
         }
     }
 
-    else
-    {
-        alert('invalid input');
-    }
-}
-
 //END PATRICKS SCRIPT ****************************************************************************************************
 
-$('#begin-app-submit').click(function (e) {
-    if ($('#email').val().search('test') != -1) {
-        e.preventDefault();
-        alert('Kindly contact ICT\'s Quality Assurance department to request for assistance during testing');
+    $('#begin-app-submit').click(function (e) {
+        if ($('#email').val().search('test') != -1) {
+            e.preventDefault();
+            alert('Kindly contact ICT\'s Quality Assurance department to request for assistance during testing');
+        }
+    })
+
+    $('.date-pick').datepicker();
+
+    if ($('.dob').attr('value') === undefined) {
+        $('.dob').datepicker("setDate", "01/01/1980");
     }
-})
 
-$('.date-pick').datepicker();
+    $('button#submit').click(function (e) {
+        if ($('.dob').val() == "") {
+            e.preventDefault();
+        }
+    })
 
-if ($('.dob').attr('value') === undefined) {
-    $('.dob').datepicker("setDate", "01/01/1980");
-}
 
-$('button#submit').click(function (e) {
-    if ($('.dob').val() == "") {
+    $.each($('.date-pick.non-dob'), function (e) {
+        var parsedDate = $.datepicker.parseDate('yy-mm-dd', $(this).attr('value'));
+        $(this).datepicker("setDate", parsedDate);
+    })
+
+    $('#submit-personal-info').click(function (e) {
         e.preventDefault();
-    }
-})
+        $('#page-title').text("Employment Details");
+        $('div#page-1').hide();
+        $('div#page-2').show();
+    })
 
+    $('#submit-employment-info-back').click(function (e) {
+        $('div#page-2').hide();
+        $('#page-title').text("Personal Particulars");
+        $('div#page-1').show();
+        e.preventDefault();
+    })
 
-$.each($('.date-pick.non-dob'), function (e) {
-    var parsedDate = $.datepicker.parseDate('yy-mm-dd', $(this).attr('value'));
-    $(this).datepicker("setDate", parsedDate);
-})
+    $('#submit-employment-info-next').click(function (e) {
+        $('div#page-2').hide();
+        $('#page-title').text("Educational Background");
+        $('div#page-3').show();
+        e.preventDefault();
+    })
 
-$('#submit-personal-info').click(function (e) {
-    e.preventDefault();
-    $('#page-title').text("Employment Details");
-    $('div#page-1').hide();
-    $('div#page-2').show();
-})
+    $('#education-back').click(function (e) {
+        $('div#page-3').hide();
+        $('#page-title').text("Employment Details");
+        $('div#page-2').show();
+        e.preventDefault();
 
-$('#submit-employment-info-back').click(function (e) {
-    $('div#page-2').hide();
-    $('#page-title').text("Personal Particulars");
-    $('div#page-1').show();
-    e.preventDefault();
-})
+    })
 
-$('#submit-employment-info-next').click(function (e) {
-    $('div#page-2').hide();
-    $('#page-title').text("Educational Background");
-    $('div#page-3').show();
-    e.preventDefault();
-})
-
-$('#education-back').click(function (e) {
-    $('div#page-3').hide();
-    $('#page-title').text("Employment Details");
-    $('div#page-2').show();
-    e.preventDefault();
-
-})
-
-$('#education-submit').click(function (e) {
-    e.preventDefault();
-    $('#application-form').submit();
-})
+    $('#education-submit').click(function (e) {
+        e.preventDefault();
+        $('#application-form').submit();
+    })
 
 })
 

@@ -36,6 +36,7 @@ OnlineApplication::Application.routes.draw do
   devise_for :users
 
   get 'updates/grade/(:id)' => 'updates#update_grade'
+  get 'updates/gpa/(:id)' => 'updates#update_gpa'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
