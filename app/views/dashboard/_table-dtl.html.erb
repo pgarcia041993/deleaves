@@ -52,6 +52,7 @@
     <th>Scholar</th>
     </thead>
     <% @applicants.each do |applicant| %>
+        <tr class="student-row">
         <% if applicant.present? %>
               <td style="width: 140px;text-align: center;"><%= applicant.number %></td>
               <td style="width: 280px;"><%= link_to applicant.name, applicant, :target => 'new', :style => "color:rgb(0, 34, 141);" %></td>
@@ -172,6 +173,7 @@
               <td style="width: 65px;text-align: center;"><%= applicant.scholar %></td>
             </tr>
         <% end %>
+        </tr>
     <% end %>
   </table>
   <div id="pager" class="pager" style="position: inherit !important">

@@ -1,4 +1,7 @@
 OnlineApplication::Application.routes.draw do
+  resources :computed_gpas
+
+
   resources :termunits
 
 
@@ -38,6 +41,7 @@ OnlineApplication::Application.routes.draw do
   get 'updates/grade/(:id)' => 'updates#update_grade'
   get 'updates/gpa/(:id)' => 'updates#update_gpa'
   get 'updates/fail/(:id)' => 'updates#update_fail'
+  get 'api/gpa/(:id)' => 'updates#get_gpa'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
