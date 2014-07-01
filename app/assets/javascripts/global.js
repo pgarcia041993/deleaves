@@ -10,6 +10,7 @@ $(document).ready(function (e) {
     $('#termination-date-form').hide();
     $('#end-date-label').hide();
     $('#highest-degree-obtained').hide();
+    $('#spinner-rank').hide();
 
     $('input.grade').change(function (e) {
         var selector_name = this.id;
@@ -24,6 +25,9 @@ $(document).ready(function (e) {
     window.onload = compute2();
 
     $('.grade').change(function () {
+        $('#spinner-rank').show();
+        $('#new-rank-place').hide();
+
         var count_fail = 0
         var add_grade = 0;
         var get_count = $('#count').val();
@@ -46,6 +50,7 @@ $(document).ready(function (e) {
             document.getElementById('final-new').innerHTML = final_grade.toFixed(2);
             $('.gpa_new').text(final_grade.toFixed(2));
             var selector_name = $('#student-id').val();
+
             var jsonData = $.ajax({
                 url: '/updates/gpa/' + selector_name + "?gpa=" + final_grade.toFixed(2),
                 async: false
@@ -53,6 +58,14 @@ $(document).ready(function (e) {
 
             var jsonResponse = JSON.parse(jsonData);
             $('#new-rank-place').text(jsonResponse['new_rank']);
+            $('#new-rank-place').show();
+            $('#spinner-rank').hide();
+
+            $.ajax({
+                url: '/updates/fail/' + selector_name + "?gpa=" + count_fail,
+                async: false
+            }).responseText;
+
             $('#count_fail').val(count_fail);
             document.getElementById('count_fail').innerHTML = count_fail;
         }
