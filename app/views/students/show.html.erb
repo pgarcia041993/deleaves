@@ -1,4 +1,5 @@
 <p id="notice"><%= notice %></p>
+<input type="hidden" id="student-id" value="<%= @student.id %>"/>
 <div style="width:900px;margin:0 auto 0 auto;">
   <%= %>
   <img src="/images/c<%= @student.cohort %>/<%= @student.number %>.jpg" style="position:relative; margin-left:560px;top: 105px; height: 560px; width: 384px;"/>
@@ -114,7 +115,7 @@
       <td>Rank</td><td><b style="text-align: center;"><%= @student.rank %></b></td><td>Rank</td><td><b style="text-align: center;">*test*</b></td>
     </tr>
     <tr>
-      <td>GPA</td><td><b style="text-align: center;"><%= @student.gpa %></b></td><td>GPA</td><td><b style="text-align: center;"><div id="gpa_new" style="text-align: center;font-weight: bold"></div></b></td>
+      <td>GPA</td><td><b style="text-align: center;"><%= @student.gpa %></b></td><td>GPA</td><td><b style="text-align: center;"><div class="gpa_new" style="text-align: center;font-weight: bold"></div></b></td>
     </tr>
   </table>
   <p style="padding-top: 35px"><b>Mr. Rey R. Reyes</b><br/>Executive Managing Director<br/>Student Services Admissions and Registration
