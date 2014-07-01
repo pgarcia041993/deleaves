@@ -9,6 +9,15 @@ class UpdatesController < ApplicationController
                      'new_grade' => grade.whatif}
   end
 
+  def update_fail
+    student = Student.where(id: params[:id]).last
+    student.update_attribute :whatif_fail, params[:fail]
+
+    render :json => {'status' => 'success',
+                     'old_fail' => student.fail,
+                     'new_fail' => student.whatif_fail}
+  end
+
   def update_gpa
     student = nil
     ActiveRecord::Base.transaction do
