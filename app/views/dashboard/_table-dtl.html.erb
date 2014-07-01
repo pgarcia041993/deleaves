@@ -65,29 +65,119 @@
             <tr style="background-color:<%= "blue !important" if applicant.tgpa.to_f < 4.0 %>;">
               <td style="width: 140px;text-align: center;"><%= applicant.number %></td>
               <td style="width: 280px;"><%= link_to applicant.name, applicant, :target => 'new', :style => "color:rgb(0, 34, 141);" %></td>
-              <!--<td><%= applicant.cohort %></td>-->
               <% if params['term'] == '2' %>
-                  <!--Start of Y1-->
-                  <td style="text-align: center;color:<%= "red" if applicant.tgpa.to_f < 3.0 %>;background-color:<%= "yellow" if applicant.tgpa.to_f == 4.0 %>;"><%= applicant.tgpa %></td>
-                  <td style="text-align: center"><%= applicant.trank %></td>
-                  <td style="text-align: center"><%= $fail.to_i + applicant.fail.to_i %></td>
-                  <!--End of Y1-->
-                  <!--T2-->
-                  <td style="text-align: center;"><%= applicant.gpa %></td>
-                  <td style="width: 50px;text-align: center;"><%= applicant.rank %></td>
-                  <td style="width: 50px;text-align: center;"><%= applicant.fail %></td>
-                  <!--end of T2-->
-                  <!--T1-->
-                  <td style="text-align: center;color: black"> <%= Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:gpa) %></td>
-                  <td style="text-align: center"> <%= Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:rank) %></td>
-                  <td style="text-align: center"> <%= $fail = Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:fail) %></td>
-                  <!--end of T1-->
+                    <% if applicant.whatif_gpa.present? %>
+
+                    <!--T1-->
+                    <% $term1_gpa =  Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:gpa) %>
+                    <% $term1_rank = Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:rank) %>
+                    <% $term1_fail = Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:fail) %>
+                                        <!--compute for the total gpa for year1-->
+                    <% $term1 = Termunit.where(cohort: applicant.cohort, term: '1').last.try(:units) %>
+                    <% $term2 = Termunit.where(cohort: applicant.cohort, term: '2').last.try(:units) %>
+                    <% $semi_total = ($term1_gpa.to_f * $term1) + (applicant.whatif_gpa.to_f * $term2)  %>
+                    <%	$total= $semi_total / ($term1+ $term2)  %>
+                    <% $total = number_with_precision($total, precision: 2)  %>
+                    <!--Start of Y1-->
+                    <% if $total.to_f < 3.0 %>
+                        <td style="text-align: center;color: #ff0000">
+                          <%= $total %></td>
+                    <% else %>
+                        <td style="text-align: center;color: #000000"><%= $total %></td>
+                    <% end %>
+                    <td style="text-align: center"><%= applicant.trank %></td>
+                    <td style="text-align: center"><%= $term1_fail.to_f + applicant.whatif_fail.to_f %></td>
+                    <!--End of Y1-->
+                    <!--T2-->
+                    <% if applicant.whatif_gpa.to_f < 3.0 %>
+                        <td style="text-align: center;color: #ff0000">
+                          <%= applicant.whatif_gpa %></td>
+                    <% else %>
+                        <td style="text-align: center;color: #000000"><%= applicant.whatif_gpa.to_s %></td>
+                    <% end %>
+                    <td style="width: 50px;text-align: center;"><%= applicant.whatif_rank %></td>
+                    <td style="width: 50px;text-align: center;"><%= applicant.whatif_fail %></td>
+                    <!--end of T2-->
+
+                    <!--T1-->
+                    <% if $term1_gpa.to_f < 3.0 %>
+                        <td style="text-align: center;color: #ff0000"> <%= $term1_gpa %></td>
+                    <% else %>
+                        <td style="text-align: center"> <%= $term1_gpa %></td>
+                    <% end %>
+                    <td style="text-align: center"> <%= $term1_rank %></td>
+                    <td style="text-align: center"> <%= $term1_fail %></td>
+                    <!--end of T1 for T2 view-->
+
+                    <!--end of view of T2-->
+
+                    <%	else  %>
+                    <!--Start of Y1-->
+                    <% if applicant.tgpa.to_f < 3.0 %>
+                        <td style="text-align: center;color: #ff0000">
+                          <%= applicant.tgpa %></td>
+                    <% else %>
+                        <td style="text-align: center;color: #000000"><%= applicant.tgpa %></td>
+                    <% end %>
+                    <td style="text-align: center"><%= applicant.trank %></td>
+                    <td style="text-align: center"><%= $fail.to_i + applicant.fail.to_i %></td>
+                    <!--End of Y1-->
+                    <!--T2-->
+                    <% if applicant.gpa.to_f < 3.0 %>
+                        <td style="text-align: center;color: #ff0000">
+                          <%= applicant.gpa %></td>
+                    <% else %>
+                        <td style="text-align: center;color: #000000"><%= applicant.gpa %></td>
+                    <% end %>
+                    <td style="width: 50px;text-align: center;"><%= applicant.rank %></td>
+                    <td style="width: 50px;text-align: center;"><%= applicant.fail %></td>
+                    <!--end of T2-->
+
+                    <!--T1-->
+                    <% if applicant.tgpa.to_f < 3.0 %>
+                        <td style="text-align: center;color: #ff0000"> <%= Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:gpa) %></td>
+                    <% else %>
+                        <td style="text-align: center"> <%= Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:gpa) %></td>
+                    <% end %>
+                    <td style="text-align: center"> <%= Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:rank) %></td>
+                    <td style="text-align: center"> <%= $fail = Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:fail) %></td>
+                    <!--end of T1 for T2 view-->
+
+                    <!--end of view of T2-->
+                    <% end %>
               <% else %>
-                  <td style="text-align: center;color: #000000"><%= applicant.gpa %></td>
-                  <td style="width: 50px;text-align: center;"><%= applicant.rank %></td>
-                  <td style="width: 50px;text-align: center;"><%= applicant.fail %></td>
+                    <%	 if applicant.whatif_gpa.present? %>
+                         <!--if there is a what if gpa use the what if data-->
+                        <% if applicant.tgpa.to_f < 3.0 %>
+                                 <td style="text-align: center;color: #ff0000">
+                                <%= applicant.whatif_gpa %></td>
+                         <% else %>
+                                 <td style="text-align: center;color: #000000"><%= applicant.whatif_gpa %></td>
+                         <% end %>
+                                <td style="width: 50px;text-align: center;"><%= applicant.whatif_rank %></td>
+                                <td style="width: 50px;text-align: center;"><%= applicant.fail %></td>
+                            <!---->
+                    <%else %>
+
+                        <% if applicant.tgpa.to_f < 3.0 %>
+                            <td style="text-align: center;color: #ff0000">
+                                <%= applicant.gpa %></td>
+                           <% else %>
+                                <td style="text-align: center;color: #000000"><%= applicant.gpa %></td>
+                         <% end %>
+                                <td style="width: 50px;text-align: center;"><%= applicant.rank %></td>
+                                <td style="width: 50px;text-align: center;"><%= applicant.fail %></td>
+                    <%  end %>
               <% end %>
-              <td style="width: 50px;text-align: center;"><%= applicant.learning_team %></td>
+
+
+
+
+
+
+
+
+            <td style="width: 50px;text-align: center;"><%= applicant.learning_team %></td>
               <!--end of term 2-->
               <td style="width: 65px;text-align: center;"><%= applicant.scholar %></td>
             </tr>
