@@ -1,0 +1,27 @@
+<h1>Listing computed_gpas</h1>
+
+<table>
+  <tr>
+    <th>Student number</th>
+    <th>Computed gpa</th>
+    <th>Rank</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @computed_gpas.each do |computed_gpa| %>
+  <tr>
+    <td><%= computed_gpa.student_number %></td>
+    <td><%= computed_gpa.computed_gpa %></td>
+    <td><%= computed_gpa.rank %></td>
+    <td><%= link_to 'Show', computed_gpa %></td>
+    <td><%= link_to 'Edit', edit_computed_gpa_path(computed_gpa) %></td>
+    <td><%= link_to 'Destroy', computed_gpa, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Computed gpa', new_computed_gpa_path %>

@@ -1,0 +1,29 @@
+<%= form_for(@computed_gpa) do |f| %>
+  <% if @computed_gpa.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@computed_gpa.errors.count, "error") %> prohibited this computed_gpa from being saved:</h2>
+
+      <ul>
+      <% @computed_gpa.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :student_number %><br />
+    <%= f.text_field :student_number %>
+  </div>
+  <div class="field">
+    <%= f.label :computed_gpa %><br />
+    <%= f.text_field :computed_gpa %>
+  </div>
+  <div class="field">
+    <%= f.label :rank %><br />
+    <%= f.text_field :rank %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

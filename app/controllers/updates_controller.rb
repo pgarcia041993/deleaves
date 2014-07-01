@@ -1,4 +1,5 @@
 class UpdatesController < ApplicationController
+  include ActionView::Helpers::NumberHelper
 
   def update_grade
     grade = Grade.where(id: params[:id]).last
@@ -7,6 +8,19 @@ class UpdatesController < ApplicationController
     render :json => {'status' => 'success',
                      'old_grade' => grade.grade,
                      'new_grade' => grade.whatif}
+  end
+
+  def get_gpa
+    students = Student.where(number: params[:id])
+    total_units = 0.0
+    total_gpa = 0.0
+
+    students.each do |student|
+      total_units = total_units + Termunit.where(cohort: student.cohort, term: student.term).sum(:units)
+      total_gpa = total_gpa + (student.whatif_gpa.present? ? student.whatif_gpa : student.gpa)
+    end
+
+    render :json => {'status' => 'success', 'gpa' => number_with_precision((total_gpa / total_units), :precision => 2)}
   end
 
   def update_fail
@@ -46,6 +60,28 @@ class UpdatesController < ApplicationController
           student.update_attribute :whatif_rank, ranks[student.whatif_gpa.to_s]
         end
       end
+
+      ComputedGpa.delete_all
+      Student.all.map(&:number).uniq.each do |student_number|
+        next if student_number.blank?
+        total_units = 0.0
+        total_gpa = 0.0
+
+        students = Student.where(number: student_number)
+        students.each do |student|
+          total_units = total_units + Termunit.where(cohort: student.cohort, term: student.term).sum(:units)
+          unless student.gpa.blank?
+            temporary_gpa = (student.whatif_gpa.present? ? student.whatif_gpa : student.gpa)
+            total_gpa = temporary_gpa * Termunit.where(cohort: student.cohort, term: student.term).sum(:units)
+          end
+        end
+
+        unless total_units.zero? || total_gpa.zero?
+          ComputedGpa.create!(student_number: student_number, computed_gpa: (total_gpa / total_units))
+        end
+
+      end
+
     end
 
     render :json => {'status' => 'success',

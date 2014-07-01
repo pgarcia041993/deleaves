@@ -61,6 +61,7 @@
     <th>Scholar</th>
     </thead>
     <% @applicants.each do |applicant| %>
+        <tr class="student-row">
         <% if applicant.present? %>
             <tr style="background-color:<%= "blue !important" if applicant.tgpa.to_f < 4.0 %>;">
               <td style="width: 140px;text-align: center;"><%= applicant.number %></td>
@@ -182,6 +183,7 @@
               <td style="width: 65px;text-align: center;"><%= applicant.scholar %></td>
             </tr>
         <% end %>
+        </tr>
     <% end %>
   </table>
   <div id="pager" class="pager" style="position: inherit !important">

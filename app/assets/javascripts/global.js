@@ -1,3 +1,18 @@
+//$(document).ready(function () {
+//    var term = $('#flag-term').text();
+//    alert(term);
+//    $('.student-row').each(function() {
+//        var student_number = $(this).children('td:first').text();
+//        var jsonData = $.ajax({
+//            url: '/api/gpa/' + student_number,
+//            async: false
+//        }).responseText;
+//        var gpa = JSON.parse(jsonData)['gpa'];
+//        $(this).find(':nth-child(3)').text(gpa);
+//    });
+//    alert('Done');
+//})
+
 $(document).ready(function (e) {
     $.datepicker.setDefaults({dateFormat: 'dd/mm/yy'});
     $('div#page-1').show();
@@ -228,3 +243,8 @@ function showCompletionDate() {
     $('#graduation-date-field-alternate').hide();
     $('#highest-degree-obtained').show();
 }
+
+$(document).ready(function () {
+    var term = $('#flag-term').text();
+    alert(term);
+})
