@@ -233,8 +233,3 @@ function showCompletionDate() {
     $('#graduation-date-field-alternate').hide();
     $('#highest-degree-obtained').show();
 }
-
-$(document).ready(function () {
-    var term = $('#flag-term').text();
-    //alert(term);
-})
