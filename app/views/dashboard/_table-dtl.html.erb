@@ -77,7 +77,9 @@
                         <td style="text-align: center;color: #000000"><%= $total %></td>
                     <% end %>
                     <td style="text-align: center"><%= ComputedGpa.where(student_number: applicant.number).last.try(:rank) %></td>
+
                     <td style="text-align: center"><%= $term1_fail.to_f + applicant.whatif_fail.to_f %></td>
+
                     <!--End of Y1-->
                     <!--T2-->
                     <% if applicant.whatif_gpa.to_f < 3.0 %>
@@ -104,6 +106,9 @@
 
                     <%	else  %>
                     <!--Start of Y1-->
+                      <% $term1_gpa =  Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:gpa) %>
+                      <% $term1_rank = Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:rank) %>
+                      <% $term1_fail = Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:fail) %>
                     <% if applicant.tgpa.to_f < 3.0 %>
                         <td style="text-align: center;color: #ff0000;">
                           <%= applicant.tgpa %></td>
@@ -111,7 +116,7 @@
                         <td style="text-align: center;color: #000000"><%= applicant.tgpa %></td>
                     <% end %>
                     <td style="text-align: center"><%= applicant.trank %></td>
-                    <td style="text-align: center"><%= $fail.to_f + applicant.fail.to_f %></td>
+                    <td style="text-align: center"><%= $term1_fail.to_f + applicant.fail.to_f %></td>
                     <!--End of Y1-->
                     <!--T2-->
                     <% if applicant.gpa.to_f < 3.0 %>
@@ -136,6 +141,39 @@
 
                     <!--end of view of T2-->
                     <% end %>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
               <% else %>
                   <!---->
                     <%	 if applicant.whatif_gpa.present? %>
