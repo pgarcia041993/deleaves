@@ -81,7 +81,7 @@ $(document).ready(function (e) {
         if ($('.grade').val() > 0 || $('.grade').val() <= 5.0 || $('.grade').val().match(/^[0-9]+$/)) {
             for (var i = 1; i <= get_count; i++) {
                 var grade = $('.grade-new' + i).val() === '' ? $('.grade-orig' + i).val() : $('.grade-new' + i).val();
-                if (grade === '' || grade === 'Pass' || grade === 'Fail') {
+                if (grade === '' || grade === 'Pass' || grade === 'Fail' || grade == 'Pass ') {
                     add_grade += 0;
                 } else {
                     var get_subject_unit = $('#units' + i).val();
