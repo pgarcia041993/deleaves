@@ -67,21 +67,32 @@ class UpdatesController < ApplicationController
         total_units = 0.0
         total_gpa = 0.0
 
-        students = Student.where(number: student_number)
+        students = Student.where(number: student_number).where('term is not null')
         students.each do |student|
           total_units = total_units + Termunit.where(cohort: student.cohort, term: student.term).sum(:units)
+          Rails.logger.debug(">>>>>>>>>>>>>>>>>>>>>>>> #{Termunit.where(cohort: student.cohort, term: student.term).sum(:units)}")
           unless student.gpa.blank?
             temporary_gpa = (student.whatif_gpa.present? ? student.whatif_gpa : student.gpa)
+            Rails.logger.debug(">>>>>>>>>>>>>>>>>>> TEMP GPA #{temporary_gpa}")
+
             total_gpa = total_gpa + (temporary_gpa * Termunit.where(cohort: student.cohort, term: student.term).sum(:units))
           end
         end
 
+        Rails.logger.debug(">>>>>>>>>>>>>>>>>>> TOTAL GPA #{total_gpa}")
+        Rails.logger.debug(">>>>>>>>>>>>>>>>>>> TOTAL UNITS #{total_units}")
+
         unless total_units.zero? || total_gpa.zero?
-          ComputedGpa.create!(student_number: student_number, computed_gpa: (total_gpa / total_units))
+          ComputedGpa.create!(student_number: student_number, computed_gpa: (total_gpa / total_units).round(2))
         end
-z
+
       end
 
+      ComputedGpa.order('computed_gpa DESC').inject([]) do |gpas, compute|
+        gpas << compute.computed_gpa
+        compute.update_attribute :rank, gpas.uniq.count
+        gpas
+      end
     end
 
     render :json => {'status' => 'success',
