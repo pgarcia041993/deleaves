@@ -71,7 +71,7 @@
                     <!--Start of Y1-->
                       <% $total = ComputedGpa.where(student_number: applicant.number).last.try(:computed_gpa) %>
                     <% if $total.to_f < 3.0 %>
-                        <td style="text-align: center;color: #ff0000">
+                        <td style="text-align: center;color: #ff0000;">
                           <%= $total %></td>
                     <% else %>
                         <td style="text-align: center;color: #000000"><%= $total %></td>
@@ -81,7 +81,7 @@
                     <!--End of Y1-->
                     <!--T2-->
                     <% if applicant.whatif_gpa.to_f < 3.0 %>
-                        <td style="text-align: center;color: #ff0000">
+                        <td style="text-align: center;color: #ff0000;">
                           <%= applicant.whatif_gpa %></td>
                     <% else %>
                         <td style="text-align: center;color: #000000"><%= applicant.whatif_gpa.to_s %></td>
@@ -92,7 +92,7 @@
 
                     <!--T1-->
                     <% if $term1_gpa.to_f < 3.0 %>
-                        <td style="text-align: center;color: #ff0000"> <%= $term1_gpa %></td>
+                        <td style="text-align: center;color: #ff0000;"> <%= $term1_gpa %></td>
                     <% else %>
                         <td style="text-align: center"> <%= $term1_gpa %></td>
                     <% end %>
@@ -105,17 +105,17 @@
                     <%	else  %>
                     <!--Start of Y1-->
                     <% if applicant.tgpa.to_f < 3.0 %>
-                        <td style="text-align: center;color: #ff0000">
+                        <td style="text-align: center;color: #ff0000;">
                           <%= applicant.tgpa %></td>
                     <% else %>
                         <td style="text-align: center;color: #000000"><%= applicant.tgpa %></td>
                     <% end %>
                     <td style="text-align: center"><%= applicant.trank %></td>
-                    <td style="text-align: center"><%= $fail.to_i + applicant.fail.to_i %></td>
+                    <td style="text-align: center"><%= $fail.to_f + applicant.fail.to_f %></td>
                     <!--End of Y1-->
                     <!--T2-->
                     <% if applicant.gpa.to_f < 3.0 %>
-                        <td style="text-align: center;color: #ff0000">
+                        <td style="text-align: center;color: #ff0000;">
                           <%= applicant.gpa %></td>
                     <% else %>
                         <td style="text-align: center;color: #000000"><%= applicant.gpa %></td>
@@ -126,7 +126,7 @@
 
                     <!--T1-->
                     <% if applicant.tgpa.to_f < 3.0 %>
-                        <td style="text-align: center;color: #ff0000"><%= Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:gpa) %></td>
+                        <td style="text-align: center;color: #ff0000;"><%= Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:gpa) %></td>
                     <% else %>
                         <td style="text-align: center"> <%= Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:gpa) %></td>
                     <% end %>
@@ -137,10 +137,11 @@
                     <!--end of view of T2-->
                     <% end %>
               <% else %>
+                  <!---->
                     <%	 if applicant.whatif_gpa.present? %>
                          <!--if there is a what if gpa use the what if data-->
-                        <% if applicant.tgpa.to_f < 3.0 %>
-                                 <td style="text-align: center;color: #ff0000">
+                        <% if applicant.whatif_gpa.to_f < 3.0 %>
+                                 <td style="text-align: center;color: #ff0000;">
                                 <%= applicant.whatif_gpa %></td>
                          <% else %>
                                  <td style="text-align: center;color: #000000"><%= applicant.whatif_gpa %></td>
@@ -151,7 +152,7 @@
                     <%else %>
 
                         <% if applicant.gpa.to_f < 3.0 %>
-                            <td style="text-align: center;color: #ff0000">
+                            <td style="text-align: center;color: #ff0000;">
                                 <%= applicant.gpa %></td>
                            <% else %>
                                 <td style="text-align: center;color: #000000"><%= applicant.gpa %></td>
