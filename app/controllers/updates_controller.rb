@@ -88,7 +88,7 @@ class UpdatesController < ApplicationController
 
       end
 
-      ComputedGpa.order('computed_gpa DESC').inject([]) do |gpas, compute|
+      ComputedGpa.order(:computed_gpa, :desc).inject([]) do |gpas, compute|
         gpas << compute.computed_gpa
         compute.update_attribute :rank, gpas.uniq.count
         gpas
