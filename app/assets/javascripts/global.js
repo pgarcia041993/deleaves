@@ -111,6 +111,7 @@ $(document).ready(function (e) {
             var final_grade = add_grade / $('#divide').val();
 //            parseFloat($('#final-new').val(parseFloat(final_grade).toFixed(2)));
             document.getElementById('final-new').innerHTML = final_grade.toFixed(2);
+
             $('#count_fail').val(count_fail);
             document.getElementById('count_fail').innerHTML = count_fail;
         }
@@ -123,18 +124,22 @@ $(document).ready(function (e) {
         var count = $('#count').val();
         var orig_grade = 0;
         for (var i = 1; i <= count; i++) {
+
             var grade = $('.grade-orig' + i).val();
-            if (grade === '' || grade === 'Pass' || grade === 'Fail') {
+           if (grade === '' || grade === 'Pass' || grade === 'Fail' ) {
                 orig_grade += 0;
             }
             else {
                 var get_subject_unit = $('#units' + i).val();
                 orig_grade += parseFloat(grade) * parseFloat(get_subject_unit);
+                alert(orig_grade + ' ' + grade);
             }
         }
+
         var total = orig_grade / $('#divide').val();
 //        $('#final-orig').val(parseFloat(total).toFixed(2));
         document.getElementById('final-orig').innerHTML = total.toFixed(2);
+
     }
 
     function compute2() {
@@ -246,5 +251,5 @@ function showCompletionDate() {
 
 $(document).ready(function () {
     var term = $('#flag-term').text();
-    alert(term);
+    //alert(term);
 })
