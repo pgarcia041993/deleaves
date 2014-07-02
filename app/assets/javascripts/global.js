@@ -1,18 +1,3 @@
-//$(document).ready(function () {
-//    var term = $('#flag-term').text();
-//    alert(term);
-//    $('.student-row').each(function() {
-//        var student_number = $(this).children('td:first').text();
-//        var jsonData = $.ajax({
-//            url: '/api/gpa/' + student_number,
-//            async: false
-//        }).responseText;
-//        var gpa = JSON.parse(jsonData)['gpa'];
-//        $(this).find(':nth-child(3)').text(gpa);
-//    });
-//    alert('Done');
-//})
-
 $(document).ready(function (e) {
     $.datepicker.setDefaults({dateFormat: 'dd/mm/yy'});
     $('div#page-1').show();
@@ -126,13 +111,12 @@ $(document).ready(function (e) {
         for (var i = 1; i <= count; i++) {
 
             var grade = $('.grade-orig' + i).val();
-           if (grade === '' || grade === 'Pass' || grade === 'Fail' ) {
+            if (grade === '' || grade === 'Pass' || grade === 'Fail') {
                 orig_grade += 0;
             }
             else {
                 var get_subject_unit = $('#units' + i).val();
                 orig_grade += parseFloat(grade) * parseFloat(get_subject_unit);
-                alert(orig_grade + ' ' + grade);
             }
         }
 
@@ -248,8 +232,3 @@ function showCompletionDate() {
     $('#graduation-date-field-alternate').hide();
     $('#highest-degree-obtained').show();
 }
-
-$(document).ready(function () {
-    var term = $('#flag-term').text();
-    //alert(term);
-})
