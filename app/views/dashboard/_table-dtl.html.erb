@@ -106,8 +106,7 @@
 
                     <%	else  %>
                     <!--Start of Y1-->
-                      <% $term1_gpa =  Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:gpa) %>
-                      <% $term1_rank = Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:rank) %>
+
                       <% $term1_fail = Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:fail) %>
                     <% if applicant.tgpa.to_f < 3.0 %>
                         <td style="text-align: center;color: #ff0000;">
