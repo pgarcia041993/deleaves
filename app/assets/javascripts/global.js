@@ -111,13 +111,12 @@ $(document).ready(function (e) {
         for (var i = 1; i <= count; i++) {
 
             var grade = $('.grade-orig' + i).val();
-           if (grade === '' || grade === 'Pass' || grade === 'Fail' ) {
+            if (grade === '' || grade === 'Pass' || grade === 'Fail') {
                 orig_grade += 0;
             }
             else {
                 var get_subject_unit = $('#units' + i).val();
                 orig_grade += parseFloat(grade) * parseFloat(get_subject_unit);
-                alert(orig_grade + ' ' + grade);
             }
         }
 
