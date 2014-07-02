@@ -16,7 +16,7 @@ class UpdatesController < ApplicationController
     total_gpa = 0.0
 
     students.each do |student|
-      total_units = total_units + Termunit.where(cohort: student.cohort, term: student.term).sum(:units)
+      total_units = total_units + Termunit.where(cohort: student.cohort.to_s, term: student.term).sum(:units)
       total_gpa = total_gpa + (student.whatif_gpa.present? ? student.whatif_gpa : student.gpa)
     end
 
@@ -69,13 +69,13 @@ class UpdatesController < ApplicationController
 
         students = Student.where(number: student_number).where('term is not null')
         students.each do |student|
-          total_units = total_units + Termunit.where(cohort: student.cohort, term: student.term).sum(:units)
-          Rails.logger.debug(">>>>>>>>>>>>>>>>>>>>>>>> #{Termunit.where(cohort: student.cohort, term: student.term).sum(:units)}")
+          total_units = total_units + Termunit.where(cohort: student.cohort.to_s, term: student.term).sum(:units)
+          Rails.logger.debug(">>>>>>>>>>>>>>>>>>>>>>>> #{Termunit.where(cohort: student.cohort.to_s, term: student.term).sum(:units)}")
           unless student.gpa.blank?
             temporary_gpa = (student.whatif_gpa.present? ? student.whatif_gpa : student.gpa)
             Rails.logger.debug(">>>>>>>>>>>>>>>>>>> TEMP GPA #{temporary_gpa}")
 
-            total_gpa = total_gpa + (temporary_gpa * Termunit.where(cohort: student.cohort, term: student.term).sum(:units))
+            total_gpa = total_gpa + (temporary_gpa * Termunit.where(cohort: student.cohort.to_s, term: student.term).sum(:units))
           end
         end
 
