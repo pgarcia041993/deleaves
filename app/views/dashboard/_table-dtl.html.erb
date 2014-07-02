@@ -77,7 +77,7 @@
                         <td style="text-align: center;color: #000000"><%= $total %></td>
                     <% end %>
                     <td style="text-align: center"><%= ComputedGpa.where(student_number: applicant.number).last.try(:rank) %></td>
-                    <%	 if applicant.whatif_fails.present? %>
+                    <%	 if applicant.whatif_fail.present? %>
 
                     <td style="text-align: center"><%= $term1_fail.to_f + applicant.whatif_fail.to_f %></td>
 
@@ -93,7 +93,11 @@
                         <td style="text-align: center;color: #000000"><%= applicant.whatif_gpa.to_s %></td>
                     <% end %>
                     <td style="width: 50px;text-align: center;"><%= applicant.whatif_rank %></td>
+                      <% if applicant.whatif_fail.present? %>
                     <td style="width: 50px;text-align: center;"><%= applicant.whatif_fail %></td>
+                           <%	 else  %>
+                          <td style="width: 50px;text-align: center;"><%= applicant.fail %></td>
+                          <% end %>
                     <!--end of T2-->
 
                     <!--T1-->
