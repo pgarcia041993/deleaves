@@ -54,8 +54,9 @@
     <th>LT</th>
     <th>Scholar</th>
     </thead>
+    <%	 counter = 0 %>
     <% @applicants.each do |applicant| %>
-
+<% counter = counter + 1 %>
         <% if applicant.present? %>
             <tr style="background-color:<%= "blue !important" if applicant.tgpa.to_f < 4.0 %>;">
               <td  class="student-row" style="width: 140px;text-align: center;"><%= applicant.number %></td>
@@ -150,46 +151,15 @@
                     <% end %>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
               <% else %>
                   <!---->
                     <%	 if applicant.whatif_gpa.present? %>
                          <!--if there is a what if gpa use the what if data-->
                         <% if applicant.whatif_gpa.to_f < 3.0 %>
-                                 <td style="text-align: center;color: #ff0000;">
+                                 <td style="text-align: center;color: #ff0000; background-color:yellow;">
                                 <%= applicant.whatif_gpa %></td>
                          <% else %>
-                                 <td style="text-align: center;color: #000000"><%= applicant.whatif_gpa %></td>
+                                 <td style="text-align: center;color: #000000; background-color:yellow;"><%= applicant.whatif_gpa %></td>
                          <% end %>
                                 <td style="width: 50px;text-align: center;"><%= applicant.whatif_rank %></td>
                                 <td style="width: 50px;text-align: center;"><%= applicant.fail %></td>
@@ -202,7 +172,7 @@
                            <% else %>
                                 <td style="text-align: center;color: #000000"><%= applicant.gpa %></td>
                          <% end %>
-                                <td style="width: 50px;text-align: center;"><%= applicant.rank %></td>
+                                <td style="width: 50px;text-align: center;"><%= counter %></td>
                                 <td style="width: 50px;text-align: center;"><%= applicant.fail %></td>
                     <%  end %>
               <% end %>
