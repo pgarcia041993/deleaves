@@ -1,4 +1,4 @@
-class AdmissionsController < ApplicationController
+  class AdmissionsController < ApplicationController
 
   # The edit method will be used as all applications will be pre-generated
 

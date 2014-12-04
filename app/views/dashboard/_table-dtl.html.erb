@@ -21,182 +21,2825 @@
                 .tablesorterPager({container: $("#pager")});
     });
 </script>
-<div id="applicant-detail">
-  <% if params['term'] == '2' %>
-  <table border="1" style="width: 595px;margin-left: 425px;">
-    <thead>
-    <th colspan="3" style="font-weight: bold; text-align: center;background-color: #00228d;color: #ffffff;border-color: black;width: 39px;font-size: 11px;border-bottom: 1px solid #00228d;">Year 1</th>
-    <th colspan="3" style="font-weight: bold; text-align: center;background-color: #00228d;color: #ffffff;border-color: black;font-size: 11px;border-bottom: 1px solid #00228d;">Term 2</th>
-    <th colspan="3" style="font-weight: bold; text-align: center;background-color: #00228d;color: #ffffff;border-color: black;font-size: 11px;border-bottom: 1px solid #00228d;">Term 1</th>
-    </thead>
-  </table>
-  <% end %>
-  <table class="tablesorter styletable" id="TheTable" border="1" style="width: 1150px;margin: 0 auto 0 auto">
 
-    <thead style="background-color: rgb(0, 34, 141);  border: 1px rgb(0, 34, 141);">
-    <th>SN</th>
-    <th>Name</th>
-    <% if params['term'] == '2' %>
-        <th>Y1 GPA</th>
-        <th>Y1 RANK</th>
-        <th>Y1 FAIL</th>
-        <th>T2 GPA</th>
-        <th>T2 Rank</th>
-        <th>T2 Fail</th>
-        <th>T1 GPA</th>
-        <th>T1 Rank</th>
-        <th>T1 Fail</th>
-    <% else %>
-        <th>GPA</th>
-        <th>Rank</th>
-        <th>Fail</th>
-    <% end %>
-    <th>LT</th>
-    <th>Scholar</th>
-    </thead>
-    <% @applicants.each do |applicant| %>
+<!-- ********************** BEGIN CUSTOM SCROLLBAR ************************ -->
+<script>
+    (function($){
+    $(window).load(function(){
 
-        <% if applicant.present? %>
-            <tr style="background-color:<%= "blue !important" if applicant.tgpa.to_f < 4.0 %>;">
-              <td  class="student-row" style="width: 140px;text-align: center;"><%= applicant.number %></td>
-              <td style="width: 280px;"><%= link_to applicant.name, applicant, :target => 'new', :style => "color:rgb(0, 34, 141);" %></td>
-              <% if params['term'] == '2' %>
-                    <% if applicant.whatif_gpa.present? %>
+    $("#myModal .modal-body").mCustomScrollbar({
+    setHeight:340,
+    theme:"minimal-dark"
+    });
 
-                    <!--T1-->
-                    <% $term1_gpa =  Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:gpa) %>
-                    <% $term1_rank = Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:rank) %>
-                    <% $term1_fail = Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:fail) %>
+    $("#accordion .panel-body").mCustomScrollbar({
+    setHeight:300,
+    theme:"dark-3"
+    });
 
-                    <!--Start of Y1-->
-                      <% $total = ComputedGpa.where(student_number: applicant.number).last.try(:computed_gpa) %>
-                    <% if $total.to_f < 3.0 %>
-                        <td style="text-align: center;color: #ff0000;">
-                          <%= $total %></td>
-                    <% else %>
-                        <td style="text-align: center;color: #000000"><%= $total %></td>
-                    <% end %>
-                    <td style="text-align: center"><%= ComputedGpa.where(student_number: applicant.number).last.try(:rank) %></td>
-                    <td style="text-align: center"><%= $term1_fail.to_f + applicant.whatif_fail.to_f %></td>
-                    <!--End of Y1-->
-                    <!--T2-->
-                    <% if applicant.whatif_gpa.to_f < 3.0 %>
-                        <td style="text-align: center;color: #ff0000;">
-                          <%= applicant.whatif_gpa %></td>
-                    <% else %>
-                        <td style="text-align: center;color: #000000"><%= applicant.whatif_gpa.to_s %></td>
-                    <% end %>
-                    <td style="width: 50px;text-align: center;"><%= applicant.whatif_rank %></td>
-                    <td style="width: 50px;text-align: center;"><%= applicant.whatif_fail %></td>
-                    <!--end of T2-->
+//    $("#myTab .tab-pane").mCustomScrollbar({
+//    setHeight:280,
+//    theme:"minimal-dark"
+//    });
 
-                    <!--T1-->
-                    <% if $term1_gpa.to_f < 3.0 %>
-                        <td style="text-align: center;color: #ff0000;"> <%= $term1_gpa %></td>
-                    <% else %>
-                        <td style="text-align: center"> <%= $term1_gpa %></td>
-                    <% end %>
-                    <td style="text-align: center"> <%= $term1_rank %></td>
-                    <td style="text-align: center"> <%= $term1_fail %></td>
-                    <!--end of T1 for T2 view-->
+    $("#content-5").mCustomScrollbar({
+        axis:"x",
+        theme:"3d",
+        autoExpandScrollbar:true,
+        advanced:{autoExpandHorizontalScroll:true}
+    });
 
-                    <!--end of view of T2-->
+    });
+    })(jQuery);
+</script>
+<!-- ********************** END CUSTOM SCROLLBAR ************************ -->
 
-                    <%	else  %>
-                    <!--Start of Y1-->
-                    <% if applicant.tgpa.to_f < 3.0 %>
-                        <td style="text-align: center;color: #ff0000;">
-                          <%= applicant.tgpa %></td>
-                    <% else %>
-                        <td style="text-align: center;color: #000000"><%= applicant.tgpa %></td>
-                    <% end %>
-                    <td style="text-align: center"><%= applicant.trank %></td>
-                    <td style="text-align: center"><%= $fail.to_f + applicant.fail.to_f %></td>
-                    <!--End of Y1-->
-                    <!--T2-->
-                    <% if applicant.gpa.to_f < 3.0 %>
-                        <td style="text-align: center;color: #ff0000;">
-                          <%= applicant.gpa %></td>
-                    <% else %>
-                        <td style="text-align: center;color: #000000"><%= applicant.gpa %></td>
-                    <% end %>
-                    <td style="width: 50px;text-align: center;"><%= applicant.rank %></td>
-                    <td style="width: 50px;text-align: center;"><%= applicant.fail %></td>
-                    <!--end of T2-->
+<link rel="stylesheet" href="/assets/jquery.mCustomScrollbar.css">
+<script src="/assets/jquery.mCustomScrollbar.concat.min.js"></script>
 
-                    <!--T1-->
-                    <% if applicant.tgpa.to_f < 3.0 %>
-                        <td style="text-align: center;color: #ff0000;"><%= Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:gpa) %></td>
-                    <% else %>
-                        <td style="text-align: center"> <%= Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:gpa) %></td>
-                    <% end %>
-                    <td style="text-align: center"> <%= Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:rank) %></td>
-                    <td style="text-align: center"> <%= $fail = Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:fail) %></td>
-                    <!--end of T1 for T2 view-->
+<div id="myTab">
+<div id="content-5" style="height: 50px;margin-bottom: 20px;width: 1150px;
+        margin-left: 10px;">
+  <ul class="nav nav-tabs   ">
+    <li class="active"><a href="#home" data-toggle="tab">Home</a></li>
+    <li><a href="#profile" data-toggle="tab">Profile</a></li>
+    <li><a href="#messages" data-toggle="tab">Messages</a></li>
+    <li><a href="#4" data-toggle="tab">Section 4</a></li>
+    <li><a href="#5" data-toggle="tab">Section 5</a></li>
+    <li><a href="#6" data-toggle="tab">Section 6</a></li>
+    <li><a href="#7" data-toggle="tab">Section 7</a></li>
+    <li><a href="#8" data-toggle="tab">Section 7</a></li>
+    <li><a href="#9" data-toggle="tab">Section 7</a></li>
+    <li><a href="#10" data-toggle="tab">Section 7</a></li>
+    <li><a href="#11" data-toggle="tab">Section 7</a></li>
+    <li><a href="#12" data-toggle="tab">Section 7</a></li>
+    <li><a href="#13" data-toggle="tab">Section 7</a></li>
+    <li><a href="#14" data-toggle="tab">Section 7</a></li>
+    <li><a href="#15" data-toggle="tab">Section 7</a></li>
+    <li><a href="#16" data-toggle="tab">Section 7</a></li>
+    <li><a href="#17" data-toggle="tab">Section 7</a></li>
+    <li><a href="#18" data-toggle="tab">Section 7</a></li>
+    <li><a href="#19" data-toggle="tab">Section 7</a></li>
+    <li><a href="#20" data-toggle="tab">Section 7</a></li>
+    <li><a href="#tab2" data-toggle="tab">Section 7</a></li>
+    <li><a href="#tab2" data-toggle="tab">Section 7</a></li>
+    <li><a href="#tab2" data-toggle="tab">Section 7</a></li>
+    <li><a href="#tab2" data-toggle="tab">Section 7</a></li>
+    <li><a href="#tab2" data-toggle="tab">Section 7</a></li>
+    <li><a href="#tab2" data-toggle="tab">Section 7</a></li>
+    <li><a href="#tab2" data-toggle="tab">Section 7</a></li>
+    <li><a href="#tab2" data-toggle="tab">Section 7</a></li>
+    <li><a href="#tab2" data-toggle="tab">Section 7</a></li>
+    <li><a href="#tab2" data-toggle="tab">Section 7</a></li>
+    <li><a href="#tab2" data-toggle="tab">Section 7</a></li>
+  </ul>
+  </div>
+  <div class="tab-content">
+    <div class="tab-pane fade in active" id="home" style="padding-left: 10px;
+            padding-right: 10px;">
+      <h1>1</h1>
+      <div id="applicant-detail">
+        <% if params['term'] == '2' %>
+            <table border="1" style="width: 595px;margin-left: 425px;">
+              <thead>
+              <th colspan="3" style="font-weight: bold; text-align: center;background-color: #00228d;color: #ffffff;border-color: black;width: 39px;font-size: 11px;border-bottom: 1px solid #00228d;">Year 1</th>
+              <th colspan="3" style="font-weight: bold; text-align: center;background-color: #00228d;color: #ffffff;border-color: black;font-size: 11px;border-bottom: 1px solid #00228d;">Term 2</th>
+              <th colspan="3" style="font-weight: bold; text-align: center;background-color: #00228d;color: #ffffff;border-color: black;font-size: 11px;border-bottom: 1px solid #00228d;">Term 1</th>
+              </thead>
+            </table>
+        <% end %>
+        <table class="tablesorter styletable" id="TheTable" border="1" style="width: 1150px;margin: 0 auto 0 auto">
 
-                    <!--end of view of T2-->
-                    <% end %>
-              <% else %>
-                  <!---->
-                    <%	 if applicant.whatif_gpa.present? %>
-                         <!--if there is a what if gpa use the what if data-->
-                        <% if applicant.whatif_gpa.to_f < 3.0 %>
-                                 <td style="text-align: center;color: #ff0000;">
-                                <%= applicant.whatif_gpa %></td>
-                         <% else %>
-                                 <td style="text-align: center;color: #000000"><%= applicant.whatif_gpa %></td>
-                         <% end %>
-                                <td style="width: 50px;text-align: center;"><%= applicant.whatif_rank %></td>
-                                <td style="width: 50px;text-align: center;"><%= applicant.fail %></td>
-                            <!---->
-                    <%else %>
+          <thead style="background-color: rgb(0, 34, 141);  border: 1px rgb(0, 34, 141);">
+          <th>SN</th>
+          <th>Name</th>
+          <% if params['term'] == '2' %>
+              <th>Y1 GPA</th>
+              <th>Y1 RANK</th>
+              <th>Y1 FAIL</th>
+              <th>T2 GPA</th>
+              <th>T2 Rank</th>
+              <th>T2 Fail</th>
+              <th>T1 GPA</th>
+              <th>T1 Rank</th>
+              <th>T1 Fail</th>
+          <% else %>
+              <th>GPA</th>
+              <th>Rank</th>
+              <th>Fail</th>
+          <% end %>
+          <th>LT</th>
+          <th>Scholar</th>
+          </thead>
+          <% @applicants.each do |applicant| %>
 
-                        <% if applicant.gpa.to_f < 3.0 %>
-                            <td style="text-align: center;color: #ff0000;">
-                                <%= applicant.gpa %></td>
-                           <% else %>
+              <% if applicant.present? %>
+                  <tr style="background-color:<%= "blue !important" if applicant.tgpa.to_f < 4.0 %>;">
+                    <td  class="student-row" style="width: 140px;text-align: center;"><%= applicant.number %></td>
+                    <td style="width: 280px;"><%= link_to applicant.name, applicant, :target => 'new', :style => "color:rgb(0, 34, 141);" %></td>
+                    <% if params['term'] == '2' %>
+                        <% if applicant.whatif_gpa.present? %>
+
+                            <!--T1-->
+                            <% $term1_gpa =  Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:gpa) %>
+                            <% $term1_rank = Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:rank) %>
+                            <% $term1_fail = Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:fail) %>
+
+                            <!--Start of Y1-->
+                            <% $total = ComputedGpa.where(student_number: applicant.number).last.try(:computed_gpa) %>
+                            <% if $total.to_f < 3.0 %>
+                                <td style="text-align: center;">
+                                  <%= $total %></td>
+                            <% else %>
+                                <td style="text-align: center;"><%= $total %></td>
+                            <% end %>
+                            <td style="text-align: center"><%= ComputedGpa.where(student_number: applicant.number).last.try(:rank) %></td>
+                            <td style="text-align: center"><%= $term1_fail.to_f + applicant.whatif_fail.to_f %></td>
+                            <!--End of Y1-->
+                            <!--T2-->
+                            <% if applicant.whatif_gpa.to_f < 3.0 %>
+                                <td style="text-align: center;">
+                                  <%= applicant.whatif_gpa %></td>
+                            <% else %>
+                                <td style="text-align: center;"><%= applicant.whatif_gpa.to_s %></td>
+                            <% end %>
+                            <td style="width: 50px;text-align: center;"><%= applicant.whatif_rank %></td>
+                            <td style="width: 50px;text-align: center;"><%= applicant.whatif_fail %></td>
+                            <!--end of T2-->
+
+                            <!--T1-->
+                            <% if $term1_gpa.to_f < 3.0 %>
+                                <td style="text-align: center;"> <%= $term1_gpa %></td>
+                            <% else %>
+                                <td style="text-align: center"> <%= $term1_gpa %></td>
+                            <% end %>
+                            <td style="text-align: center"> <%= $term1_rank %></td>
+                            <td style="text-align: center"> <%= $term1_fail %></td>
+                            <!--end of T1 for T2 view-->
+
+                            <!--end of view of T2-->
+
+                        <%	else  %>
+                            <!--Start of Y1-->
+                            <% if applicant.tgpa.to_f < 3.0 %>
+                                <td style="text-align: center;">
+                                  <%= applicant.tgpa %></td>
+                            <% else %>
+                                <td style="text-align: center;"><%= applicant.tgpa %></td>
+                            <% end %>
+                            <td style="text-align: center"><%= applicant.trank %></td>
+                            <td style="text-align: center"><%= $fail.to_f + applicant.fail.to_f %></td>
+                            <!--End of Y1-->
+                            <!--T2-->
+                            <% if applicant.gpa.to_f < 3.0 %>
+                                <td style="text-align: center;color: #ff0000;">
+                                  <%= applicant.gpa %></td>
+                            <% else %>
                                 <td style="text-align: center;color: #000000"><%= applicant.gpa %></td>
-                         <% end %>
-                                <td style="width: 50px;text-align: center;"><%= applicant.rank %></td>
-                                <td style="width: 50px;text-align: center;"><%= applicant.fail %></td>
-                    <%  end %>
+                            <% end %>
+                            <td style="width: 50px;text-align: center;"><%= applicant.rank %></td>
+                            <td style="width: 50px;text-align: center;"><%= applicant.fail %></td>
+                            <!--end of T2-->
+
+                            <!--T1-->
+                            <% if applicant.tgpa.to_f < 3.0 %>
+                                <td style="text-align: center;color: #ff0000;"><%= Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:gpa) %></td>
+                            <% else %>
+                                <td style="text-align: center"> <%= Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:gpa) %></td>
+                            <% end %>
+                            <td style="text-align: center"> <%= Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:rank) %></td>
+                            <td style="text-align: center"> <%= $fail = Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:fail) %></td>
+                            <!--end of T1 for T2 view-->
+
+                            <!--end of view of T2-->
+                        <% end %>
+                    <% else %>
+                        <!---->
+                        <%	 if applicant.whatif_gpa.present? %>
+                            <!--if there is a what if gpa use the what if data-->
+                            <% if applicant.whatif_gpa.to_f < 3.0 %>
+                                <td style="text-align: center;">
+                                  <%= applicant.whatif_gpa %></td>
+                            <% else %>
+                                <td style="text-align: center;"><%= applicant.whatif_gpa %></td>
+                            <% end %>
+                            <td style="width: 50px;text-align: center;"><%= applicant.whatif_rank %></td>
+                            <td style="width: 50px;text-align: center;"><%= applicant.fail %></td>
+                            <!---->
+                        <%else %>
+
+                            <% if applicant.gpa.to_f < 3.0 %>
+                                <td style="text-align: center;color: #ff0000;">
+                                  <%= applicant.gpa %></td>
+                            <% else %>
+                                <td style="text-align: center;color: #000000"><%= applicant.gpa %></td>
+                            <% end %>
+                            <td style="width: 50px;text-align: center;"><%= applicant.rank %></td>
+                            <td style="width: 50px;text-align: center;"><%= applicant.fail %></td>
+                        <%  end %>
+                    <% end %>
+
+
+
+
+
+
+
+
+                    <td style="width: 50px;text-align: center;"><%= applicant.learning_team %></td>
+                    <!--end of term 2-->
+                    <td style="width: 65px;text-align: center;"><%= applicant.scholar %></td>
+                  </tr>
               <% end %>
 
+          <% end %>
+        </table>
+        <div id="pager" class="pager" style="position: inherit !important">
+          <form>
+            <img src="/assets/addons/first.png" class="first">
+            <img src="/assets/addons/prev.png" class="prev">
+            <input type="text" class="pagedisplay">
+            <img src="/assets/addons/next.png" class="next">
+            <img src="/assets/addons/last.png" class="last">
+            <select class="pagesize" style="width: 80px;">
 
-
-
-
-
-
-
-            <td style="width: 50px;text-align: center;"><%= applicant.learning_team %></td>
-              <!--end of term 2-->
-              <td style="width: 65px;text-align: center;"><%= applicant.scholar %></td>
-            </tr>
+              <option value="150">100</option>
+              <option value="50">50</option>
+              <option value="30">30</option>
+              <option value="20">20</option>
+              <option value="15">15</option>
+              <option value="13">13</option>
+              <option value="10">10</option>
+              <option value="7">7</option>
+              <option value="5">5</option>
+              <option value="3">3</option>
+            </select>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="tab-pane fade" id="profile">
+      <h2>2</h2>
+      <div id="applicant-detail">
+        <% if params['term'] == '2' %>
+            <table border="1" style="width: 595px;margin-left: 425px;">
+              <thead>
+              <th colspan="3" style="font-weight: bold; text-align: center;background-color: #00228d;color: #ffffff;border-color: black;width: 39px;font-size: 11px;border-bottom: 1px solid #00228d;">Year 1</th>
+              <th colspan="3" style="font-weight: bold; text-align: center;background-color: #00228d;color: #ffffff;border-color: black;font-size: 11px;border-bottom: 1px solid #00228d;">Term 2</th>
+              <th colspan="3" style="font-weight: bold; text-align: center;background-color: #00228d;color: #ffffff;border-color: black;font-size: 11px;border-bottom: 1px solid #00228d;">Term 1</th>
+              </thead>
+            </table>
         <% end %>
+        <table class="tablesorter styletable" id="TheTable" border="1" style="width: 1150px;margin: 0 auto 0 auto">
 
-    <% end %>
-  </table>
-  <div id="pager" class="pager" style="position: inherit !important">
-    <form>
-      <img src="/assets/addons/first.png" class="first">
-      <img src="/assets/addons/prev.png" class="prev">
-      <input type="text" class="pagedisplay">
-      <img src="/assets/addons/next.png" class="next">
-      <img src="/assets/addons/last.png" class="last">
-      <select class="pagesize" style="width: 80px;">
+          <thead style="background-color: rgb(0, 34, 141);  border: 1px rgb(0, 34, 141);">
+          <th>SN</th>
+          <th>Name</th>
+          <% if params['term'] == '2' %>
+              <th>Y1 GPA</th>
+              <th>Y1 RANK</th>
+              <th>Y1 FAIL</th>
+              <th>T2 GPA</th>
+              <th>T2 Rank</th>
+              <th>T2 Fail</th>
+              <th>T1 GPA</th>
+              <th>T1 Rank</th>
+              <th>T1 Fail</th>
+          <% else %>
+              <th>GPA</th>
+              <th>Rank</th>
+              <th>Fail</th>
+          <% end %>
+          <th>LT</th>
+          <th>Scholar</th>
+          </thead>
+          <% @applicants.each do |applicant| %>
 
-        <option value="150">100</option>
-        <option value="50">50</option>
-        <option value="30">30</option>
-        <option value="20">20</option>
-        <option value="15">15</option>
-        <option value="13">13</option>
-        <option value="10">10</option>
-        <option value="7">7</option>
-        <option value="5">5</option>
-        <option value="3">3</option>
-      </select>
-    </form>
+              <% if applicant.present? %>
+                  <tr style="background-color:<%= "blue !important" if applicant.tgpa.to_f < 4.0 %>;">
+                    <td  class="student-row" style="width: 140px;text-align: center;"><%= applicant.number %></td>
+                    <td style="width: 280px;"><%= link_to applicant.name, applicant, :target => 'new', :style => "color:rgb(0, 34, 141);" %></td>
+                    <% if params['term'] == '2' %>
+                        <% if applicant.whatif_gpa.present? %>
+
+                            <!--T1-->
+                            <% $term1_gpa =  Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:gpa) %>
+                            <% $term1_rank = Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:rank) %>
+                            <% $term1_fail = Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:fail) %>
+
+                            <!--Start of Y1-->
+                            <% $total = ComputedGpa.where(student_number: applicant.number).last.try(:computed_gpa) %>
+                            <% if $total.to_f < 3.0 %>
+                                <td style="text-align: center;">
+                                  <%= $total %></td>
+                            <% else %>
+                                <td style="text-align: center;"><%= $total %></td>
+                            <% end %>
+                            <td style="text-align: center"><%= ComputedGpa.where(student_number: applicant.number).last.try(:rank) %></td>
+                            <td style="text-align: center"><%= $term1_fail.to_f + applicant.whatif_fail.to_f %></td>
+                            <!--End of Y1-->
+                            <!--T2-->
+                            <% if applicant.whatif_gpa.to_f < 3.0 %>
+                                <td style="text-align: center;">
+                                  <%= applicant.whatif_gpa %></td>
+                            <% else %>
+                                <td style="text-align: center;"><%= applicant.whatif_gpa.to_s %></td>
+                            <% end %>
+                            <td style="width: 50px;text-align: center;"><%= applicant.whatif_rank %></td>
+                            <td style="width: 50px;text-align: center;"><%= applicant.whatif_fail %></td>
+                            <!--end of T2-->
+
+                            <!--T1-->
+                            <% if $term1_gpa.to_f < 3.0 %>
+                                <td style="text-align: center;"> <%= $term1_gpa %></td>
+                            <% else %>
+                                <td style="text-align: center"> <%= $term1_gpa %></td>
+                            <% end %>
+                            <td style="text-align: center"> <%= $term1_rank %></td>
+                            <td style="text-align: center"> <%= $term1_fail %></td>
+                            <!--end of T1 for T2 view-->
+
+                            <!--end of view of T2-->
+
+                        <%	else  %>
+                            <!--Start of Y1-->
+                            <% if applicant.tgpa.to_f < 3.0 %>
+                                <td style="text-align: center;">
+                                  <%= applicant.tgpa %></td>
+                            <% else %>
+                                <td style="text-align: center;"><%= applicant.tgpa %></td>
+                            <% end %>
+                            <td style="text-align: center"><%= applicant.trank %></td>
+                            <td style="text-align: center"><%= $fail.to_f + applicant.fail.to_f %></td>
+                            <!--End of Y1-->
+                            <!--T2-->
+                            <% if applicant.gpa.to_f < 3.0 %>
+                                <td style="text-align: center;color: #ff0000;">
+                                  <%= applicant.gpa %></td>
+                            <% else %>
+                                <td style="text-align: center;color: #000000"><%= applicant.gpa %></td>
+                            <% end %>
+                            <td style="width: 50px;text-align: center;"><%= applicant.rank %></td>
+                            <td style="width: 50px;text-align: center;"><%= applicant.fail %></td>
+                            <!--end of T2-->
+
+                            <!--T1-->
+                            <% if applicant.tgpa.to_f < 3.0 %>
+                                <td style="text-align: center;color: #ff0000;"><%= Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:gpa) %></td>
+                            <% else %>
+                                <td style="text-align: center"> <%= Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:gpa) %></td>
+                            <% end %>
+                            <td style="text-align: center"> <%= Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:rank) %></td>
+                            <td style="text-align: center"> <%= $fail = Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:fail) %></td>
+                            <!--end of T1 for T2 view-->
+
+                            <!--end of view of T2-->
+                        <% end %>
+                    <% else %>
+                        <!---->
+                        <%	 if applicant.whatif_gpa.present? %>
+                            <!--if there is a what if gpa use the what if data-->
+                            <% if applicant.whatif_gpa.to_f < 3.0 %>
+                                <td style="text-align: center;">
+                                  <%= applicant.whatif_gpa %></td>
+                            <% else %>
+                                <td style="text-align: center;"><%= applicant.whatif_gpa %></td>
+                            <% end %>
+                            <td style="width: 50px;text-align: center;"><%= applicant.whatif_rank %></td>
+                            <td style="width: 50px;text-align: center;"><%= applicant.fail %></td>
+                            <!---->
+                        <%else %>
+
+                            <% if applicant.gpa.to_f < 3.0 %>
+                                <td style="text-align: center;color: #ff0000;">
+                                  <%= applicant.gpa %></td>
+                            <% else %>
+                                <td style="text-align: center;color: #000000"><%= applicant.gpa %></td>
+                            <% end %>
+                            <td style="width: 50px;text-align: center;"><%= applicant.rank %></td>
+                            <td style="width: 50px;text-align: center;"><%= applicant.fail %></td>
+                        <%  end %>
+                    <% end %>
+
+
+
+
+
+
+
+
+                    <td style="width: 50px;text-align: center;"><%= applicant.learning_team %></td>
+                    <!--end of term 2-->
+                    <td style="width: 65px;text-align: center;"><%= applicant.scholar %></td>
+                  </tr>
+              <% end %>
+
+          <% end %>
+        </table>
+        <div id="pager" class="pager" style="position: inherit !important">
+          <form>
+            <img src="/assets/addons/first.png" class="first">
+            <img src="/assets/addons/prev.png" class="prev">
+            <input type="text" class="pagedisplay">
+            <img src="/assets/addons/next.png" class="next">
+            <img src="/assets/addons/last.png" class="last">
+            <select class="pagesize" style="width: 80px;">
+
+              <option value="150">100</option>
+              <option value="50">50</option>
+              <option value="30">30</option>
+              <option value="20">20</option>
+              <option value="15">15</option>
+              <option value="13">13</option>
+              <option value="10">10</option>
+              <option value="7">7</option>
+              <option value="5">5</option>
+              <option value="3">3</option>
+            </select>
+          </form>
+        </div>
+      </div>
+
+    </div>
+    <div class="tab-pane fade" id="messages">
+      <h1>3</h1>
+      <div id="applicant-detail">
+        <% if params['term'] == '2' %>
+            <table border="1" style="width: 595px;margin-left: 425px;">
+              <thead>
+              <th colspan="3" style="font-weight: bold; text-align: center;background-color: #00228d;color: #ffffff;border-color: black;width: 39px;font-size: 11px;border-bottom: 1px solid #00228d;">Year 1</th>
+              <th colspan="3" style="font-weight: bold; text-align: center;background-color: #00228d;color: #ffffff;border-color: black;font-size: 11px;border-bottom: 1px solid #00228d;">Term 2</th>
+              <th colspan="3" style="font-weight: bold; text-align: center;background-color: #00228d;color: #ffffff;border-color: black;font-size: 11px;border-bottom: 1px solid #00228d;">Term 1</th>
+              </thead>
+            </table>
+        <% end %>
+        <table class="tablesorter styletable" id="TheTable" border="1" style="width: 1150px;margin: 0 auto 0 auto">
+
+          <thead style="background-color: rgb(0, 34, 141);  border: 1px rgb(0, 34, 141);">
+          <th>SN</th>
+          <th>Name</th>
+          <% if params['term'] == '2' %>
+              <th>Y1 GPA</th>
+              <th>Y1 RANK</th>
+              <th>Y1 FAIL</th>
+              <th>T2 GPA</th>
+              <th>T2 Rank</th>
+              <th>T2 Fail</th>
+              <th>T1 GPA</th>
+              <th>T1 Rank</th>
+              <th>T1 Fail</th>
+          <% else %>
+              <th>GPA</th>
+              <th>Rank</th>
+              <th>Fail</th>
+          <% end %>
+          <th>LT</th>
+          <th>Scholar</th>
+          </thead>
+          <% @applicants.each do |applicant| %>
+
+              <% if applicant.present? %>
+                  <tr style="background-color:<%= "blue !important" if applicant.tgpa.to_f < 4.0 %>;">
+                    <td  class="student-row" style="width: 140px;text-align: center;"><%= applicant.number %></td>
+                    <td style="width: 280px;"><%= link_to applicant.name, applicant, :target => 'new', :style => "color:rgb(0, 34, 141);" %></td>
+                    <% if params['term'] == '2' %>
+                        <% if applicant.whatif_gpa.present? %>
+
+                            <!--T1-->
+                            <% $term1_gpa =  Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:gpa) %>
+                            <% $term1_rank = Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:rank) %>
+                            <% $term1_fail = Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:fail) %>
+
+                            <!--Start of Y1-->
+                            <% $total = ComputedGpa.where(student_number: applicant.number).last.try(:computed_gpa) %>
+                            <% if $total.to_f < 3.0 %>
+                                <td style="text-align: center;">
+                                  <%= $total %></td>
+                            <% else %>
+                                <td style="text-align: center;"><%= $total %></td>
+                            <% end %>
+                            <td style="text-align: center"><%= ComputedGpa.where(student_number: applicant.number).last.try(:rank) %></td>
+                            <td style="text-align: center"><%= $term1_fail.to_f + applicant.whatif_fail.to_f %></td>
+                            <!--End of Y1-->
+                            <!--T2-->
+                            <% if applicant.whatif_gpa.to_f < 3.0 %>
+                                <td style="text-align: center;">
+                                  <%= applicant.whatif_gpa %></td>
+                            <% else %>
+                                <td style="text-align: center;"><%= applicant.whatif_gpa.to_s %></td>
+                            <% end %>
+                            <td style="width: 50px;text-align: center;"><%= applicant.whatif_rank %></td>
+                            <td style="width: 50px;text-align: center;"><%= applicant.whatif_fail %></td>
+                            <!--end of T2-->
+
+                            <!--T1-->
+                            <% if $term1_gpa.to_f < 3.0 %>
+                                <td style="text-align: center;"> <%= $term1_gpa %></td>
+                            <% else %>
+                                <td style="text-align: center"> <%= $term1_gpa %></td>
+                            <% end %>
+                            <td style="text-align: center"> <%= $term1_rank %></td>
+                            <td style="text-align: center"> <%= $term1_fail %></td>
+                            <!--end of T1 for T2 view-->
+
+                            <!--end of view of T2-->
+
+                        <%	else  %>
+                            <!--Start of Y1-->
+                            <% if applicant.tgpa.to_f < 3.0 %>
+                                <td style="text-align: center;">
+                                  <%= applicant.tgpa %></td>
+                            <% else %>
+                                <td style="text-align: center;"><%= applicant.tgpa %></td>
+                            <% end %>
+                            <td style="text-align: center"><%= applicant.trank %></td>
+                            <td style="text-align: center"><%= $fail.to_f + applicant.fail.to_f %></td>
+                            <!--End of Y1-->
+                            <!--T2-->
+                            <% if applicant.gpa.to_f < 3.0 %>
+                                <td style="text-align: center;color: #ff0000;">
+                                  <%= applicant.gpa %></td>
+                            <% else %>
+                                <td style="text-align: center;color: #000000"><%= applicant.gpa %></td>
+                            <% end %>
+                            <td style="width: 50px;text-align: center;"><%= applicant.rank %></td>
+                            <td style="width: 50px;text-align: center;"><%= applicant.fail %></td>
+                            <!--end of T2-->
+
+                            <!--T1-->
+                            <% if applicant.tgpa.to_f < 3.0 %>
+                                <td style="text-align: center;color: #ff0000;"><%= Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:gpa) %></td>
+                            <% else %>
+                                <td style="text-align: center"> <%= Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:gpa) %></td>
+                            <% end %>
+                            <td style="text-align: center"> <%= Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:rank) %></td>
+                            <td style="text-align: center"> <%= $fail = Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:fail) %></td>
+                            <!--end of T1 for T2 view-->
+
+                            <!--end of view of T2-->
+                        <% end %>
+                    <% else %>
+                        <!---->
+                        <%	 if applicant.whatif_gpa.present? %>
+                            <!--if there is a what if gpa use the what if data-->
+                            <% if applicant.whatif_gpa.to_f < 3.0 %>
+                                <td style="text-align: center;">
+                                  <%= applicant.whatif_gpa %></td>
+                            <% else %>
+                                <td style="text-align: center;"><%= applicant.whatif_gpa %></td>
+                            <% end %>
+                            <td style="width: 50px;text-align: center;"><%= applicant.whatif_rank %></td>
+                            <td style="width: 50px;text-align: center;"><%= applicant.fail %></td>
+                            <!---->
+                        <%else %>
+
+                            <% if applicant.gpa.to_f < 3.0 %>
+                                <td style="text-align: center;color: #ff0000;">
+                                  <%= applicant.gpa %></td>
+                            <% else %>
+                                <td style="text-align: center;color: #000000"><%= applicant.gpa %></td>
+                            <% end %>
+                            <td style="width: 50px;text-align: center;"><%= applicant.rank %></td>
+                            <td style="width: 50px;text-align: center;"><%= applicant.fail %></td>
+                        <%  end %>
+                    <% end %>
+
+
+
+
+
+
+
+
+                    <td style="width: 50px;text-align: center;"><%= applicant.learning_team %></td>
+                    <!--end of term 2-->
+                    <td style="width: 65px;text-align: center;"><%= applicant.scholar %></td>
+                  </tr>
+              <% end %>
+
+          <% end %>
+        </table>
+        <div id="pager" class="pager" style="position: inherit !important">
+          <form>
+            <img src="/assets/addons/first.png" class="first">
+            <img src="/assets/addons/prev.png" class="prev">
+            <input type="text" class="pagedisplay">
+            <img src="/assets/addons/next.png" class="next">
+            <img src="/assets/addons/last.png" class="last">
+            <select class="pagesize" style="width: 80px;">
+
+              <option value="150">100</option>
+              <option value="50">50</option>
+              <option value="30">30</option>
+              <option value="20">20</option>
+              <option value="15">15</option>
+              <option value="13">13</option>
+              <option value="10">10</option>
+              <option value="7">7</option>
+              <option value="5">5</option>
+              <option value="3">3</option>
+            </select>
+          </form>
+        </div>
+      </div>
+
+    </div>
+    <div class="tab-pane fade" id="4">
+      <h1>4</h1>
+      <div id="applicant-detail">
+        <% if params['term'] == '2' %>
+            <table border="1" style="width: 595px;margin-left: 425px;">
+              <thead>
+              <th colspan="3" style="font-weight: bold; text-align: center;background-color: #00228d;color: #ffffff;border-color: black;width: 39px;font-size: 11px;border-bottom: 1px solid #00228d;">Year 1</th>
+              <th colspan="3" style="font-weight: bold; text-align: center;background-color: #00228d;color: #ffffff;border-color: black;font-size: 11px;border-bottom: 1px solid #00228d;">Term 2</th>
+              <th colspan="3" style="font-weight: bold; text-align: center;background-color: #00228d;color: #ffffff;border-color: black;font-size: 11px;border-bottom: 1px solid #00228d;">Term 1</th>
+              </thead>
+            </table>
+        <% end %>
+        <table class="tablesorter styletable" id="TheTable" border="1" style="width: 1150px;margin: 0 auto 0 auto">
+
+          <thead style="background-color: rgb(0, 34, 141);  border: 1px rgb(0, 34, 141);">
+          <th>SN</th>
+          <th>Name</th>
+          <% if params['term'] == '2' %>
+              <th>Y1 GPA</th>
+              <th>Y1 RANK</th>
+              <th>Y1 FAIL</th>
+              <th>T2 GPA</th>
+              <th>T2 Rank</th>
+              <th>T2 Fail</th>
+              <th>T1 GPA</th>
+              <th>T1 Rank</th>
+              <th>T1 Fail</th>
+          <% else %>
+              <th>GPA</th>
+              <th>Rank</th>
+              <th>Fail</th>
+          <% end %>
+          <th>LT</th>
+          <th>Scholar</th>
+          </thead>
+          <% @applicants.each do |applicant| %>
+
+              <% if applicant.present? %>
+                  <tr style="background-color:<%= "blue !important" if applicant.tgpa.to_f < 4.0 %>;">
+                    <td  class="student-row" style="width: 140px;text-align: center;"><%= applicant.number %></td>
+                    <td style="width: 280px;"><%= link_to applicant.name, applicant, :target => 'new', :style => "color:rgb(0, 34, 141);" %></td>
+                    <% if params['term'] == '2' %>
+                        <% if applicant.whatif_gpa.present? %>
+
+                            <!--T1-->
+                            <% $term1_gpa =  Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:gpa) %>
+                            <% $term1_rank = Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:rank) %>
+                            <% $term1_fail = Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:fail) %>
+
+                            <!--Start of Y1-->
+                            <% $total = ComputedGpa.where(student_number: applicant.number).last.try(:computed_gpa) %>
+                            <% if $total.to_f < 3.0 %>
+                                <td style="text-align: center;">
+                                  <%= $total %></td>
+                            <% else %>
+                                <td style="text-align: center;"><%= $total %></td>
+                            <% end %>
+                            <td style="text-align: center"><%= ComputedGpa.where(student_number: applicant.number).last.try(:rank) %></td>
+                            <td style="text-align: center"><%= $term1_fail.to_f + applicant.whatif_fail.to_f %></td>
+                            <!--End of Y1-->
+                            <!--T2-->
+                            <% if applicant.whatif_gpa.to_f < 3.0 %>
+                                <td style="text-align: center;">
+                                  <%= applicant.whatif_gpa %></td>
+                            <% else %>
+                                <td style="text-align: center;"><%= applicant.whatif_gpa.to_s %></td>
+                            <% end %>
+                            <td style="width: 50px;text-align: center;"><%= applicant.whatif_rank %></td>
+                            <td style="width: 50px;text-align: center;"><%= applicant.whatif_fail %></td>
+                            <!--end of T2-->
+
+                            <!--T1-->
+                            <% if $term1_gpa.to_f < 3.0 %>
+                                <td style="text-align: center;"> <%= $term1_gpa %></td>
+                            <% else %>
+                                <td style="text-align: center"> <%= $term1_gpa %></td>
+                            <% end %>
+                            <td style="text-align: center"> <%= $term1_rank %></td>
+                            <td style="text-align: center"> <%= $term1_fail %></td>
+                            <!--end of T1 for T2 view-->
+
+                            <!--end of view of T2-->
+
+                        <%	else  %>
+                            <!--Start of Y1-->
+                            <% if applicant.tgpa.to_f < 3.0 %>
+                                <td style="text-align: center;">
+                                  <%= applicant.tgpa %></td>
+                            <% else %>
+                                <td style="text-align: center;"><%= applicant.tgpa %></td>
+                            <% end %>
+                            <td style="text-align: center"><%= applicant.trank %></td>
+                            <td style="text-align: center"><%= $fail.to_f + applicant.fail.to_f %></td>
+                            <!--End of Y1-->
+                            <!--T2-->
+                            <% if applicant.gpa.to_f < 3.0 %>
+                                <td style="text-align: center;color: #ff0000;">
+                                  <%= applicant.gpa %></td>
+                            <% else %>
+                                <td style="text-align: center;color: #000000"><%= applicant.gpa %></td>
+                            <% end %>
+                            <td style="width: 50px;text-align: center;"><%= applicant.rank %></td>
+                            <td style="width: 50px;text-align: center;"><%= applicant.fail %></td>
+                            <!--end of T2-->
+
+                            <!--T1-->
+                            <% if applicant.tgpa.to_f < 3.0 %>
+                                <td style="text-align: center;color: #ff0000;"><%= Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:gpa) %></td>
+                            <% else %>
+                                <td style="text-align: center"> <%= Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:gpa) %></td>
+                            <% end %>
+                            <td style="text-align: center"> <%= Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:rank) %></td>
+                            <td style="text-align: center"> <%= $fail = Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:fail) %></td>
+                            <!--end of T1 for T2 view-->
+
+                            <!--end of view of T2-->
+                        <% end %>
+                    <% else %>
+                        <!---->
+                        <%	 if applicant.whatif_gpa.present? %>
+                            <!--if there is a what if gpa use the what if data-->
+                            <% if applicant.whatif_gpa.to_f < 3.0 %>
+                                <td style="text-align: center;">
+                                  <%= applicant.whatif_gpa %></td>
+                            <% else %>
+                                <td style="text-align: center;"><%= applicant.whatif_gpa %></td>
+                            <% end %>
+                            <td style="width: 50px;text-align: center;"><%= applicant.whatif_rank %></td>
+                            <td style="width: 50px;text-align: center;"><%= applicant.fail %></td>
+                            <!---->
+                        <%else %>
+
+                            <% if applicant.gpa.to_f < 3.0 %>
+                                <td style="text-align: center;color: #ff0000;">
+                                  <%= applicant.gpa %></td>
+                            <% else %>
+                                <td style="text-align: center;color: #000000"><%= applicant.gpa %></td>
+                            <% end %>
+                            <td style="width: 50px;text-align: center;"><%= applicant.rank %></td>
+                            <td style="width: 50px;text-align: center;"><%= applicant.fail %></td>
+                        <%  end %>
+                    <% end %>
+
+
+
+
+
+
+
+
+                    <td style="width: 50px;text-align: center;"><%= applicant.learning_team %></td>
+                    <!--end of term 2-->
+                    <td style="width: 65px;text-align: center;"><%= applicant.scholar %></td>
+                  </tr>
+              <% end %>
+
+          <% end %>
+        </table>
+        <div id="pager" class="pager" style="position: inherit !important">
+          <form>
+            <img src="/assets/addons/first.png" class="first">
+            <img src="/assets/addons/prev.png" class="prev">
+            <input type="text" class="pagedisplay">
+            <img src="/assets/addons/next.png" class="next">
+            <img src="/assets/addons/last.png" class="last">
+            <select class="pagesize" style="width: 80px;">
+
+              <option value="150">100</option>
+              <option value="50">50</option>
+              <option value="30">30</option>
+              <option value="20">20</option>
+              <option value="15">15</option>
+              <option value="13">13</option>
+              <option value="10">10</option>
+              <option value="7">7</option>
+              <option value="5">5</option>
+              <option value="3">3</option>
+            </select>
+          </form>
+        </div>
+      </div>
+
+    </div>
+    <div class="tab-pane fade" id="5">
+      <h1>5</h1>
+      <div id="applicant-detail">
+        <% if params['term'] == '2' %>
+            <table border="1" style="width: 595px;margin-left: 425px;">
+              <thead>
+              <th colspan="3" style="font-weight: bold; text-align: center;background-color: #00228d;color: #ffffff;border-color: black;width: 39px;font-size: 11px;border-bottom: 1px solid #00228d;">Year 1</th>
+              <th colspan="3" style="font-weight: bold; text-align: center;background-color: #00228d;color: #ffffff;border-color: black;font-size: 11px;border-bottom: 1px solid #00228d;">Term 2</th>
+              <th colspan="3" style="font-weight: bold; text-align: center;background-color: #00228d;color: #ffffff;border-color: black;font-size: 11px;border-bottom: 1px solid #00228d;">Term 1</th>
+              </thead>
+            </table>
+        <% end %>
+        <table class="tablesorter styletable" id="TheTable" border="1" style="width: 1150px;margin: 0 auto 0 auto">
+
+          <thead style="background-color: rgb(0, 34, 141);  border: 1px rgb(0, 34, 141);">
+          <th>SN</th>
+          <th>Name</th>
+          <% if params['term'] == '2' %>
+              <th>Y1 GPA</th>
+              <th>Y1 RANK</th>
+              <th>Y1 FAIL</th>
+              <th>T2 GPA</th>
+              <th>T2 Rank</th>
+              <th>T2 Fail</th>
+              <th>T1 GPA</th>
+              <th>T1 Rank</th>
+              <th>T1 Fail</th>
+          <% else %>
+              <th>GPA</th>
+              <th>Rank</th>
+              <th>Fail</th>
+          <% end %>
+          <th>LT</th>
+          <th>Scholar</th>
+          </thead>
+          <% @applicants.each do |applicant| %>
+
+              <% if applicant.present? %>
+                  <tr style="background-color:<%= "blue !important" if applicant.tgpa.to_f < 4.0 %>;">
+                    <td  class="student-row" style="width: 140px;text-align: center;"><%= applicant.number %></td>
+                    <td style="width: 280px;"><%= link_to applicant.name, applicant, :target => 'new', :style => "color:rgb(0, 34, 141);" %></td>
+                    <% if params['term'] == '2' %>
+                        <% if applicant.whatif_gpa.present? %>
+
+                            <!--T1-->
+                            <% $term1_gpa =  Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:gpa) %>
+                            <% $term1_rank = Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:rank) %>
+                            <% $term1_fail = Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:fail) %>
+
+                            <!--Start of Y1-->
+                            <% $total = ComputedGpa.where(student_number: applicant.number).last.try(:computed_gpa) %>
+                            <% if $total.to_f < 3.0 %>
+                                <td style="text-align: center;">
+                                  <%= $total %></td>
+                            <% else %>
+                                <td style="text-align: center;"><%= $total %></td>
+                            <% end %>
+                            <td style="text-align: center"><%= ComputedGpa.where(student_number: applicant.number).last.try(:rank) %></td>
+                            <td style="text-align: center"><%= $term1_fail.to_f + applicant.whatif_fail.to_f %></td>
+                            <!--End of Y1-->
+                            <!--T2-->
+                            <% if applicant.whatif_gpa.to_f < 3.0 %>
+                                <td style="text-align: center;">
+                                  <%= applicant.whatif_gpa %></td>
+                            <% else %>
+                                <td style="text-align: center;"><%= applicant.whatif_gpa.to_s %></td>
+                            <% end %>
+                            <td style="width: 50px;text-align: center;"><%= applicant.whatif_rank %></td>
+                            <td style="width: 50px;text-align: center;"><%= applicant.whatif_fail %></td>
+                            <!--end of T2-->
+
+                            <!--T1-->
+                            <% if $term1_gpa.to_f < 3.0 %>
+                                <td style="text-align: center;"> <%= $term1_gpa %></td>
+                            <% else %>
+                                <td style="text-align: center"> <%= $term1_gpa %></td>
+                            <% end %>
+                            <td style="text-align: center"> <%= $term1_rank %></td>
+                            <td style="text-align: center"> <%= $term1_fail %></td>
+                            <!--end of T1 for T2 view-->
+
+                            <!--end of view of T2-->
+
+                        <%	else  %>
+                            <!--Start of Y1-->
+                            <% if applicant.tgpa.to_f < 3.0 %>
+                                <td style="text-align: center;">
+                                  <%= applicant.tgpa %></td>
+                            <% else %>
+                                <td style="text-align: center;"><%= applicant.tgpa %></td>
+                            <% end %>
+                            <td style="text-align: center"><%= applicant.trank %></td>
+                            <td style="text-align: center"><%= $fail.to_f + applicant.fail.to_f %></td>
+                            <!--End of Y1-->
+                            <!--T2-->
+                            <% if applicant.gpa.to_f < 3.0 %>
+                                <td style="text-align: center;color: #ff0000;">
+                                  <%= applicant.gpa %></td>
+                            <% else %>
+                                <td style="text-align: center;color: #000000"><%= applicant.gpa %></td>
+                            <% end %>
+                            <td style="width: 50px;text-align: center;"><%= applicant.rank %></td>
+                            <td style="width: 50px;text-align: center;"><%= applicant.fail %></td>
+                            <!--end of T2-->
+
+                            <!--T1-->
+                            <% if applicant.tgpa.to_f < 3.0 %>
+                                <td style="text-align: center;color: #ff0000;"><%= Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:gpa) %></td>
+                            <% else %>
+                                <td style="text-align: center"> <%= Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:gpa) %></td>
+                            <% end %>
+                            <td style="text-align: center"> <%= Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:rank) %></td>
+                            <td style="text-align: center"> <%= $fail = Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:fail) %></td>
+                            <!--end of T1 for T2 view-->
+
+                            <!--end of view of T2-->
+                        <% end %>
+                    <% else %>
+                        <!---->
+                        <%	 if applicant.whatif_gpa.present? %>
+                            <!--if there is a what if gpa use the what if data-->
+                            <% if applicant.whatif_gpa.to_f < 3.0 %>
+                                <td style="text-align: center;">
+                                  <%= applicant.whatif_gpa %></td>
+                            <% else %>
+                                <td style="text-align: center;"><%= applicant.whatif_gpa %></td>
+                            <% end %>
+                            <td style="width: 50px;text-align: center;"><%= applicant.whatif_rank %></td>
+                            <td style="width: 50px;text-align: center;"><%= applicant.fail %></td>
+                            <!---->
+                        <%else %>
+
+                            <% if applicant.gpa.to_f < 3.0 %>
+                                <td style="text-align: center;color: #ff0000;">
+                                  <%= applicant.gpa %></td>
+                            <% else %>
+                                <td style="text-align: center;color: #000000"><%= applicant.gpa %></td>
+                            <% end %>
+                            <td style="width: 50px;text-align: center;"><%= applicant.rank %></td>
+                            <td style="width: 50px;text-align: center;"><%= applicant.fail %></td>
+                        <%  end %>
+                    <% end %>
+
+
+
+
+
+
+
+
+                    <td style="width: 50px;text-align: center;"><%= applicant.learning_team %></td>
+                    <!--end of term 2-->
+                    <td style="width: 65px;text-align: center;"><%= applicant.scholar %></td>
+                  </tr>
+              <% end %>
+
+          <% end %>
+        </table>
+        <div id="pager" class="pager" style="position: inherit !important">
+          <form>
+            <img src="/assets/addons/first.png" class="first">
+            <img src="/assets/addons/prev.png" class="prev">
+            <input type="text" class="pagedisplay">
+            <img src="/assets/addons/next.png" class="next">
+            <img src="/assets/addons/last.png" class="last">
+            <select class="pagesize" style="width: 80px;">
+
+              <option value="150">100</option>
+              <option value="50">50</option>
+              <option value="30">30</option>
+              <option value="20">20</option>
+              <option value="15">15</option>
+              <option value="13">13</option>
+              <option value="10">10</option>
+              <option value="7">7</option>
+              <option value="5">5</option>
+              <option value="3">3</option>
+            </select>
+          </form>
+        </div>
+      </div>
+
+    </div>
+    <div class="tab-pane fade" id="6">
+      <h1>6</h1>
+      <div id="applicant-detail">
+        <% if params['term'] == '2' %>
+            <table border="1" style="width: 595px;margin-left: 425px;">
+              <thead>
+              <th colspan="3" style="font-weight: bold; text-align: center;background-color: #00228d;color: #ffffff;border-color: black;width: 39px;font-size: 11px;border-bottom: 1px solid #00228d;">Year 1</th>
+              <th colspan="3" style="font-weight: bold; text-align: center;background-color: #00228d;color: #ffffff;border-color: black;font-size: 11px;border-bottom: 1px solid #00228d;">Term 2</th>
+              <th colspan="3" style="font-weight: bold; text-align: center;background-color: #00228d;color: #ffffff;border-color: black;font-size: 11px;border-bottom: 1px solid #00228d;">Term 1</th>
+              </thead>
+            </table>
+        <% end %>
+        <table class="tablesorter styletable" id="TheTable" border="1" style="width: 1150px;margin: 0 auto 0 auto">
+
+          <thead style="background-color: rgb(0, 34, 141);  border: 1px rgb(0, 34, 141);">
+          <th>SN</th>
+          <th>Name</th>
+          <% if params['term'] == '2' %>
+              <th>Y1 GPA</th>
+              <th>Y1 RANK</th>
+              <th>Y1 FAIL</th>
+              <th>T2 GPA</th>
+              <th>T2 Rank</th>
+              <th>T2 Fail</th>
+              <th>T1 GPA</th>
+              <th>T1 Rank</th>
+              <th>T1 Fail</th>
+          <% else %>
+              <th>GPA</th>
+              <th>Rank</th>
+              <th>Fail</th>
+          <% end %>
+          <th>LT</th>
+          <th>Scholar</th>
+          </thead>
+          <% @applicants.each do |applicant| %>
+
+              <% if applicant.present? %>
+                  <tr style="background-color:<%= "blue !important" if applicant.tgpa.to_f < 4.0 %>;">
+                    <td  class="student-row" style="width: 140px;text-align: center;"><%= applicant.number %></td>
+                    <td style="width: 280px;"><%= link_to applicant.name, applicant, :target => 'new', :style => "color:rgb(0, 34, 141);" %></td>
+                    <% if params['term'] == '2' %>
+                        <% if applicant.whatif_gpa.present? %>
+
+                            <!--T1-->
+                            <% $term1_gpa =  Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:gpa) %>
+                            <% $term1_rank = Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:rank) %>
+                            <% $term1_fail = Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:fail) %>
+
+                            <!--Start of Y1-->
+                            <% $total = ComputedGpa.where(student_number: applicant.number).last.try(:computed_gpa) %>
+                            <% if $total.to_f < 3.0 %>
+                                <td style="text-align: center;">
+                                  <%= $total %></td>
+                            <% else %>
+                                <td style="text-align: center;"><%= $total %></td>
+                            <% end %>
+                            <td style="text-align: center"><%= ComputedGpa.where(student_number: applicant.number).last.try(:rank) %></td>
+                            <td style="text-align: center"><%= $term1_fail.to_f + applicant.whatif_fail.to_f %></td>
+                            <!--End of Y1-->
+                            <!--T2-->
+                            <% if applicant.whatif_gpa.to_f < 3.0 %>
+                                <td style="text-align: center;">
+                                  <%= applicant.whatif_gpa %></td>
+                            <% else %>
+                                <td style="text-align: center;"><%= applicant.whatif_gpa.to_s %></td>
+                            <% end %>
+                            <td style="width: 50px;text-align: center;"><%= applicant.whatif_rank %></td>
+                            <td style="width: 50px;text-align: center;"><%= applicant.whatif_fail %></td>
+                            <!--end of T2-->
+
+                            <!--T1-->
+                            <% if $term1_gpa.to_f < 3.0 %>
+                                <td style="text-align: center;"> <%= $term1_gpa %></td>
+                            <% else %>
+                                <td style="text-align: center"> <%= $term1_gpa %></td>
+                            <% end %>
+                            <td style="text-align: center"> <%= $term1_rank %></td>
+                            <td style="text-align: center"> <%= $term1_fail %></td>
+                            <!--end of T1 for T2 view-->
+
+                            <!--end of view of T2-->
+
+                        <%	else  %>
+                            <!--Start of Y1-->
+                            <% if applicant.tgpa.to_f < 3.0 %>
+                                <td style="text-align: center;">
+                                  <%= applicant.tgpa %></td>
+                            <% else %>
+                                <td style="text-align: center;"><%= applicant.tgpa %></td>
+                            <% end %>
+                            <td style="text-align: center"><%= applicant.trank %></td>
+                            <td style="text-align: center"><%= $fail.to_f + applicant.fail.to_f %></td>
+                            <!--End of Y1-->
+                            <!--T2-->
+                            <% if applicant.gpa.to_f < 3.0 %>
+                                <td style="text-align: center;color: #ff0000;">
+                                  <%= applicant.gpa %></td>
+                            <% else %>
+                                <td style="text-align: center;color: #000000"><%= applicant.gpa %></td>
+                            <% end %>
+                            <td style="width: 50px;text-align: center;"><%= applicant.rank %></td>
+                            <td style="width: 50px;text-align: center;"><%= applicant.fail %></td>
+                            <!--end of T2-->
+
+                            <!--T1-->
+                            <% if applicant.tgpa.to_f < 3.0 %>
+                                <td style="text-align: center;color: #ff0000;"><%= Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:gpa) %></td>
+                            <% else %>
+                                <td style="text-align: center"> <%= Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:gpa) %></td>
+                            <% end %>
+                            <td style="text-align: center"> <%= Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:rank) %></td>
+                            <td style="text-align: center"> <%= $fail = Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:fail) %></td>
+                            <!--end of T1 for T2 view-->
+
+                            <!--end of view of T2-->
+                        <% end %>
+                    <% else %>
+                        <!---->
+                        <%	 if applicant.whatif_gpa.present? %>
+                            <!--if there is a what if gpa use the what if data-->
+                            <% if applicant.whatif_gpa.to_f < 3.0 %>
+                                <td style="text-align: center;">
+                                  <%= applicant.whatif_gpa %></td>
+                            <% else %>
+                                <td style="text-align: center;"><%= applicant.whatif_gpa %></td>
+                            <% end %>
+                            <td style="width: 50px;text-align: center;"><%= applicant.whatif_rank %></td>
+                            <td style="width: 50px;text-align: center;"><%= applicant.fail %></td>
+                            <!---->
+                        <%else %>
+
+                            <% if applicant.gpa.to_f < 3.0 %>
+                                <td style="text-align: center;color: #ff0000;">
+                                  <%= applicant.gpa %></td>
+                            <% else %>
+                                <td style="text-align: center;color: #000000"><%= applicant.gpa %></td>
+                            <% end %>
+                            <td style="width: 50px;text-align: center;"><%= applicant.rank %></td>
+                            <td style="width: 50px;text-align: center;"><%= applicant.fail %></td>
+                        <%  end %>
+                    <% end %>
+
+
+
+
+
+
+
+
+                    <td style="width: 50px;text-align: center;"><%= applicant.learning_team %></td>
+                    <!--end of term 2-->
+                    <td style="width: 65px;text-align: center;"><%= applicant.scholar %></td>
+                  </tr>
+              <% end %>
+
+          <% end %>
+        </table>
+        <div id="pager" class="pager" style="position: inherit !important">
+          <form>
+            <img src="/assets/addons/first.png" class="first">
+            <img src="/assets/addons/prev.png" class="prev">
+            <input type="text" class="pagedisplay">
+            <img src="/assets/addons/next.png" class="next">
+            <img src="/assets/addons/last.png" class="last">
+            <select class="pagesize" style="width: 80px;">
+
+              <option value="150">100</option>
+              <option value="50">50</option>
+              <option value="30">30</option>
+              <option value="20">20</option>
+              <option value="15">15</option>
+              <option value="13">13</option>
+              <option value="10">10</option>
+              <option value="7">7</option>
+              <option value="5">5</option>
+              <option value="3">3</option>
+            </select>
+          </form>
+        </div>
+      </div>
+
+    </div>
+    <div class="tab-pane fade" id="7">
+      <h1>7</h1>
+      <div id="applicant-detail">
+        <% if params['term'] == '2' %>
+            <table border="1" style="width: 595px;margin-left: 425px;">
+              <thead>
+              <th colspan="3" style="font-weight: bold; text-align: center;background-color: #00228d;color: #ffffff;border-color: black;width: 39px;font-size: 11px;border-bottom: 1px solid #00228d;">Year 1</th>
+              <th colspan="3" style="font-weight: bold; text-align: center;background-color: #00228d;color: #ffffff;border-color: black;font-size: 11px;border-bottom: 1px solid #00228d;">Term 2</th>
+              <th colspan="3" style="font-weight: bold; text-align: center;background-color: #00228d;color: #ffffff;border-color: black;font-size: 11px;border-bottom: 1px solid #00228d;">Term 1</th>
+              </thead>
+            </table>
+        <% end %>
+        <table class="tablesorter styletable" id="TheTable" border="1" style="width: 1150px;margin: 0 auto 0 auto">
+
+          <thead style="background-color: rgb(0, 34, 141);  border: 1px rgb(0, 34, 141);">
+          <th>SN</th>
+          <th>Name</th>
+          <% if params['term'] == '2' %>
+              <th>Y1 GPA</th>
+              <th>Y1 RANK</th>
+              <th>Y1 FAIL</th>
+              <th>T2 GPA</th>
+              <th>T2 Rank</th>
+              <th>T2 Fail</th>
+              <th>T1 GPA</th>
+              <th>T1 Rank</th>
+              <th>T1 Fail</th>
+          <% else %>
+              <th>GPA</th>
+              <th>Rank</th>
+              <th>Fail</th>
+          <% end %>
+          <th>LT</th>
+          <th>Scholar</th>
+          </thead>
+          <% @applicants.each do |applicant| %>
+
+              <% if applicant.present? %>
+                  <tr style="background-color:<%= "blue !important" if applicant.tgpa.to_f < 4.0 %>;">
+                    <td  class="student-row" style="width: 140px;text-align: center;"><%= applicant.number %></td>
+                    <td style="width: 280px;"><%= link_to applicant.name, applicant, :target => 'new', :style => "color:rgb(0, 34, 141);" %></td>
+                    <% if params['term'] == '2' %>
+                        <% if applicant.whatif_gpa.present? %>
+
+                            <!--T1-->
+                            <% $term1_gpa =  Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:gpa) %>
+                            <% $term1_rank = Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:rank) %>
+                            <% $term1_fail = Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:fail) %>
+
+                            <!--Start of Y1-->
+                            <% $total = ComputedGpa.where(student_number: applicant.number).last.try(:computed_gpa) %>
+                            <% if $total.to_f < 3.0 %>
+                                <td style="text-align: center;">
+                                  <%= $total %></td>
+                            <% else %>
+                                <td style="text-align: center;"><%= $total %></td>
+                            <% end %>
+                            <td style="text-align: center"><%= ComputedGpa.where(student_number: applicant.number).last.try(:rank) %></td>
+                            <td style="text-align: center"><%= $term1_fail.to_f + applicant.whatif_fail.to_f %></td>
+                            <!--End of Y1-->
+                            <!--T2-->
+                            <% if applicant.whatif_gpa.to_f < 3.0 %>
+                                <td style="text-align: center;">
+                                  <%= applicant.whatif_gpa %></td>
+                            <% else %>
+                                <td style="text-align: center;"><%= applicant.whatif_gpa.to_s %></td>
+                            <% end %>
+                            <td style="width: 50px;text-align: center;"><%= applicant.whatif_rank %></td>
+                            <td style="width: 50px;text-align: center;"><%= applicant.whatif_fail %></td>
+                            <!--end of T2-->
+
+                            <!--T1-->
+                            <% if $term1_gpa.to_f < 3.0 %>
+                                <td style="text-align: center;"> <%= $term1_gpa %></td>
+                            <% else %>
+                                <td style="text-align: center"> <%= $term1_gpa %></td>
+                            <% end %>
+                            <td style="text-align: center"> <%= $term1_rank %></td>
+                            <td style="text-align: center"> <%= $term1_fail %></td>
+                            <!--end of T1 for T2 view-->
+
+                            <!--end of view of T2-->
+
+                        <%	else  %>
+                            <!--Start of Y1-->
+                            <% if applicant.tgpa.to_f < 3.0 %>
+                                <td style="text-align: center;">
+                                  <%= applicant.tgpa %></td>
+                            <% else %>
+                                <td style="text-align: center;"><%= applicant.tgpa %></td>
+                            <% end %>
+                            <td style="text-align: center"><%= applicant.trank %></td>
+                            <td style="text-align: center"><%= $fail.to_f + applicant.fail.to_f %></td>
+                            <!--End of Y1-->
+                            <!--T2-->
+                            <% if applicant.gpa.to_f < 3.0 %>
+                                <td style="text-align: center;color: #ff0000;">
+                                  <%= applicant.gpa %></td>
+                            <% else %>
+                                <td style="text-align: center;color: #000000"><%= applicant.gpa %></td>
+                            <% end %>
+                            <td style="width: 50px;text-align: center;"><%= applicant.rank %></td>
+                            <td style="width: 50px;text-align: center;"><%= applicant.fail %></td>
+                            <!--end of T2-->
+
+                            <!--T1-->
+                            <% if applicant.tgpa.to_f < 3.0 %>
+                                <td style="text-align: center;color: #ff0000;"><%= Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:gpa) %></td>
+                            <% else %>
+                                <td style="text-align: center"> <%= Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:gpa) %></td>
+                            <% end %>
+                            <td style="text-align: center"> <%= Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:rank) %></td>
+                            <td style="text-align: center"> <%= $fail = Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:fail) %></td>
+                            <!--end of T1 for T2 view-->
+
+                            <!--end of view of T2-->
+                        <% end %>
+                    <% else %>
+                        <!---->
+                        <%	 if applicant.whatif_gpa.present? %>
+                            <!--if there is a what if gpa use the what if data-->
+                            <% if applicant.whatif_gpa.to_f < 3.0 %>
+                                <td style="text-align: center;">
+                                  <%= applicant.whatif_gpa %></td>
+                            <% else %>
+                                <td style="text-align: center;"><%= applicant.whatif_gpa %></td>
+                            <% end %>
+                            <td style="width: 50px;text-align: center;"><%= applicant.whatif_rank %></td>
+                            <td style="width: 50px;text-align: center;"><%= applicant.fail %></td>
+                            <!---->
+                        <%else %>
+
+                            <% if applicant.gpa.to_f < 3.0 %>
+                                <td style="text-align: center;color: #ff0000;">
+                                  <%= applicant.gpa %></td>
+                            <% else %>
+                                <td style="text-align: center;color: #000000"><%= applicant.gpa %></td>
+                            <% end %>
+                            <td style="width: 50px;text-align: center;"><%= applicant.rank %></td>
+                            <td style="width: 50px;text-align: center;"><%= applicant.fail %></td>
+                        <%  end %>
+                    <% end %>
+
+
+
+
+
+
+
+
+                    <td style="width: 50px;text-align: center;"><%= applicant.learning_team %></td>
+                    <!--end of term 2-->
+                    <td style="width: 65px;text-align: center;"><%= applicant.scholar %></td>
+                  </tr>
+              <% end %>
+
+          <% end %>
+        </table>
+        <div id="pager" class="pager" style="position: inherit !important">
+          <form>
+            <img src="/assets/addons/first.png" class="first">
+            <img src="/assets/addons/prev.png" class="prev">
+            <input type="text" class="pagedisplay">
+            <img src="/assets/addons/next.png" class="next">
+            <img src="/assets/addons/last.png" class="last">
+            <select class="pagesize" style="width: 80px;">
+
+              <option value="150">100</option>
+              <option value="50">50</option>
+              <option value="30">30</option>
+              <option value="20">20</option>
+              <option value="15">15</option>
+              <option value="13">13</option>
+              <option value="10">10</option>
+              <option value="7">7</option>
+              <option value="5">5</option>
+              <option value="3">3</option>
+            </select>
+          </form>
+        </div>
+      </div>
+
+    </div>
+    <div class="tab-pane fade" id="8">
+      <h1>8</h1>
+      <div id="applicant-detail">
+        <% if params['term'] == '2' %>
+            <table border="1" style="width: 595px;margin-left: 425px;">
+              <thead>
+              <th colspan="3" style="font-weight: bold; text-align: center;background-color: #00228d;color: #ffffff;border-color: black;width: 39px;font-size: 11px;border-bottom: 1px solid #00228d;">Year 1</th>
+              <th colspan="3" style="font-weight: bold; text-align: center;background-color: #00228d;color: #ffffff;border-color: black;font-size: 11px;border-bottom: 1px solid #00228d;">Term 2</th>
+              <th colspan="3" style="font-weight: bold; text-align: center;background-color: #00228d;color: #ffffff;border-color: black;font-size: 11px;border-bottom: 1px solid #00228d;">Term 1</th>
+              </thead>
+            </table>
+        <% end %>
+        <table class="tablesorter styletable" id="TheTable" border="1" style="width: 1150px;margin: 0 auto 0 auto">
+
+          <thead style="background-color: rgb(0, 34, 141);  border: 1px rgb(0, 34, 141);">
+          <th>SN</th>
+          <th>Name</th>
+          <% if params['term'] == '2' %>
+              <th>Y1 GPA</th>
+              <th>Y1 RANK</th>
+              <th>Y1 FAIL</th>
+              <th>T2 GPA</th>
+              <th>T2 Rank</th>
+              <th>T2 Fail</th>
+              <th>T1 GPA</th>
+              <th>T1 Rank</th>
+              <th>T1 Fail</th>
+          <% else %>
+              <th>GPA</th>
+              <th>Rank</th>
+              <th>Fail</th>
+          <% end %>
+          <th>LT</th>
+          <th>Scholar</th>
+          </thead>
+          <% @applicants.each do |applicant| %>
+
+              <% if applicant.present? %>
+                  <tr style="background-color:<%= "blue !important" if applicant.tgpa.to_f < 4.0 %>;">
+                    <td  class="student-row" style="width: 140px;text-align: center;"><%= applicant.number %></td>
+                    <td style="width: 280px;"><%= link_to applicant.name, applicant, :target => 'new', :style => "color:rgb(0, 34, 141);" %></td>
+                    <% if params['term'] == '2' %>
+                        <% if applicant.whatif_gpa.present? %>
+
+                            <!--T1-->
+                            <% $term1_gpa =  Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:gpa) %>
+                            <% $term1_rank = Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:rank) %>
+                            <% $term1_fail = Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:fail) %>
+
+                            <!--Start of Y1-->
+                            <% $total = ComputedGpa.where(student_number: applicant.number).last.try(:computed_gpa) %>
+                            <% if $total.to_f < 3.0 %>
+                                <td style="text-align: center;">
+                                  <%= $total %></td>
+                            <% else %>
+                                <td style="text-align: center;"><%= $total %></td>
+                            <% end %>
+                            <td style="text-align: center"><%= ComputedGpa.where(student_number: applicant.number).last.try(:rank) %></td>
+                            <td style="text-align: center"><%= $term1_fail.to_f + applicant.whatif_fail.to_f %></td>
+                            <!--End of Y1-->
+                            <!--T2-->
+                            <% if applicant.whatif_gpa.to_f < 3.0 %>
+                                <td style="text-align: center;">
+                                  <%= applicant.whatif_gpa %></td>
+                            <% else %>
+                                <td style="text-align: center;"><%= applicant.whatif_gpa.to_s %></td>
+                            <% end %>
+                            <td style="width: 50px;text-align: center;"><%= applicant.whatif_rank %></td>
+                            <td style="width: 50px;text-align: center;"><%= applicant.whatif_fail %></td>
+                            <!--end of T2-->
+
+                            <!--T1-->
+                            <% if $term1_gpa.to_f < 3.0 %>
+                                <td style="text-align: center;"> <%= $term1_gpa %></td>
+                            <% else %>
+                                <td style="text-align: center"> <%= $term1_gpa %></td>
+                            <% end %>
+                            <td style="text-align: center"> <%= $term1_rank %></td>
+                            <td style="text-align: center"> <%= $term1_fail %></td>
+                            <!--end of T1 for T2 view-->
+
+                            <!--end of view of T2-->
+
+                        <%	else  %>
+                            <!--Start of Y1-->
+                            <% if applicant.tgpa.to_f < 3.0 %>
+                                <td style="text-align: center;">
+                                  <%= applicant.tgpa %></td>
+                            <% else %>
+                                <td style="text-align: center;"><%= applicant.tgpa %></td>
+                            <% end %>
+                            <td style="text-align: center"><%= applicant.trank %></td>
+                            <td style="text-align: center"><%= $fail.to_f + applicant.fail.to_f %></td>
+                            <!--End of Y1-->
+                            <!--T2-->
+                            <% if applicant.gpa.to_f < 3.0 %>
+                                <td style="text-align: center;color: #ff0000;">
+                                  <%= applicant.gpa %></td>
+                            <% else %>
+                                <td style="text-align: center;color: #000000"><%= applicant.gpa %></td>
+                            <% end %>
+                            <td style="width: 50px;text-align: center;"><%= applicant.rank %></td>
+                            <td style="width: 50px;text-align: center;"><%= applicant.fail %></td>
+                            <!--end of T2-->
+
+                            <!--T1-->
+                            <% if applicant.tgpa.to_f < 3.0 %>
+                                <td style="text-align: center;color: #ff0000;"><%= Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:gpa) %></td>
+                            <% else %>
+                                <td style="text-align: center"> <%= Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:gpa) %></td>
+                            <% end %>
+                            <td style="text-align: center"> <%= Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:rank) %></td>
+                            <td style="text-align: center"> <%= $fail = Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:fail) %></td>
+                            <!--end of T1 for T2 view-->
+
+                            <!--end of view of T2-->
+                        <% end %>
+                    <% else %>
+                        <!---->
+                        <%	 if applicant.whatif_gpa.present? %>
+                            <!--if there is a what if gpa use the what if data-->
+                            <% if applicant.whatif_gpa.to_f < 3.0 %>
+                                <td style="text-align: center;">
+                                  <%= applicant.whatif_gpa %></td>
+                            <% else %>
+                                <td style="text-align: center;"><%= applicant.whatif_gpa %></td>
+                            <% end %>
+                            <td style="width: 50px;text-align: center;"><%= applicant.whatif_rank %></td>
+                            <td style="width: 50px;text-align: center;"><%= applicant.fail %></td>
+                            <!---->
+                        <%else %>
+
+                            <% if applicant.gpa.to_f < 3.0 %>
+                                <td style="text-align: center;color: #ff0000;">
+                                  <%= applicant.gpa %></td>
+                            <% else %>
+                                <td style="text-align: center;color: #000000"><%= applicant.gpa %></td>
+                            <% end %>
+                            <td style="width: 50px;text-align: center;"><%= applicant.rank %></td>
+                            <td style="width: 50px;text-align: center;"><%= applicant.fail %></td>
+                        <%  end %>
+                    <% end %>
+
+
+
+
+
+
+
+
+                    <td style="width: 50px;text-align: center;"><%= applicant.learning_team %></td>
+                    <!--end of term 2-->
+                    <td style="width: 65px;text-align: center;"><%= applicant.scholar %></td>
+                  </tr>
+              <% end %>
+
+          <% end %>
+        </table>
+        <div id="pager" class="pager" style="position: inherit !important">
+          <form>
+            <img src="/assets/addons/first.png" class="first">
+            <img src="/assets/addons/prev.png" class="prev">
+            <input type="text" class="pagedisplay">
+            <img src="/assets/addons/next.png" class="next">
+            <img src="/assets/addons/last.png" class="last">
+            <select class="pagesize" style="width: 80px;">
+
+              <option value="150">100</option>
+              <option value="50">50</option>
+              <option value="30">30</option>
+              <option value="20">20</option>
+              <option value="15">15</option>
+              <option value="13">13</option>
+              <option value="10">10</option>
+              <option value="7">7</option>
+              <option value="5">5</option>
+              <option value="3">3</option>
+            </select>
+          </form>
+        </div>
+      </div>
+
+    </div>
+    <div class="tab-pane fade" id="9">
+      <h1>9</h1>
+      <div id="applicant-detail">
+        <% if params['term'] == '2' %>
+            <table border="1" style="width: 595px;margin-left: 425px;">
+              <thead>
+              <th colspan="3" style="font-weight: bold; text-align: center;background-color: #00228d;color: #ffffff;border-color: black;width: 39px;font-size: 11px;border-bottom: 1px solid #00228d;">Year 1</th>
+              <th colspan="3" style="font-weight: bold; text-align: center;background-color: #00228d;color: #ffffff;border-color: black;font-size: 11px;border-bottom: 1px solid #00228d;">Term 2</th>
+              <th colspan="3" style="font-weight: bold; text-align: center;background-color: #00228d;color: #ffffff;border-color: black;font-size: 11px;border-bottom: 1px solid #00228d;">Term 1</th>
+              </thead>
+            </table>
+        <% end %>
+        <table class="tablesorter styletable" id="TheTable" border="1" style="width: 1150px;margin: 0 auto 0 auto">
+
+          <thead style="background-color: rgb(0, 34, 141);  border: 1px rgb(0, 34, 141);">
+          <th>SN</th>
+          <th>Name</th>
+          <% if params['term'] == '2' %>
+              <th>Y1 GPA</th>
+              <th>Y1 RANK</th>
+              <th>Y1 FAIL</th>
+              <th>T2 GPA</th>
+              <th>T2 Rank</th>
+              <th>T2 Fail</th>
+              <th>T1 GPA</th>
+              <th>T1 Rank</th>
+              <th>T1 Fail</th>
+          <% else %>
+              <th>GPA</th>
+              <th>Rank</th>
+              <th>Fail</th>
+          <% end %>
+          <th>LT</th>
+          <th>Scholar</th>
+          </thead>
+          <% @applicants.each do |applicant| %>
+
+              <% if applicant.present? %>
+                  <tr style="background-color:<%= "blue !important" if applicant.tgpa.to_f < 4.0 %>;">
+                    <td  class="student-row" style="width: 140px;text-align: center;"><%= applicant.number %></td>
+                    <td style="width: 280px;"><%= link_to applicant.name, applicant, :target => 'new', :style => "color:rgb(0, 34, 141);" %></td>
+                    <% if params['term'] == '2' %>
+                        <% if applicant.whatif_gpa.present? %>
+
+                            <!--T1-->
+                            <% $term1_gpa =  Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:gpa) %>
+                            <% $term1_rank = Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:rank) %>
+                            <% $term1_fail = Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:fail) %>
+
+                            <!--Start of Y1-->
+                            <% $total = ComputedGpa.where(student_number: applicant.number).last.try(:computed_gpa) %>
+                            <% if $total.to_f < 3.0 %>
+                                <td style="text-align: center;">
+                                  <%= $total %></td>
+                            <% else %>
+                                <td style="text-align: center;"><%= $total %></td>
+                            <% end %>
+                            <td style="text-align: center"><%= ComputedGpa.where(student_number: applicant.number).last.try(:rank) %></td>
+                            <td style="text-align: center"><%= $term1_fail.to_f + applicant.whatif_fail.to_f %></td>
+                            <!--End of Y1-->
+                            <!--T2-->
+                            <% if applicant.whatif_gpa.to_f < 3.0 %>
+                                <td style="text-align: center;">
+                                  <%= applicant.whatif_gpa %></td>
+                            <% else %>
+                                <td style="text-align: center;"><%= applicant.whatif_gpa.to_s %></td>
+                            <% end %>
+                            <td style="width: 50px;text-align: center;"><%= applicant.whatif_rank %></td>
+                            <td style="width: 50px;text-align: center;"><%= applicant.whatif_fail %></td>
+                            <!--end of T2-->
+
+                            <!--T1-->
+                            <% if $term1_gpa.to_f < 3.0 %>
+                                <td style="text-align: center;"> <%= $term1_gpa %></td>
+                            <% else %>
+                                <td style="text-align: center"> <%= $term1_gpa %></td>
+                            <% end %>
+                            <td style="text-align: center"> <%= $term1_rank %></td>
+                            <td style="text-align: center"> <%= $term1_fail %></td>
+                            <!--end of T1 for T2 view-->
+
+                            <!--end of view of T2-->
+
+                        <%	else  %>
+                            <!--Start of Y1-->
+                            <% if applicant.tgpa.to_f < 3.0 %>
+                                <td style="text-align: center;">
+                                  <%= applicant.tgpa %></td>
+                            <% else %>
+                                <td style="text-align: center;"><%= applicant.tgpa %></td>
+                            <% end %>
+                            <td style="text-align: center"><%= applicant.trank %></td>
+                            <td style="text-align: center"><%= $fail.to_f + applicant.fail.to_f %></td>
+                            <!--End of Y1-->
+                            <!--T2-->
+                            <% if applicant.gpa.to_f < 3.0 %>
+                                <td style="text-align: center;color: #ff0000;">
+                                  <%= applicant.gpa %></td>
+                            <% else %>
+                                <td style="text-align: center;color: #000000"><%= applicant.gpa %></td>
+                            <% end %>
+                            <td style="width: 50px;text-align: center;"><%= applicant.rank %></td>
+                            <td style="width: 50px;text-align: center;"><%= applicant.fail %></td>
+                            <!--end of T2-->
+
+                            <!--T1-->
+                            <% if applicant.tgpa.to_f < 3.0 %>
+                                <td style="text-align: center;color: #ff0000;"><%= Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:gpa) %></td>
+                            <% else %>
+                                <td style="text-align: center"> <%= Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:gpa) %></td>
+                            <% end %>
+                            <td style="text-align: center"> <%= Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:rank) %></td>
+                            <td style="text-align: center"> <%= $fail = Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:fail) %></td>
+                            <!--end of T1 for T2 view-->
+
+                            <!--end of view of T2-->
+                        <% end %>
+                    <% else %>
+                        <!---->
+                        <%	 if applicant.whatif_gpa.present? %>
+                            <!--if there is a what if gpa use the what if data-->
+                            <% if applicant.whatif_gpa.to_f < 3.0 %>
+                                <td style="text-align: center;">
+                                  <%= applicant.whatif_gpa %></td>
+                            <% else %>
+                                <td style="text-align: center;"><%= applicant.whatif_gpa %></td>
+                            <% end %>
+                            <td style="width: 50px;text-align: center;"><%= applicant.whatif_rank %></td>
+                            <td style="width: 50px;text-align: center;"><%= applicant.fail %></td>
+                            <!---->
+                        <%else %>
+
+                            <% if applicant.gpa.to_f < 3.0 %>
+                                <td style="text-align: center;color: #ff0000;">
+                                  <%= applicant.gpa %></td>
+                            <% else %>
+                                <td style="text-align: center;color: #000000"><%= applicant.gpa %></td>
+                            <% end %>
+                            <td style="width: 50px;text-align: center;"><%= applicant.rank %></td>
+                            <td style="width: 50px;text-align: center;"><%= applicant.fail %></td>
+                        <%  end %>
+                    <% end %>
+
+
+
+
+
+
+
+
+                    <td style="width: 50px;text-align: center;"><%= applicant.learning_team %></td>
+                    <!--end of term 2-->
+                    <td style="width: 65px;text-align: center;"><%= applicant.scholar %></td>
+                  </tr>
+              <% end %>
+
+          <% end %>
+        </table>
+        <div id="pager" class="pager" style="position: inherit !important">
+          <form>
+            <img src="/assets/addons/first.png" class="first">
+            <img src="/assets/addons/prev.png" class="prev">
+            <input type="text" class="pagedisplay">
+            <img src="/assets/addons/next.png" class="next">
+            <img src="/assets/addons/last.png" class="last">
+            <select class="pagesize" style="width: 80px;">
+
+              <option value="150">100</option>
+              <option value="50">50</option>
+              <option value="30">30</option>
+              <option value="20">20</option>
+              <option value="15">15</option>
+              <option value="13">13</option>
+              <option value="10">10</option>
+              <option value="7">7</option>
+              <option value="5">5</option>
+              <option value="3">3</option>
+            </select>
+          </form>
+        </div>
+      </div>
+
+    </div>
+    <div class="tab-pane fade" id="10">
+      <h1>10</h1>
+      <div id="applicant-detail">
+        <% if params['term'] == '2' %>
+            <table border="1" style="width: 595px;margin-left: 425px;">
+              <thead>
+              <th colspan="3" style="font-weight: bold; text-align: center;background-color: #00228d;color: #ffffff;border-color: black;width: 39px;font-size: 11px;border-bottom: 1px solid #00228d;">Year 1</th>
+              <th colspan="3" style="font-weight: bold; text-align: center;background-color: #00228d;color: #ffffff;border-color: black;font-size: 11px;border-bottom: 1px solid #00228d;">Term 2</th>
+              <th colspan="3" style="font-weight: bold; text-align: center;background-color: #00228d;color: #ffffff;border-color: black;font-size: 11px;border-bottom: 1px solid #00228d;">Term 1</th>
+              </thead>
+            </table>
+        <% end %>
+        <table class="tablesorter styletable" id="TheTable" border="1" style="width: 1150px;margin: 0 auto 0 auto">
+
+          <thead style="background-color: rgb(0, 34, 141);  border: 1px rgb(0, 34, 141);">
+          <th>SN</th>
+          <th>Name</th>
+          <% if params['term'] == '2' %>
+              <th>Y1 GPA</th>
+              <th>Y1 RANK</th>
+              <th>Y1 FAIL</th>
+              <th>T2 GPA</th>
+              <th>T2 Rank</th>
+              <th>T2 Fail</th>
+              <th>T1 GPA</th>
+              <th>T1 Rank</th>
+              <th>T1 Fail</th>
+          <% else %>
+              <th>GPA</th>
+              <th>Rank</th>
+              <th>Fail</th>
+          <% end %>
+          <th>LT</th>
+          <th>Scholar</th>
+          </thead>
+          <% @applicants.each do |applicant| %>
+
+              <% if applicant.present? %>
+                  <tr style="background-color:<%= "blue !important" if applicant.tgpa.to_f < 4.0 %>;">
+                    <td  class="student-row" style="width: 140px;text-align: center;"><%= applicant.number %></td>
+                    <td style="width: 280px;"><%= link_to applicant.name, applicant, :target => 'new', :style => "color:rgb(0, 34, 141);" %></td>
+                    <% if params['term'] == '2' %>
+                        <% if applicant.whatif_gpa.present? %>
+
+                            <!--T1-->
+                            <% $term1_gpa =  Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:gpa) %>
+                            <% $term1_rank = Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:rank) %>
+                            <% $term1_fail = Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:fail) %>
+
+                            <!--Start of Y1-->
+                            <% $total = ComputedGpa.where(student_number: applicant.number).last.try(:computed_gpa) %>
+                            <% if $total.to_f < 3.0 %>
+                                <td style="text-align: center;">
+                                  <%= $total %></td>
+                            <% else %>
+                                <td style="text-align: center;"><%= $total %></td>
+                            <% end %>
+                            <td style="text-align: center"><%= ComputedGpa.where(student_number: applicant.number).last.try(:rank) %></td>
+                            <td style="text-align: center"><%= $term1_fail.to_f + applicant.whatif_fail.to_f %></td>
+                            <!--End of Y1-->
+                            <!--T2-->
+                            <% if applicant.whatif_gpa.to_f < 3.0 %>
+                                <td style="text-align: center;">
+                                  <%= applicant.whatif_gpa %></td>
+                            <% else %>
+                                <td style="text-align: center;"><%= applicant.whatif_gpa.to_s %></td>
+                            <% end %>
+                            <td style="width: 50px;text-align: center;"><%= applicant.whatif_rank %></td>
+                            <td style="width: 50px;text-align: center;"><%= applicant.whatif_fail %></td>
+                            <!--end of T2-->
+
+                            <!--T1-->
+                            <% if $term1_gpa.to_f < 3.0 %>
+                                <td style="text-align: center;"> <%= $term1_gpa %></td>
+                            <% else %>
+                                <td style="text-align: center"> <%= $term1_gpa %></td>
+                            <% end %>
+                            <td style="text-align: center"> <%= $term1_rank %></td>
+                            <td style="text-align: center"> <%= $term1_fail %></td>
+                            <!--end of T1 for T2 view-->
+
+                            <!--end of view of T2-->
+
+                        <%	else  %>
+                            <!--Start of Y1-->
+                            <% if applicant.tgpa.to_f < 3.0 %>
+                                <td style="text-align: center;">
+                                  <%= applicant.tgpa %></td>
+                            <% else %>
+                                <td style="text-align: center;"><%= applicant.tgpa %></td>
+                            <% end %>
+                            <td style="text-align: center"><%= applicant.trank %></td>
+                            <td style="text-align: center"><%= $fail.to_f + applicant.fail.to_f %></td>
+                            <!--End of Y1-->
+                            <!--T2-->
+                            <% if applicant.gpa.to_f < 3.0 %>
+                                <td style="text-align: center;color: #ff0000;">
+                                  <%= applicant.gpa %></td>
+                            <% else %>
+                                <td style="text-align: center;color: #000000"><%= applicant.gpa %></td>
+                            <% end %>
+                            <td style="width: 50px;text-align: center;"><%= applicant.rank %></td>
+                            <td style="width: 50px;text-align: center;"><%= applicant.fail %></td>
+                            <!--end of T2-->
+
+                            <!--T1-->
+                            <% if applicant.tgpa.to_f < 3.0 %>
+                                <td style="text-align: center;color: #ff0000;"><%= Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:gpa) %></td>
+                            <% else %>
+                                <td style="text-align: center"> <%= Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:gpa) %></td>
+                            <% end %>
+                            <td style="text-align: center"> <%= Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:rank) %></td>
+                            <td style="text-align: center"> <%= $fail = Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:fail) %></td>
+                            <!--end of T1 for T2 view-->
+
+                            <!--end of view of T2-->
+                        <% end %>
+                    <% else %>
+                        <!---->
+                        <%	 if applicant.whatif_gpa.present? %>
+                            <!--if there is a what if gpa use the what if data-->
+                            <% if applicant.whatif_gpa.to_f < 3.0 %>
+                                <td style="text-align: center;">
+                                  <%= applicant.whatif_gpa %></td>
+                            <% else %>
+                                <td style="text-align: center;"><%= applicant.whatif_gpa %></td>
+                            <% end %>
+                            <td style="width: 50px;text-align: center;"><%= applicant.whatif_rank %></td>
+                            <td style="width: 50px;text-align: center;"><%= applicant.fail %></td>
+                            <!---->
+                        <%else %>
+
+                            <% if applicant.gpa.to_f < 3.0 %>
+                                <td style="text-align: center;color: #ff0000;">
+                                  <%= applicant.gpa %></td>
+                            <% else %>
+                                <td style="text-align: center;color: #000000"><%= applicant.gpa %></td>
+                            <% end %>
+                            <td style="width: 50px;text-align: center;"><%= applicant.rank %></td>
+                            <td style="width: 50px;text-align: center;"><%= applicant.fail %></td>
+                        <%  end %>
+                    <% end %>
+
+
+
+
+
+
+
+
+                    <td style="width: 50px;text-align: center;"><%= applicant.learning_team %></td>
+                    <!--end of term 2-->
+                    <td style="width: 65px;text-align: center;"><%= applicant.scholar %></td>
+                  </tr>
+              <% end %>
+
+          <% end %>
+        </table>
+        <div id="pager" class="pager" style="position: inherit !important">
+          <form>
+            <img src="/assets/addons/first.png" class="first">
+            <img src="/assets/addons/prev.png" class="prev">
+            <input type="text" class="pagedisplay">
+            <img src="/assets/addons/next.png" class="next">
+            <img src="/assets/addons/last.png" class="last">
+            <select class="pagesize" style="width: 80px;">
+
+              <option value="150">100</option>
+              <option value="50">50</option>
+              <option value="30">30</option>
+              <option value="20">20</option>
+              <option value="15">15</option>
+              <option value="13">13</option>
+              <option value="10">10</option>
+              <option value="7">7</option>
+              <option value="5">5</option>
+              <option value="3">3</option>
+            </select>
+          </form>
+        </div>
+      </div>
+
+    </div>
+    <div class="tab-pane fade" id="11">
+      <h1>11</h1>
+      <div id="applicant-detail">
+        <% if params['term'] == '2' %>
+            <table border="1" style="width: 595px;margin-left: 425px;">
+              <thead>
+              <th colspan="3" style="font-weight: bold; text-align: center;background-color: #00228d;color: #ffffff;border-color: black;width: 39px;font-size: 11px;border-bottom: 1px solid #00228d;">Year 1</th>
+              <th colspan="3" style="font-weight: bold; text-align: center;background-color: #00228d;color: #ffffff;border-color: black;font-size: 11px;border-bottom: 1px solid #00228d;">Term 2</th>
+              <th colspan="3" style="font-weight: bold; text-align: center;background-color: #00228d;color: #ffffff;border-color: black;font-size: 11px;border-bottom: 1px solid #00228d;">Term 1</th>
+              </thead>
+            </table>
+        <% end %>
+        <table class="tablesorter styletable" id="TheTable" border="1" style="width: 1150px;margin: 0 auto 0 auto">
+
+          <thead style="background-color: rgb(0, 34, 141);  border: 1px rgb(0, 34, 141);">
+          <th>SN</th>
+          <th>Name</th>
+          <% if params['term'] == '2' %>
+              <th>Y1 GPA</th>
+              <th>Y1 RANK</th>
+              <th>Y1 FAIL</th>
+              <th>T2 GPA</th>
+              <th>T2 Rank</th>
+              <th>T2 Fail</th>
+              <th>T1 GPA</th>
+              <th>T1 Rank</th>
+              <th>T1 Fail</th>
+          <% else %>
+              <th>GPA</th>
+              <th>Rank</th>
+              <th>Fail</th>
+          <% end %>
+          <th>LT</th>
+          <th>Scholar</th>
+          </thead>
+          <% @applicants.each do |applicant| %>
+
+              <% if applicant.present? %>
+                  <tr style="background-color:<%= "blue !important" if applicant.tgpa.to_f < 4.0 %>;">
+                    <td  class="student-row" style="width: 140px;text-align: center;"><%= applicant.number %></td>
+                    <td style="width: 280px;"><%= link_to applicant.name, applicant, :target => 'new', :style => "color:rgb(0, 34, 141);" %></td>
+                    <% if params['term'] == '2' %>
+                        <% if applicant.whatif_gpa.present? %>
+
+                            <!--T1-->
+                            <% $term1_gpa =  Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:gpa) %>
+                            <% $term1_rank = Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:rank) %>
+                            <% $term1_fail = Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:fail) %>
+
+                            <!--Start of Y1-->
+                            <% $total = ComputedGpa.where(student_number: applicant.number).last.try(:computed_gpa) %>
+                            <% if $total.to_f < 3.0 %>
+                                <td style="text-align: center;">
+                                  <%= $total %></td>
+                            <% else %>
+                                <td style="text-align: center;"><%= $total %></td>
+                            <% end %>
+                            <td style="text-align: center"><%= ComputedGpa.where(student_number: applicant.number).last.try(:rank) %></td>
+                            <td style="text-align: center"><%= $term1_fail.to_f + applicant.whatif_fail.to_f %></td>
+                            <!--End of Y1-->
+                            <!--T2-->
+                            <% if applicant.whatif_gpa.to_f < 3.0 %>
+                                <td style="text-align: center;">
+                                  <%= applicant.whatif_gpa %></td>
+                            <% else %>
+                                <td style="text-align: center;"><%= applicant.whatif_gpa.to_s %></td>
+                            <% end %>
+                            <td style="width: 50px;text-align: center;"><%= applicant.whatif_rank %></td>
+                            <td style="width: 50px;text-align: center;"><%= applicant.whatif_fail %></td>
+                            <!--end of T2-->
+
+                            <!--T1-->
+                            <% if $term1_gpa.to_f < 3.0 %>
+                                <td style="text-align: center;"> <%= $term1_gpa %></td>
+                            <% else %>
+                                <td style="text-align: center"> <%= $term1_gpa %></td>
+                            <% end %>
+                            <td style="text-align: center"> <%= $term1_rank %></td>
+                            <td style="text-align: center"> <%= $term1_fail %></td>
+                            <!--end of T1 for T2 view-->
+
+                            <!--end of view of T2-->
+
+                        <%	else  %>
+                            <!--Start of Y1-->
+                            <% if applicant.tgpa.to_f < 3.0 %>
+                                <td style="text-align: center;">
+                                  <%= applicant.tgpa %></td>
+                            <% else %>
+                                <td style="text-align: center;"><%= applicant.tgpa %></td>
+                            <% end %>
+                            <td style="text-align: center"><%= applicant.trank %></td>
+                            <td style="text-align: center"><%= $fail.to_f + applicant.fail.to_f %></td>
+                            <!--End of Y1-->
+                            <!--T2-->
+                            <% if applicant.gpa.to_f < 3.0 %>
+                                <td style="text-align: center;color: #ff0000;">
+                                  <%= applicant.gpa %></td>
+                            <% else %>
+                                <td style="text-align: center;color: #000000"><%= applicant.gpa %></td>
+                            <% end %>
+                            <td style="width: 50px;text-align: center;"><%= applicant.rank %></td>
+                            <td style="width: 50px;text-align: center;"><%= applicant.fail %></td>
+                            <!--end of T2-->
+
+                            <!--T1-->
+                            <% if applicant.tgpa.to_f < 3.0 %>
+                                <td style="text-align: center;color: #ff0000;"><%= Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:gpa) %></td>
+                            <% else %>
+                                <td style="text-align: center"> <%= Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:gpa) %></td>
+                            <% end %>
+                            <td style="text-align: center"> <%= Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:rank) %></td>
+                            <td style="text-align: center"> <%= $fail = Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:fail) %></td>
+                            <!--end of T1 for T2 view-->
+
+                            <!--end of view of T2-->
+                        <% end %>
+                    <% else %>
+                        <!---->
+                        <%	 if applicant.whatif_gpa.present? %>
+                            <!--if there is a what if gpa use the what if data-->
+                            <% if applicant.whatif_gpa.to_f < 3.0 %>
+                                <td style="text-align: center;">
+                                  <%= applicant.whatif_gpa %></td>
+                            <% else %>
+                                <td style="text-align: center;"><%= applicant.whatif_gpa %></td>
+                            <% end %>
+                            <td style="width: 50px;text-align: center;"><%= applicant.whatif_rank %></td>
+                            <td style="width: 50px;text-align: center;"><%= applicant.fail %></td>
+                            <!---->
+                        <%else %>
+
+                            <% if applicant.gpa.to_f < 3.0 %>
+                                <td style="text-align: center;color: #ff0000;">
+                                  <%= applicant.gpa %></td>
+                            <% else %>
+                                <td style="text-align: center;color: #000000"><%= applicant.gpa %></td>
+                            <% end %>
+                            <td style="width: 50px;text-align: center;"><%= applicant.rank %></td>
+                            <td style="width: 50px;text-align: center;"><%= applicant.fail %></td>
+                        <%  end %>
+                    <% end %>
+
+
+
+
+
+
+
+
+                    <td style="width: 50px;text-align: center;"><%= applicant.learning_team %></td>
+                    <!--end of term 2-->
+                    <td style="width: 65px;text-align: center;"><%= applicant.scholar %></td>
+                  </tr>
+              <% end %>
+
+          <% end %>
+        </table>
+        <div id="pager" class="pager" style="position: inherit !important">
+          <form>
+            <img src="/assets/addons/first.png" class="first">
+            <img src="/assets/addons/prev.png" class="prev">
+            <input type="text" class="pagedisplay">
+            <img src="/assets/addons/next.png" class="next">
+            <img src="/assets/addons/last.png" class="last">
+            <select class="pagesize" style="width: 80px;">
+
+              <option value="150">100</option>
+              <option value="50">50</option>
+              <option value="30">30</option>
+              <option value="20">20</option>
+              <option value="15">15</option>
+              <option value="13">13</option>
+              <option value="10">10</option>
+              <option value="7">7</option>
+              <option value="5">5</option>
+              <option value="3">3</option>
+            </select>
+          </form>
+        </div>
+      </div>
+
+    </div>
+    <div class="tab-pane fade" id="12">
+      <h1>12</h1>
+      <div id="applicant-detail">
+        <% if params['term'] == '2' %>
+            <table border="1" style="width: 595px;margin-left: 425px;">
+              <thead>
+              <th colspan="3" style="font-weight: bold; text-align: center;background-color: #00228d;color: #ffffff;border-color: black;width: 39px;font-size: 11px;border-bottom: 1px solid #00228d;">Year 1</th>
+              <th colspan="3" style="font-weight: bold; text-align: center;background-color: #00228d;color: #ffffff;border-color: black;font-size: 11px;border-bottom: 1px solid #00228d;">Term 2</th>
+              <th colspan="3" style="font-weight: bold; text-align: center;background-color: #00228d;color: #ffffff;border-color: black;font-size: 11px;border-bottom: 1px solid #00228d;">Term 1</th>
+              </thead>
+            </table>
+        <% end %>
+        <table class="tablesorter styletable" id="TheTable" border="1" style="width: 1150px;margin: 0 auto 0 auto">
+
+          <thead style="background-color: rgb(0, 34, 141);  border: 1px rgb(0, 34, 141);">
+          <th>SN</th>
+          <th>Name</th>
+          <% if params['term'] == '2' %>
+              <th>Y1 GPA</th>
+              <th>Y1 RANK</th>
+              <th>Y1 FAIL</th>
+              <th>T2 GPA</th>
+              <th>T2 Rank</th>
+              <th>T2 Fail</th>
+              <th>T1 GPA</th>
+              <th>T1 Rank</th>
+              <th>T1 Fail</th>
+          <% else %>
+              <th>GPA</th>
+              <th>Rank</th>
+              <th>Fail</th>
+          <% end %>
+          <th>LT</th>
+          <th>Scholar</th>
+          </thead>
+          <% @applicants.each do |applicant| %>
+
+              <% if applicant.present? %>
+                  <tr style="background-color:<%= "blue !important" if applicant.tgpa.to_f < 4.0 %>;">
+                    <td  class="student-row" style="width: 140px;text-align: center;"><%= applicant.number %></td>
+                    <td style="width: 280px;"><%= link_to applicant.name, applicant, :target => 'new', :style => "color:rgb(0, 34, 141);" %></td>
+                    <% if params['term'] == '2' %>
+                        <% if applicant.whatif_gpa.present? %>
+
+                            <!--T1-->
+                            <% $term1_gpa =  Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:gpa) %>
+                            <% $term1_rank = Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:rank) %>
+                            <% $term1_fail = Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:fail) %>
+
+                            <!--Start of Y1-->
+                            <% $total = ComputedGpa.where(student_number: applicant.number).last.try(:computed_gpa) %>
+                            <% if $total.to_f < 3.0 %>
+                                <td style="text-align: center;">
+                                  <%= $total %></td>
+                            <% else %>
+                                <td style="text-align: center;"><%= $total %></td>
+                            <% end %>
+                            <td style="text-align: center"><%= ComputedGpa.where(student_number: applicant.number).last.try(:rank) %></td>
+                            <td style="text-align: center"><%= $term1_fail.to_f + applicant.whatif_fail.to_f %></td>
+                            <!--End of Y1-->
+                            <!--T2-->
+                            <% if applicant.whatif_gpa.to_f < 3.0 %>
+                                <td style="text-align: center;">
+                                  <%= applicant.whatif_gpa %></td>
+                            <% else %>
+                                <td style="text-align: center;"><%= applicant.whatif_gpa.to_s %></td>
+                            <% end %>
+                            <td style="width: 50px;text-align: center;"><%= applicant.whatif_rank %></td>
+                            <td style="width: 50px;text-align: center;"><%= applicant.whatif_fail %></td>
+                            <!--end of T2-->
+
+                            <!--T1-->
+                            <% if $term1_gpa.to_f < 3.0 %>
+                                <td style="text-align: center;"> <%= $term1_gpa %></td>
+                            <% else %>
+                                <td style="text-align: center"> <%= $term1_gpa %></td>
+                            <% end %>
+                            <td style="text-align: center"> <%= $term1_rank %></td>
+                            <td style="text-align: center"> <%= $term1_fail %></td>
+                            <!--end of T1 for T2 view-->
+
+                            <!--end of view of T2-->
+
+                        <%	else  %>
+                            <!--Start of Y1-->
+                            <% if applicant.tgpa.to_f < 3.0 %>
+                                <td style="text-align: center;">
+                                  <%= applicant.tgpa %></td>
+                            <% else %>
+                                <td style="text-align: center;"><%= applicant.tgpa %></td>
+                            <% end %>
+                            <td style="text-align: center"><%= applicant.trank %></td>
+                            <td style="text-align: center"><%= $fail.to_f + applicant.fail.to_f %></td>
+                            <!--End of Y1-->
+                            <!--T2-->
+                            <% if applicant.gpa.to_f < 3.0 %>
+                                <td style="text-align: center;color: #ff0000;">
+                                  <%= applicant.gpa %></td>
+                            <% else %>
+                                <td style="text-align: center;color: #000000"><%= applicant.gpa %></td>
+                            <% end %>
+                            <td style="width: 50px;text-align: center;"><%= applicant.rank %></td>
+                            <td style="width: 50px;text-align: center;"><%= applicant.fail %></td>
+                            <!--end of T2-->
+
+                            <!--T1-->
+                            <% if applicant.tgpa.to_f < 3.0 %>
+                                <td style="text-align: center;color: #ff0000;"><%= Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:gpa) %></td>
+                            <% else %>
+                                <td style="text-align: center"> <%= Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:gpa) %></td>
+                            <% end %>
+                            <td style="text-align: center"> <%= Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:rank) %></td>
+                            <td style="text-align: center"> <%= $fail = Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:fail) %></td>
+                            <!--end of T1 for T2 view-->
+
+                            <!--end of view of T2-->
+                        <% end %>
+                    <% else %>
+                        <!---->
+                        <%	 if applicant.whatif_gpa.present? %>
+                            <!--if there is a what if gpa use the what if data-->
+                            <% if applicant.whatif_gpa.to_f < 3.0 %>
+                                <td style="text-align: center;">
+                                  <%= applicant.whatif_gpa %></td>
+                            <% else %>
+                                <td style="text-align: center;"><%= applicant.whatif_gpa %></td>
+                            <% end %>
+                            <td style="width: 50px;text-align: center;"><%= applicant.whatif_rank %></td>
+                            <td style="width: 50px;text-align: center;"><%= applicant.fail %></td>
+                            <!---->
+                        <%else %>
+
+                            <% if applicant.gpa.to_f < 3.0 %>
+                                <td style="text-align: center;color: #ff0000;">
+                                  <%= applicant.gpa %></td>
+                            <% else %>
+                                <td style="text-align: center;color: #000000"><%= applicant.gpa %></td>
+                            <% end %>
+                            <td style="width: 50px;text-align: center;"><%= applicant.rank %></td>
+                            <td style="width: 50px;text-align: center;"><%= applicant.fail %></td>
+                        <%  end %>
+                    <% end %>
+
+
+
+
+
+
+
+
+                    <td style="width: 50px;text-align: center;"><%= applicant.learning_team %></td>
+                    <!--end of term 2-->
+                    <td style="width: 65px;text-align: center;"><%= applicant.scholar %></td>
+                  </tr>
+              <% end %>
+
+          <% end %>
+        </table>
+        <div id="pager" class="pager" style="position: inherit !important">
+          <form>
+            <img src="/assets/addons/first.png" class="first">
+            <img src="/assets/addons/prev.png" class="prev">
+            <input type="text" class="pagedisplay">
+            <img src="/assets/addons/next.png" class="next">
+            <img src="/assets/addons/last.png" class="last">
+            <select class="pagesize" style="width: 80px;">
+
+              <option value="150">100</option>
+              <option value="50">50</option>
+              <option value="30">30</option>
+              <option value="20">20</option>
+              <option value="15">15</option>
+              <option value="13">13</option>
+              <option value="10">10</option>
+              <option value="7">7</option>
+              <option value="5">5</option>
+              <option value="3">3</option>
+            </select>
+          </form>
+        </div>
+      </div>
+
+    </div>
+    <div class="tab-pane fade" id="13">
+      <h1>13</h1>
+      <div id="applicant-detail">
+        <% if params['term'] == '2' %>
+            <table border="1" style="width: 595px;margin-left: 425px;">
+              <thead>
+              <th colspan="3" style="font-weight: bold; text-align: center;background-color: #00228d;color: #ffffff;border-color: black;width: 39px;font-size: 11px;border-bottom: 1px solid #00228d;">Year 1</th>
+              <th colspan="3" style="font-weight: bold; text-align: center;background-color: #00228d;color: #ffffff;border-color: black;font-size: 11px;border-bottom: 1px solid #00228d;">Term 2</th>
+              <th colspan="3" style="font-weight: bold; text-align: center;background-color: #00228d;color: #ffffff;border-color: black;font-size: 11px;border-bottom: 1px solid #00228d;">Term 1</th>
+              </thead>
+            </table>
+        <% end %>
+        <table class="tablesorter styletable" id="TheTable" border="1" style="width: 1150px;margin: 0 auto 0 auto">
+
+          <thead style="background-color: rgb(0, 34, 141);  border: 1px rgb(0, 34, 141);">
+          <th>SN</th>
+          <th>Name</th>
+          <% if params['term'] == '2' %>
+              <th>Y1 GPA</th>
+              <th>Y1 RANK</th>
+              <th>Y1 FAIL</th>
+              <th>T2 GPA</th>
+              <th>T2 Rank</th>
+              <th>T2 Fail</th>
+              <th>T1 GPA</th>
+              <th>T1 Rank</th>
+              <th>T1 Fail</th>
+          <% else %>
+              <th>GPA</th>
+              <th>Rank</th>
+              <th>Fail</th>
+          <% end %>
+          <th>LT</th>
+          <th>Scholar</th>
+          </thead>
+          <% @applicants.each do |applicant| %>
+
+              <% if applicant.present? %>
+                  <tr style="background-color:<%= "blue !important" if applicant.tgpa.to_f < 4.0 %>;">
+                    <td  class="student-row" style="width: 140px;text-align: center;"><%= applicant.number %></td>
+                    <td style="width: 280px;"><%= link_to applicant.name, applicant, :target => 'new', :style => "color:rgb(0, 34, 141);" %></td>
+                    <% if params['term'] == '2' %>
+                        <% if applicant.whatif_gpa.present? %>
+
+                            <!--T1-->
+                            <% $term1_gpa =  Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:gpa) %>
+                            <% $term1_rank = Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:rank) %>
+                            <% $term1_fail = Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:fail) %>
+
+                            <!--Start of Y1-->
+                            <% $total = ComputedGpa.where(student_number: applicant.number).last.try(:computed_gpa) %>
+                            <% if $total.to_f < 3.0 %>
+                                <td style="text-align: center;">
+                                  <%= $total %></td>
+                            <% else %>
+                                <td style="text-align: center;"><%= $total %></td>
+                            <% end %>
+                            <td style="text-align: center"><%= ComputedGpa.where(student_number: applicant.number).last.try(:rank) %></td>
+                            <td style="text-align: center"><%= $term1_fail.to_f + applicant.whatif_fail.to_f %></td>
+                            <!--End of Y1-->
+                            <!--T2-->
+                            <% if applicant.whatif_gpa.to_f < 3.0 %>
+                                <td style="text-align: center;">
+                                  <%= applicant.whatif_gpa %></td>
+                            <% else %>
+                                <td style="text-align: center;"><%= applicant.whatif_gpa.to_s %></td>
+                            <% end %>
+                            <td style="width: 50px;text-align: center;"><%= applicant.whatif_rank %></td>
+                            <td style="width: 50px;text-align: center;"><%= applicant.whatif_fail %></td>
+                            <!--end of T2-->
+
+                            <!--T1-->
+                            <% if $term1_gpa.to_f < 3.0 %>
+                                <td style="text-align: center;"> <%= $term1_gpa %></td>
+                            <% else %>
+                                <td style="text-align: center"> <%= $term1_gpa %></td>
+                            <% end %>
+                            <td style="text-align: center"> <%= $term1_rank %></td>
+                            <td style="text-align: center"> <%= $term1_fail %></td>
+                            <!--end of T1 for T2 view-->
+
+                            <!--end of view of T2-->
+
+                        <%	else  %>
+                            <!--Start of Y1-->
+                            <% if applicant.tgpa.to_f < 3.0 %>
+                                <td style="text-align: center;">
+                                  <%= applicant.tgpa %></td>
+                            <% else %>
+                                <td style="text-align: center;"><%= applicant.tgpa %></td>
+                            <% end %>
+                            <td style="text-align: center"><%= applicant.trank %></td>
+                            <td style="text-align: center"><%= $fail.to_f + applicant.fail.to_f %></td>
+                            <!--End of Y1-->
+                            <!--T2-->
+                            <% if applicant.gpa.to_f < 3.0 %>
+                                <td style="text-align: center;color: #ff0000;">
+                                  <%= applicant.gpa %></td>
+                            <% else %>
+                                <td style="text-align: center;color: #000000"><%= applicant.gpa %></td>
+                            <% end %>
+                            <td style="width: 50px;text-align: center;"><%= applicant.rank %></td>
+                            <td style="width: 50px;text-align: center;"><%= applicant.fail %></td>
+                            <!--end of T2-->
+
+                            <!--T1-->
+                            <% if applicant.tgpa.to_f < 3.0 %>
+                                <td style="text-align: center;color: #ff0000;"><%= Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:gpa) %></td>
+                            <% else %>
+                                <td style="text-align: center"> <%= Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:gpa) %></td>
+                            <% end %>
+                            <td style="text-align: center"> <%= Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:rank) %></td>
+                            <td style="text-align: center"> <%= $fail = Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:fail) %></td>
+                            <!--end of T1 for T2 view-->
+
+                            <!--end of view of T2-->
+                        <% end %>
+                    <% else %>
+                        <!---->
+                        <%	 if applicant.whatif_gpa.present? %>
+                            <!--if there is a what if gpa use the what if data-->
+                            <% if applicant.whatif_gpa.to_f < 3.0 %>
+                                <td style="text-align: center;">
+                                  <%= applicant.whatif_gpa %></td>
+                            <% else %>
+                                <td style="text-align: center;"><%= applicant.whatif_gpa %></td>
+                            <% end %>
+                            <td style="width: 50px;text-align: center;"><%= applicant.whatif_rank %></td>
+                            <td style="width: 50px;text-align: center;"><%= applicant.fail %></td>
+                            <!---->
+                        <%else %>
+
+                            <% if applicant.gpa.to_f < 3.0 %>
+                                <td style="text-align: center;color: #ff0000;">
+                                  <%= applicant.gpa %></td>
+                            <% else %>
+                                <td style="text-align: center;color: #000000"><%= applicant.gpa %></td>
+                            <% end %>
+                            <td style="width: 50px;text-align: center;"><%= applicant.rank %></td>
+                            <td style="width: 50px;text-align: center;"><%= applicant.fail %></td>
+                        <%  end %>
+                    <% end %>
+
+
+
+
+
+
+
+
+                    <td style="width: 50px;text-align: center;"><%= applicant.learning_team %></td>
+                    <!--end of term 2-->
+                    <td style="width: 65px;text-align: center;"><%= applicant.scholar %></td>
+                  </tr>
+              <% end %>
+
+          <% end %>
+        </table>
+        <div id="pager" class="pager" style="position: inherit !important">
+          <form>
+            <img src="/assets/addons/first.png" class="first">
+            <img src="/assets/addons/prev.png" class="prev">
+            <input type="text" class="pagedisplay">
+            <img src="/assets/addons/next.png" class="next">
+            <img src="/assets/addons/last.png" class="last">
+            <select class="pagesize" style="width: 80px;">
+
+              <option value="150">100</option>
+              <option value="50">50</option>
+              <option value="30">30</option>
+              <option value="20">20</option>
+              <option value="15">15</option>
+              <option value="13">13</option>
+              <option value="10">10</option>
+              <option value="7">7</option>
+              <option value="5">5</option>
+              <option value="3">3</option>
+            </select>
+          </form>
+        </div>
+      </div>
+
+    </div>
+    <div class="tab-pane fade" id="messages">
+      <h1>3</h1>
+      <div id="applicant-detail">
+        <% if params['term'] == '2' %>
+            <table border="1" style="width: 595px;margin-left: 425px;">
+              <thead>
+              <th colspan="3" style="font-weight: bold; text-align: center;background-color: #00228d;color: #ffffff;border-color: black;width: 39px;font-size: 11px;border-bottom: 1px solid #00228d;">Year 1</th>
+              <th colspan="3" style="font-weight: bold; text-align: center;background-color: #00228d;color: #ffffff;border-color: black;font-size: 11px;border-bottom: 1px solid #00228d;">Term 2</th>
+              <th colspan="3" style="font-weight: bold; text-align: center;background-color: #00228d;color: #ffffff;border-color: black;font-size: 11px;border-bottom: 1px solid #00228d;">Term 1</th>
+              </thead>
+            </table>
+        <% end %>
+        <table class="tablesorter styletable" id="TheTable" border="1" style="width: 1150px;margin: 0 auto 0 auto">
+
+          <thead style="background-color: rgb(0, 34, 141);  border: 1px rgb(0, 34, 141);">
+          <th>SN</th>
+          <th>Name</th>
+          <% if params['term'] == '2' %>
+              <th>Y1 GPA</th>
+              <th>Y1 RANK</th>
+              <th>Y1 FAIL</th>
+              <th>T2 GPA</th>
+              <th>T2 Rank</th>
+              <th>T2 Fail</th>
+              <th>T1 GPA</th>
+              <th>T1 Rank</th>
+              <th>T1 Fail</th>
+          <% else %>
+              <th>GPA</th>
+              <th>Rank</th>
+              <th>Fail</th>
+          <% end %>
+          <th>LT</th>
+          <th>Scholar</th>
+          </thead>
+          <% @applicants.each do |applicant| %>
+
+              <% if applicant.present? %>
+                  <tr style="background-color:<%= "blue !important" if applicant.tgpa.to_f < 4.0 %>;">
+                    <td  class="student-row" style="width: 140px;text-align: center;"><%= applicant.number %></td>
+                    <td style="width: 280px;"><%= link_to applicant.name, applicant, :target => 'new', :style => "color:rgb(0, 34, 141);" %></td>
+                    <% if params['term'] == '2' %>
+                        <% if applicant.whatif_gpa.present? %>
+
+                            <!--T1-->
+                            <% $term1_gpa =  Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:gpa) %>
+                            <% $term1_rank = Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:rank) %>
+                            <% $term1_fail = Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:fail) %>
+
+                            <!--Start of Y1-->
+                            <% $total = ComputedGpa.where(student_number: applicant.number).last.try(:computed_gpa) %>
+                            <% if $total.to_f < 3.0 %>
+                                <td style="text-align: center;">
+                                  <%= $total %></td>
+                            <% else %>
+                                <td style="text-align: center;"><%= $total %></td>
+                            <% end %>
+                            <td style="text-align: center"><%= ComputedGpa.where(student_number: applicant.number).last.try(:rank) %></td>
+                            <td style="text-align: center"><%= $term1_fail.to_f + applicant.whatif_fail.to_f %></td>
+                            <!--End of Y1-->
+                            <!--T2-->
+                            <% if applicant.whatif_gpa.to_f < 3.0 %>
+                                <td style="text-align: center;">
+                                  <%= applicant.whatif_gpa %></td>
+                            <% else %>
+                                <td style="text-align: center;"><%= applicant.whatif_gpa.to_s %></td>
+                            <% end %>
+                            <td style="width: 50px;text-align: center;"><%= applicant.whatif_rank %></td>
+                            <td style="width: 50px;text-align: center;"><%= applicant.whatif_fail %></td>
+                            <!--end of T2-->
+
+                            <!--T1-->
+                            <% if $term1_gpa.to_f < 3.0 %>
+                                <td style="text-align: center;"> <%= $term1_gpa %></td>
+                            <% else %>
+                                <td style="text-align: center"> <%= $term1_gpa %></td>
+                            <% end %>
+                            <td style="text-align: center"> <%= $term1_rank %></td>
+                            <td style="text-align: center"> <%= $term1_fail %></td>
+                            <!--end of T1 for T2 view-->
+
+                            <!--end of view of T2-->
+
+                        <%	else  %>
+                            <!--Start of Y1-->
+                            <% if applicant.tgpa.to_f < 3.0 %>
+                                <td style="text-align: center;">
+                                  <%= applicant.tgpa %></td>
+                            <% else %>
+                                <td style="text-align: center;"><%= applicant.tgpa %></td>
+                            <% end %>
+                            <td style="text-align: center"><%= applicant.trank %></td>
+                            <td style="text-align: center"><%= $fail.to_f + applicant.fail.to_f %></td>
+                            <!--End of Y1-->
+                            <!--T2-->
+                            <% if applicant.gpa.to_f < 3.0 %>
+                                <td style="text-align: center;color: #ff0000;">
+                                  <%= applicant.gpa %></td>
+                            <% else %>
+                                <td style="text-align: center;color: #000000"><%= applicant.gpa %></td>
+                            <% end %>
+                            <td style="width: 50px;text-align: center;"><%= applicant.rank %></td>
+                            <td style="width: 50px;text-align: center;"><%= applicant.fail %></td>
+                            <!--end of T2-->
+
+                            <!--T1-->
+                            <% if applicant.tgpa.to_f < 3.0 %>
+                                <td style="text-align: center;color: #ff0000;"><%= Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:gpa) %></td>
+                            <% else %>
+                                <td style="text-align: center"> <%= Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:gpa) %></td>
+                            <% end %>
+                            <td style="text-align: center"> <%= Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:rank) %></td>
+                            <td style="text-align: center"> <%= $fail = Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:fail) %></td>
+                            <!--end of T1 for T2 view-->
+
+                            <!--end of view of T2-->
+                        <% end %>
+                    <% else %>
+                        <!---->
+                        <%	 if applicant.whatif_gpa.present? %>
+                            <!--if there is a what if gpa use the what if data-->
+                            <% if applicant.whatif_gpa.to_f < 3.0 %>
+                                <td style="text-align: center;">
+                                  <%= applicant.whatif_gpa %></td>
+                            <% else %>
+                                <td style="text-align: center;"><%= applicant.whatif_gpa %></td>
+                            <% end %>
+                            <td style="width: 50px;text-align: center;"><%= applicant.whatif_rank %></td>
+                            <td style="width: 50px;text-align: center;"><%= applicant.fail %></td>
+                            <!---->
+                        <%else %>
+
+                            <% if applicant.gpa.to_f < 3.0 %>
+                                <td style="text-align: center;color: #ff0000;">
+                                  <%= applicant.gpa %></td>
+                            <% else %>
+                                <td style="text-align: center;color: #000000"><%= applicant.gpa %></td>
+                            <% end %>
+                            <td style="width: 50px;text-align: center;"><%= applicant.rank %></td>
+                            <td style="width: 50px;text-align: center;"><%= applicant.fail %></td>
+                        <%  end %>
+                    <% end %>
+
+
+
+
+
+
+
+
+                    <td style="width: 50px;text-align: center;"><%= applicant.learning_team %></td>
+                    <!--end of term 2-->
+                    <td style="width: 65px;text-align: center;"><%= applicant.scholar %></td>
+                  </tr>
+              <% end %>
+
+          <% end %>
+        </table>
+        <div id="pager" class="pager" style="position: inherit !important">
+          <form>
+            <img src="/assets/addons/first.png" class="first">
+            <img src="/assets/addons/prev.png" class="prev">
+            <input type="text" class="pagedisplay">
+            <img src="/assets/addons/next.png" class="next">
+            <img src="/assets/addons/last.png" class="last">
+            <select class="pagesize" style="width: 80px;">
+
+              <option value="150">100</option>
+              <option value="50">50</option>
+              <option value="30">30</option>
+              <option value="20">20</option>
+              <option value="15">15</option>
+              <option value="13">13</option>
+              <option value="10">10</option>
+              <option value="7">7</option>
+              <option value="5">5</option>
+              <option value="3">3</option>
+            </select>
+          </form>
+        </div>
+      </div>
+
+    </div>
+    <div class="tab-pane fade" id="messages">
+      <h1>3</h1>
+      <div id="applicant-detail">
+        <% if params['term'] == '2' %>
+            <table border="1" style="width: 595px;margin-left: 425px;">
+              <thead>
+              <th colspan="3" style="font-weight: bold; text-align: center;background-color: #00228d;color: #ffffff;border-color: black;width: 39px;font-size: 11px;border-bottom: 1px solid #00228d;">Year 1</th>
+              <th colspan="3" style="font-weight: bold; text-align: center;background-color: #00228d;color: #ffffff;border-color: black;font-size: 11px;border-bottom: 1px solid #00228d;">Term 2</th>
+              <th colspan="3" style="font-weight: bold; text-align: center;background-color: #00228d;color: #ffffff;border-color: black;font-size: 11px;border-bottom: 1px solid #00228d;">Term 1</th>
+              </thead>
+            </table>
+        <% end %>
+        <table class="tablesorter styletable" id="TheTable" border="1" style="width: 1150px;margin: 0 auto 0 auto">
+
+          <thead style="background-color: rgb(0, 34, 141);  border: 1px rgb(0, 34, 141);">
+          <th>SN</th>
+          <th>Name</th>
+          <% if params['term'] == '2' %>
+              <th>Y1 GPA</th>
+              <th>Y1 RANK</th>
+              <th>Y1 FAIL</th>
+              <th>T2 GPA</th>
+              <th>T2 Rank</th>
+              <th>T2 Fail</th>
+              <th>T1 GPA</th>
+              <th>T1 Rank</th>
+              <th>T1 Fail</th>
+          <% else %>
+              <th>GPA</th>
+              <th>Rank</th>
+              <th>Fail</th>
+          <% end %>
+          <th>LT</th>
+          <th>Scholar</th>
+          </thead>
+          <% @applicants.each do |applicant| %>
+
+              <% if applicant.present? %>
+                  <tr style="background-color:<%= "blue !important" if applicant.tgpa.to_f < 4.0 %>;">
+                    <td  class="student-row" style="width: 140px;text-align: center;"><%= applicant.number %></td>
+                    <td style="width: 280px;"><%= link_to applicant.name, applicant, :target => 'new', :style => "color:rgb(0, 34, 141);" %></td>
+                    <% if params['term'] == '2' %>
+                        <% if applicant.whatif_gpa.present? %>
+
+                            <!--T1-->
+                            <% $term1_gpa =  Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:gpa) %>
+                            <% $term1_rank = Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:rank) %>
+                            <% $term1_fail = Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:fail) %>
+
+                            <!--Start of Y1-->
+                            <% $total = ComputedGpa.where(student_number: applicant.number).last.try(:computed_gpa) %>
+                            <% if $total.to_f < 3.0 %>
+                                <td style="text-align: center;">
+                                  <%= $total %></td>
+                            <% else %>
+                                <td style="text-align: center;"><%= $total %></td>
+                            <% end %>
+                            <td style="text-align: center"><%= ComputedGpa.where(student_number: applicant.number).last.try(:rank) %></td>
+                            <td style="text-align: center"><%= $term1_fail.to_f + applicant.whatif_fail.to_f %></td>
+                            <!--End of Y1-->
+                            <!--T2-->
+                            <% if applicant.whatif_gpa.to_f < 3.0 %>
+                                <td style="text-align: center;">
+                                  <%= applicant.whatif_gpa %></td>
+                            <% else %>
+                                <td style="text-align: center;"><%= applicant.whatif_gpa.to_s %></td>
+                            <% end %>
+                            <td style="width: 50px;text-align: center;"><%= applicant.whatif_rank %></td>
+                            <td style="width: 50px;text-align: center;"><%= applicant.whatif_fail %></td>
+                            <!--end of T2-->
+
+                            <!--T1-->
+                            <% if $term1_gpa.to_f < 3.0 %>
+                                <td style="text-align: center;"> <%= $term1_gpa %></td>
+                            <% else %>
+                                <td style="text-align: center"> <%= $term1_gpa %></td>
+                            <% end %>
+                            <td style="text-align: center"> <%= $term1_rank %></td>
+                            <td style="text-align: center"> <%= $term1_fail %></td>
+                            <!--end of T1 for T2 view-->
+
+                            <!--end of view of T2-->
+
+                        <%	else  %>
+                            <!--Start of Y1-->
+                            <% if applicant.tgpa.to_f < 3.0 %>
+                                <td style="text-align: center;">
+                                  <%= applicant.tgpa %></td>
+                            <% else %>
+                                <td style="text-align: center;"><%= applicant.tgpa %></td>
+                            <% end %>
+                            <td style="text-align: center"><%= applicant.trank %></td>
+                            <td style="text-align: center"><%= $fail.to_f + applicant.fail.to_f %></td>
+                            <!--End of Y1-->
+                            <!--T2-->
+                            <% if applicant.gpa.to_f < 3.0 %>
+                                <td style="text-align: center;color: #ff0000;">
+                                  <%= applicant.gpa %></td>
+                            <% else %>
+                                <td style="text-align: center;color: #000000"><%= applicant.gpa %></td>
+                            <% end %>
+                            <td style="width: 50px;text-align: center;"><%= applicant.rank %></td>
+                            <td style="width: 50px;text-align: center;"><%= applicant.fail %></td>
+                            <!--end of T2-->
+
+                            <!--T1-->
+                            <% if applicant.tgpa.to_f < 3.0 %>
+                                <td style="text-align: center;color: #ff0000;"><%= Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:gpa) %></td>
+                            <% else %>
+                                <td style="text-align: center"> <%= Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:gpa) %></td>
+                            <% end %>
+                            <td style="text-align: center"> <%= Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:rank) %></td>
+                            <td style="text-align: center"> <%= $fail = Student.where(name: applicant.name, cohort: applicant.cohort, term: '1').last.try(:fail) %></td>
+                            <!--end of T1 for T2 view-->
+
+                            <!--end of view of T2-->
+                        <% end %>
+                    <% else %>
+                        <!---->
+                        <%	 if applicant.whatif_gpa.present? %>
+                            <!--if there is a what if gpa use the what if data-->
+                            <% if applicant.whatif_gpa.to_f < 3.0 %>
+                                <td style="text-align: center;">
+                                  <%= applicant.whatif_gpa %></td>
+                            <% else %>
+                                <td style="text-align: center;"><%= applicant.whatif_gpa %></td>
+                            <% end %>
+                            <td style="width: 50px;text-align: center;"><%= applicant.whatif_rank %></td>
+                            <td style="width: 50px;text-align: center;"><%= applicant.fail %></td>
+                            <!---->
+                        <%else %>
+
+                            <% if applicant.gpa.to_f < 3.0 %>
+                                <td style="text-align: center;color: #ff0000;">
+                                  <%= applicant.gpa %></td>
+                            <% else %>
+                                <td style="text-align: center;color: #000000"><%= applicant.gpa %></td>
+                            <% end %>
+                            <td style="width: 50px;text-align: center;"><%= applicant.rank %></td>
+                            <td style="width: 50px;text-align: center;"><%= applicant.fail %></td>
+                        <%  end %>
+                    <% end %>
+
+
+
+
+
+
+
+
+                    <td style="width: 50px;text-align: center;"><%= applicant.learning_team %></td>
+                    <!--end of term 2-->
+                    <td style="width: 65px;text-align: center;"><%= applicant.scholar %></td>
+                  </tr>
+              <% end %>
+
+          <% end %>
+        </table>
+        <div id="pager" class="pager" style="position: inherit !important">
+          <form>
+            <img src="/assets/addons/first.png" class="first">
+            <img src="/assets/addons/prev.png" class="prev">
+            <input type="text" class="pagedisplay">
+            <img src="/assets/addons/next.png" class="next">
+            <img src="/assets/addons/last.png" class="last">
+            <select class="pagesize" style="width: 80px;">
+
+              <option value="150">100</option>
+              <option value="50">50</option>
+              <option value="30">30</option>
+              <option value="20">20</option>
+              <option value="15">15</option>
+              <option value="13">13</option>
+              <option value="10">10</option>
+              <option value="7">7</option>
+              <option value="5">5</option>
+              <option value="3">3</option>
+            </select>
+          </form>
+        </div>
+      </div>
+
+    </div>
   </div>
 </div>
+
