@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140701075110) do
+ActiveRecord::Schema.define(:version => 20141204015437) do
 
   create_table "computed_gpas", :force => true do |t|
     t.string   "student_number"
@@ -67,6 +67,7 @@ ActiveRecord::Schema.define(:version => 20140701075110) do
     t.datetime "updated_at",             :null => false
     t.string   "units"
     t.decimal  "whatif"
+    t.string   "term"
   end
 
   create_table "online_application_forms", :force => true do |t|

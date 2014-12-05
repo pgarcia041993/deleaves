@@ -22,6 +22,7 @@ $(document).ready(function (e) {
 
     //BEGIN PATRICKS SCRIPT ******************************************************************************************************************
     window.onload = compute();
+    window.onload = compute2();
 
     $('.grade').change(function () {
         $('#spinner-rank').show();
@@ -73,44 +74,86 @@ $(document).ready(function (e) {
         }
     });
 
-    function compute() {
-
-        var count_fail = 0;
-        var add_orig_grades = 0;
-        var add_whatif_grades = 0;
+    $('.grade').change(function () {
+        var count_fail = 0
+        var add_grade = 0;
         var get_count = $('#count').val();
-
         if ($('.grade').val() > 0 || $('.grade').val() <= 5.0 || $('.grade').val().match(/^[0-9]+$/)) {
             for (var i = 1; i <= get_count; i++) {
-                var get_orig_grade = $('.grade-orig' + i).val();
-                var get_whatif_grade = $('.grade-new' + i).val() === '' ? $('.grade-orig' + i).val() : $('.grade-new' + i).val();
-                if (get_whatif_grade === '' || get_whatif_grade === 'Pass' || get_whatif_grade === 'Fail' || get_orig_grade === '' || get_orig_grade === 'Pass' || get_orig_grade === 'Fail') {
-                    add_whatif_grades += 0;
-                    add_orig_grades += 0;
+                var grade = $('.grade-new' + i).val() === '' ? $('.grade-orig' + i).val() : $('.grade-new' + i).val();
+                if (grade === '' || grade === 'Pass' || grade === 'Fail' || grade == 'Pass ') {
+                    add_grade += 0;
                 } else {
                     var get_subject_unit = $('#units' + i).val();
-                    add_orig_grades += parseFloat(get_orig_grade) * get_subject_unit;
-                    add_whatif_grades += parseFloat(get_whatif_grade) * get_subject_unit;
+                    if ($('.grade-new' + i).val() < 3.0) {
+                        count_fail = parseFloat(count_fail) + parseFloat(get_subject_unit);
+                    }
+                    add_grade += parseFloat(grade) * get_subject_unit;
+
                 }
-                parseFloat($('.grade-new' + i).val(get_whatif_grade));
+                parseFloat($('.grade-new' + i).val(grade));
             }
+            var final_grade = add_grade / $('#divide').val();
+//            parseFloat($('#final-new').val(parseFloat(final_grade).toFixed(2)));
+            document.getElementById('final-new').innerHTML = final_grade.toFixed(2);
 
-            var final_orig_grade = add_orig_grades / $('#divide').val();
-            var final_whatif_grade = add_whatif_grades / $('#divide').val();
-//            parseFloat($('#final-new').val(parseFloat(final_whatif_grade).toFixed(2)));
-            document.getElementById('final-orig').innerHTML = final_orig_grade.toFixed(2);
-            document.getElementById('final-new').innerHTML = final_whatif_grade.toFixed(2);
+            $('#count_fail').val(count_fail);
+            document.getElementById('count_fail').innerHTML = count_fail;
+        }
+        else {
+            alert('invalid input');
+        }
+    });
 
-            //Count number of fails on page load
+    function compute() {
+        var count = $('#count').val();
+        var orig_grade = 0;
+        for (var i = 1; i <= count; i++) {
+
+            var grade = $('.grade-orig' + i).val();
+            if (grade === '' || grade === 'Pass' || grade === 'Fail') {
+                orig_grade += 0;
+            }
+            else {
+                var get_subject_unit = $('#units' + i).val();
+                orig_grade += parseFloat(grade) * parseFloat(get_subject_unit);
+            }
+        }
+
+        var total = orig_grade / $('#divide').val();
+//        $('#final-orig').val(parseFloat(total).toFixed(2));
+        document.getElementById('final-orig').innerHTML = total.toFixed(2);
+
+    }
+
+    function compute2() {
+        var count_fail = 0
+        var add_grade = 0;
+        var get_count = $('#count').val();
+        if ($('.grade').val() > 0 || $('.grade').val() <= 5.0 || $('.grade').val().match(/^[0-9]+$/)) {
+            for (var i = 1; i <= get_count; i++) {
+                var grade = $('.grade-new' + i).val() === '' ? $('.grade-orig' + i).val() : $('.grade-new' + i).val();
+                if (grade === '' || grade === 'Pass' || grade === 'Fail') {
+                    add_grade += 0;
+                } else {
+                    var get_subject_unit = $('#units' + i).val();
+                    add_grade += parseFloat(grade) * get_subject_unit;
+                }
+                parseFloat($('.grade-new' + i).val(grade));
+            }
+            var final_grade = add_grade / $('#divide').val();
+//            parseFloat($('#final-new').val(parseFloat(final_grade).toFixed(2)));
+            document.getElementById('final-new').innerHTML = final_grade.toFixed(2);
             for (var i = 1; i <= get_count; i++) {
                 if ($('.grade-new' + i).val() < 3.0) {
                     count_fail = parseFloat(count_fail) + parseFloat($('#units' + i).val());
                 }
                 document.getElementById('count_fail').innerHTML = count_fail;
-                $('.gpa_new').text(final_whatif_grade.toFixed(2));
+                $('.gpa_new').text(final_grade.toFixed(2));
 //            document.getElementsByClassName('gpa_new').innerHTML = final_grade.toFixed(2);
             }
         }
+
         else {
             alert('invalid input');
         }

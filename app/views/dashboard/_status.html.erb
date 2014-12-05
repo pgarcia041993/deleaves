@@ -35,18 +35,13 @@
         <td style="padding-left: 10px;">
           <form name="cohort">
           <select name="cohort" id="select-status">
-            <!--<option value="8"-->
-                    <% if params['cohort'] == '8' %> selected
-                    <% end %> >Cohort 8
-            <!--</option>-->
-            <option value="9"
-                    <% if params['cohort'] == '9' %>selected
-                    <% end %> >Cohort 9
+          <% @cohort_select.each do |option| %>
+
+            <option value="<%=option%>"
+                    <% if params['cohort'] == option %>selected
+                    <% end %> >Cohort <%= option%>
             </option>
-            <option value="10"
-                    <% if params['cohort'] == '10' %> selected
-                    <% end %> >Cohort 10
-            </option>
+           <%	 end %>
           </select>
           </form>
         </td>
@@ -65,9 +60,7 @@
             <option value="2" <% if params['term'] == '2' %> selected
                     <% end %> >Term 2
             </option>
-            <option value="3"<% if params['term'] == '3' %> selected
-                    <% end %> >Term 3
-            </option>
+
           </select>
         </td>
       </div>

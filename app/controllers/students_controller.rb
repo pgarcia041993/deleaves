@@ -14,7 +14,7 @@ class StudentsController < ApplicationController
   # GET /students/1.json
   def show
     @student = Student.find(params[:id])
-    @grades = @student.grades
+    @grades =  Grade.where(student_id: @student.number , term: session[:term])
 
     respond_to do |format|
       format.html # show.html.erb
