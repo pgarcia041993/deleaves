@@ -102,4 +102,22 @@ class UpdatesController < ApplicationController
                      'new_rank' => student.whatif_rank}
   end
 
+
+  def save_whatif
+
+    if params[:gpa] == 10
+      Student.where(:number => params[:id], :term => session[:term]).each do |student|
+        student.update_attribute :whatif_gpa, nil
+      end
+    else
+      Student.where(:number => params[:id], :term => session[:term]).each do |student|
+        student.update_attribute :whatif_gpa, params[:gpa]
+      end
+    end
+
+    render :json => {'status' => 'success'
+
+    }
+  end
+
 end

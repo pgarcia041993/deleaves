@@ -42,7 +42,7 @@ OnlineApplication::Application.routes.draw do
   get 'updates/gpa/(:id)' => 'updates#update_gpa'
   get 'updates/fail/(:id)' => 'updates#update_fail'
   get 'api/gpa/(:id)' => 'updates#get_gpa'
-
+  get '/updates/gpa_new/(:id)' => 'updates#save_whatif'
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

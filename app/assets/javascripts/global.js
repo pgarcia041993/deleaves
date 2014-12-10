@@ -15,11 +15,29 @@ $(document).ready(function (e) {
     $('input.grade').change(function (e) {
         var selector_name = this.id;
         var new_grade = $('#' + selector_name).val();
+
         $.ajax({
             url: '/updates/grade/' + selector_name + "?grade=" + new_grade
         }).responseText;
     })
+    $('.save_gpa').click(function (e){
+        var studentid = $('#student-number').val();
+    var thenew = $('#final-new').text();
+var theold =$('#final-orig').text();
+        var gpa = 0
+        if(thenew == theold)
+        {
+            gpa = 10
+        }
+        else
+        {
+            gpa = thenew
+        }
+        $.ajax({
+            url:'/updates/gpa_new/' + studentid + "?gpa=" + gpa
+        }).responseText;
 
+    })
     //BEGIN PATRICKS SCRIPT ******************************************************************************************************************
     window.onload = compute();
     window.onload = compute2();
