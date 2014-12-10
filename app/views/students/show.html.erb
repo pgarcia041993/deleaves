@@ -1,134 +1,1 @@
-<p id="notice"><%= notice %></p>
-<input type="hidden" id="student-id" value="<%= @student.id %>"/>
-<div style="width: 970px;
-        margin: 0 auto 0 auto;
-        padding-left: 20px;">
-  <%= %>
-  <img src="/images/c<%= @student.cohort %>/<%= @student.number %>.jpg" style="position:relative; margin-left:560px;top: 105px; height: 560px; width: 384px;"/>
-
-  <div style="">
-    <table style="margin-top: -560px;">
-      <tr>
-        <td>
-          <p style="font-weight: bold; padding-top: 15px;margin: 0"> Master in Business Administration</p>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <p style="font-weight: bold;margin: 0"> Washington Sycip Graduate School of Business</p>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <p style="font-weight: bold;margin: 0"> <% if(@student.term == '1') %>First Term<% else %>Second Term<% end %> Grades SY 2013-2014 </p>
-        </td>
-      </tr>
-    </table>
-  </div>
-  <table cellpadding="5" style="margin-bottom: 20px">
-    <tr>
-      <p style="padding-top:15px;">
-      <td> <%= @student.number %></td>
-      </p>
-      <p>
-      <td>
-        Cohort
-      </td>
-      </p>
-      <td>LT</td>
-    </tr>
-    <tr>
-      <p>
-      <td style="font-size: 22px; padding-bottom: 5px; font-weight: bold; width: 430px"><%= @student.name %></td>
-      </p>
-      <td style="text-align: center">
-        <b style="font-size: 18px;"><%= @student.cohort %></b>
-      </td>
-      <p>
-      <td style="text-align: center">
-        <b style="font-size: 18px;"><%= @student.learning_team %></b>
-      </td>
-      </p>
-    </tr>
-  </table>
-
-  <table class="csstable" style="width: 520px">
-    <tr>
-      <td>Subject Code</td>
-      <td>Subject</td>
-      <td>Units</td>
-      <td>Grade</td>
-      <td>What if</td>
-    </tr>
-    <% $count = 0; %>
-    <% $divide = 0; %>
-
-    <% @grades.each do |grade| %>
-        <% if grade.present? %>
-            <% $count = $count + 1 %>
-        <% end %>
-        <tr>
-          <td style="padding-left: 10px"><%= grade.temporary_subject_code %></td>
-          <td style="padding-left: 10px">
-            <%= Subject.where(subject_code: grade.temporary_subject_code).last.try(:description) %>
-          </td>
-          <td style="text-align: center">
-            <% if grade.units.present? and !(['Pass', 'Fail'].include?(grade.grade)) %>
-                <% $divide = $divide + grade.units.to_f %>
-            <% end %>
-            <%= grade.units %>
-            <input type="hidden" name="units<%= $count %>" value="<%= grade.units %>" id="units<%= $count %>">
-          </td>
-          <td style="text-align: center">
-            <input type="hidden" name="subject<%= $count %>" value="<%= grade.temporary_subject_code %>" id="subject<%= $count %>">
-            <%= grade.grade %>
-            <input type="hidden" style="width:50px; height:15px; text-align: center;" class="gradeorig grade-orig<%= $count %>" name="" readonly value="<%= grade.grade %>"/>
-          </td>
-          <td style="text-align: center;padding-top: 5px">
-            <% if grade.grade == 'PASS' or grade.grade == 'Pass' or grade.grade == 'FAIL' or grade.grade == nil %>
-                <input style="width:50px; height:15px; text-align: center;" type="text" name="" class="grade grade-new<%= $count %>" id="<%= grade.id %>" readonly/>
-            <% else %>
-                <input style="width:50px; height:15px; text-align: center;" type="text" name="" class="grade grade-new<%= $count %>" id="<%= grade.id %>" value="<%= grade.whatif %>"/>
-            <% end %>
-          </td>
-    <% end %>
-    <input type="hidden" name="divide" value="<%= $divide %>" id="divide">
-    <!-- INSERT SCRIPT HERE -->
-    </tr>
-    <tr>
-      <td style="border: none">&nbsp;</td>
-      <td style="font-weight: bold">Term <%= @student.term %> GPA</td>
-      <td border: none>&nbsp;</td>
-      <td style="color: #ff0000; text-align: center;">
-        <div id="final-orig" style="font-size: 15px;
-                color: blue;font-weight: bold" readonly></div>
-      </td>
-      <td style="color: #ff0000;text-align: center;">
-        <div id="final-new" style="font-size: 15px;
-                color: blue;font-weight: bold" readonly></div>
-      </td>
-    </tr>
-  </table>
-  <table cellpadding="3" border="1" style="margin-left: 239px; margin-top: 10px;">
-    <tr>
-      <th colspan="2">Pre-delibs</th>
-      <th colspan="2">Post-delibs</th>
-    </tr>
-    <tr>
-      <td>Number of fails:</td><td style="text-align: center;"><b style="text-align: center;"><% if @student.fail.blank? %>0<% else %><%= @student.fail %><% end %></b></td><td>Number of fails:</td><td><div id="count_fail" style="text-align: center;font-weight: bold"></div></td>
-    </tr>
-    <tr>
-      <td>Rank</td><td style="text-align: center;"><b style="text-align: center;"><%= @student.rank %></b></td><td>Rank</td><td style="text-align: center;"><b id='new-rank-place' style="text-align: center;"><%= @student.whatif_rank %></b><div id="spinner-rank" style="position: relative; left: 1px; top: 1px z-index: 100;"><%= image_tag 'spinnerLarge.gif', :height => 20, :width => 20 %></div></td>
-    </tr>
-    <tr>
-      <td>GPA</td><td style="text-align: center;"><b style="text-align: center;"><%= @student.gpa %></b></td><td>GPA</td><td style="text-align: center;"><b style="text-align: center;"><div class="gpa_new" style="text-align: center;font-weight: bold"></div></b></td>
-    </tr>
-  </table>
-  <p style="padding-top: 15px"><b>Mr. Rey R. Reyes</b><br/>Executive Managing Director<br/>Student Services Admissions and Registration
-  </p>
-  <input type="hidden" name="count" value="<%= $count %>" id="count">
-
-</div>
-<!---->
-<!--= <%= link_to 'Back', students_path %> |-->
-<!--= link_to 'Edit', edit_student_path(@student) %> |-->
+<p id="notice"><%= notice %></p><input type="hidden" id="student-id" value="<%= @student.id %>"/><div style="width: 970px;        margin: 0 auto 0 auto;        padding-left: 20px;">  <%= %>  <img src="/images/c<%= @student.cohort %>/<%= @student.number %>.jpg" style="position:relative; margin-left:560px;top: 105px; height: 560px; width: 384px;"/>  <div style="">    <table style="margin-top: -560px;">      <tr>        <td>          <p style="font-weight: bold; padding-top: 15px;margin: 0"> Master in Business Administration</p>        </td>      </tr>      <tr>        <td>          <p style="font-weight: bold;margin: 0"> Washington Sycip Graduate School of Business</p>        </td>      </tr>      <tr>        <td>          <p style="font-weight: bold;margin: 0"> <% if(@student.term == '1') %>First Term<% else %>Second Term<% end %> Grades SY 2013-2014 </p>        </td>      </tr>    </table>  </div>  <table cellpadding="5" style="margin-bottom: 20px">    <tr>      <p style="padding-top:15px;">      <td> <%= @student.number %></td>      </p>      <p>      <td>        Cohort      </td>      </p>      <td>LT</td>    </tr>    <tr>      <p>      <td style="font-size: 22px; padding-bottom: 5px; font-weight: bold; width: 430px"><%= @student.name %></td>      </p>      <td style="text-align: center">        <b style="font-size: 18px;"><%= @student.cohort %></b>      </td>      <p>      <td style="text-align: center">        <b style="font-size: 18px;"><%= @student.learning_team %></b>      </td>      </p>    </tr>  </table>  <table class="csstable" style="width: 520px">    <tr>      <td>Subject Code</td>      <td>Subject</td>      <td>Units</td>      <td>Grade</td>      <td>What if</td>    </tr>    <% $count = 0; %>    <% $divide = 0; %>    <% @grades.each do |grade| %>        <% if grade.present? %>            <% $count = $count + 1 %>        <% end %>        <tr>          <td style="padding-left: 10px"><%= grade.temporary_subject_code %></td>          <td style="padding-left: 10px">            <%= Subject.where(subject_code: grade.temporary_subject_code).last.try(:description) %>          </td>          <td style="text-align: center">            <% if grade.units.present? and !(['Pass', 'Fail'].include?(grade.grade)) %>                <% $divide = $divide + grade.units.to_f %>            <% end %>            <%= grade.units %>            <input type="hidden" name="units<%= $count %>" value="<%= grade.units %>" id="units<%= $count %>">          </td>          <td style="text-align: center">            <input type="hidden" name="subject<%= $count %>" value="<%= grade.temporary_subject_code %>" id="subject<%= $count %>">            <%= grade.grade %>            <input type="hidden" style="width:50px; height:15px; text-align: center;" class="gradeorig grade-orig<%= $count %>" name="" readonly value="<%= grade.grade %>"/>          </td>          <td style="text-align: center;padding-top: 5px">            <% if grade.grade == 'PASS' or grade.grade == 'Pass' or grade.grade == 'FAIL' or grade.grade == nil %>                <input style="width:50px; height:15px; text-align: center;" type="text" name="" class="grade grade-new<%= $count %>" id="<%= grade.id %>" readonly/>            <% else %>                <input style="width:50px; height:15px; text-align: center;" type="text" name="" class="grade grade-new<%= $count %>" id="<%= grade.id %>" value="<%= grade.whatif %>"/>            <% end %>          </td>    <% end %>    <input type="hidden" name="divide" value="<%= $divide %>" id="divide">    <!-- INSERT SCRIPT HERE -->    </tr>    <tr>      <td style="border: none">&nbsp;</td>      <td style="font-weight: bold">Term <%= @student.term %> GPA</td>      <td border: none>&nbsp;</td>      <td style="color: #ff0000; text-align: center;">        <div id="final-orig" style="font-size: 15px;                color: blue;font-weight: bold" readonly></div>      </td>      <td style="color: #ff0000;text-align: center;">        <div id="final-new" style="font-size: 15px;                color: blue;font-weight: bold" readonly></div>      </td>    </tr>  </table>  <table cellpadding="3" border="1" style="margin-left: 239px; margin-top: 10px;">    <button class="btn btn-primary" id="revert_grade">Revert Grade</button>    <tr>      <th colspan="2">Pre-delibs</th>      <th colspan="2">Post-delibs</th>    </tr>    <tr>      <td>Number of fails:</td><td style="text-align: center;"><b style="text-align: center;" id="get_fail"><% if @student.fail.blank? %>0<% else %><%= @student.fail %><% end %></b></td><td>Number of fails:</td><td><div id="count_fail" style="text-align: center;font-weight: bold"></div></td>    </tr>    <tr>      <td>Rank</td><td style="text-align: center;"><b style="text-align: center;"><%= @student.rank %></b></td><td>Rank</td><td style="text-align: center;"><b id='new-rank-place' style="text-align: center;"><%= @student.whatif_rank %></b><div id="spinner-rank" style="position: relative; left: 1px; top: 1px z-index: 100;"><%= image_tag 'spinnerLarge.gif', :height => 20, :width => 20 %></div></td>    </tr>    <tr>      <td>GPA</td><td style="text-align: center;"><b style="text-align: center;"><%= @student.gpa %></b></td><td>GPA</td><td style="text-align: center;"><b style="text-align: center;"><div class="gpa_new" style="text-align: center;font-weight: bold"></div></b></td>    </tr>  </table>  <p style="padding-top: 15px"><b>Mr. Rey R. Reyes</b><br/>Executive Managing Director<br/>Student Services Admissions and Registration  </p>  <input type="hidden" name="count" value="<%= $count %>" id="count"></div><!----><!--= <%= link_to 'Back', students_path %> |--><!--= link_to 'Edit', edit_student_path(@student) %> |-->
