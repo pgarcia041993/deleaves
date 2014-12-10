@@ -352,3 +352,25 @@ div#show-education-detail {
 .dataTables_scrollBody{
   height: 450px !important;
 }
+
+.tab-content>.active, .pill-content>.active{
+  padding: 0px 10px 0px 10px;
+}
+
+/* ***************CUSTOM SCROLLBAR*******************************************/
+
+.nav-tabs {
+  overflow-x: auto;
+  overflow-y: hidden;
+  display: -webkit-box;
+  display: -moz-box;
+}
+.nav-tabs>li {
+  float:none;
+}
+
+.nav-tabs{
+  border-bottom: 1px solid white;
+}
+
+/* ***************END CUSTOM SCROLLBAR***************************************/

@@ -92,35 +92,19 @@ var theold =$('#final-orig').text();
         }
     });
 
-    $('.grade').change(function () {
-        var count_fail = 0
-        var add_grade = 0;
+    $('#revert_grade').click(function (e) {
         var get_count = $('#count').val();
-        if ($('.grade').val() > 0 || $('.grade').val() <= 5.0 || $('.grade').val().match(/^[0-9]+$/)) {
             for (var i = 1; i <= get_count; i++) {
-                var grade = $('.grade-new' + i).val() === '' ? $('.grade-orig' + i).val() : $('.grade-new' + i).val();
-                if (grade === '' || grade === 'Pass' || grade === 'Fail' || grade == 'Pass ') {
-                    add_grade += 0;
-                } else {
-                    var get_subject_unit = $('#units' + i).val();
-                    if ($('.grade-new' + i).val() < 3.0) {
-                        count_fail = parseFloat(count_fail) + parseFloat(get_subject_unit);
-                    }
-                    add_grade += parseFloat(grade) * get_subject_unit;
-
+                    $('.grade-new' + i).val($('.grade-orig' + i).val());
+                    var selector_name = document.querySelector('.grade-new' + i).id
+                    var new_grade = $('.grade-new' + i).val();
+                    $.ajax({
+                        url: '/updates/grade/' + selector_name + "?grade=" + new_grade
+                    }).responseText;
                 }
-                parseFloat($('.grade-new' + i).val(grade));
-            }
-            var final_grade = add_grade / $('#divide').val();
-//            parseFloat($('#final-new').val(parseFloat(final_grade).toFixed(2)));
-            document.getElementById('final-new').innerHTML = final_grade.toFixed(2);
-
-            $('#count_fail').val(count_fail);
-            document.getElementById('count_fail').innerHTML = count_fail;
-        }
-        else {
-            alert('invalid input');
-        }
+        document.getElementById('final-new').innerHTML = document.getElementById('final-orig').innerHTML;
+        document.getElementById('count_fail').innerHTML = document.getElementById('get_fail').innerHTML;
+            $('#count_fail').val($('#get_fail').val());
     });
 
     function compute() {

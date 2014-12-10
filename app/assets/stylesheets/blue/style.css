@@ -37,3 +37,7 @@ table.tablesorter thead tr .headerSortDown {
 table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSortUp {
     /*background-color: #4c7fd8;*/
 }
+
+.tablesorter tbody tr td:hover {
+    /*background-color: black;*/
+}

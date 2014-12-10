@@ -1,7 +1,8 @@
 <p id="notice"><%= notice %></p>
 <input type="hidden" id="student-id" value="<%= @student.id %>"/>
-<input type="hidden" id="student-number" value="<%= @student.number %>"/>
-<div style="width:900px;margin:0 auto 0 auto;">
+<div style="width: 970px;
+        margin: 0 auto 0 auto;
+        padding-left: 20px;">
   <%= %>
   <img src="/images/c<%= @student.cohort %>/<%= @student.number %>.jpg" style="position:relative; margin-left:560px;top: 105px; height: 560px; width: 384px;"/>
 
@@ -109,6 +110,7 @@
     </tr>
   </table>
   <table cellpadding="3" border="1" style="margin-left: 239px; margin-top: 10px;">
+    <button class="btn btn-primary" id="revert_grade">Revert Grade</button>
     <tr>
       <th colspan="2"><!--Pre-delibs--></th>
       <th colspan="2">Post-delibs</th>
